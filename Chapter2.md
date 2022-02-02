@@ -192,6 +192,15 @@ The space argument may be used to control spacing in the final string.
 - If it is a number, successive levels in the stringification will each be indented by this many space characters (up to 10).
 - If it is a string, successive levels will be indented by this string (or the first ten characters of it).
 
+```js
+JSON.stringify({ uno: 1, dos: 2 }, null, '\t');
+// returns the string:
+// '{
+//     "uno": 1,
+//     "dos": 2
+// }'
+```
+
 ##### Return value
 A JSON string representing the given value, or undefined.
 
