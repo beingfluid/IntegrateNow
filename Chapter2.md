@@ -178,7 +178,7 @@ console.log(JSON.stringify(new Date(2006, 0, 2, 15, 4, 5)));
 - A function that alters the behavior of the stringification process, or an array of String and Number that serve as an allowlist for selecting/filtering the properties of the value object to be included in the JSON string. 
 - If this value is null or not provided, all properties of the object are included in the resulting JSON string.
 
-###### space Optional
+###### space Optional (The space argument)
 - A String or Number object that's used to insert white space (including indentation, line break characters, etc.) into the output JSON string for readability purposes.
 - If this parameter is not provided (or is null), no white space is used.
 \
@@ -186,6 +186,11 @@ console.log(JSON.stringify(new Date(2006, 0, 2, 15, 4, 5)));
 - Values less than 1 indicate that no space should be used.
 \
 - If this is a String, the string (or the first 10 characters of the string, if it's longer than that) is used as white space.
+\
+The space argument may be used to control spacing in the final string.
+
+- If it is a number, successive levels in the stringification will each be indented by this many space characters (up to 10).
+- If it is a string, successive levels will be indented by this string (or the first ten characters of it).
 
 ##### Return value
 A JSON string representing the given value, or undefined.
@@ -280,9 +285,37 @@ console.log(a !== b) // true
 
 ```
 
+##### toJSON() behavior
+- If an object being stringified has a property named toJSON whose value is a function, then the toJSON() method customizes JSON stringification behavior: instead of the object being serialized, the value returned by the toJSON() method when called will be serialized. 
+\
+JSON.stringify() calls toJSON with one parameter:
 
+- if this object is a property value, the property name
+- if it is in an array, the index in the array, as a string
+- an empty string if JSON.stringify() was directly called on this object
 
+```js
+var obj = {
+    data: 'data',
 
+    toJSON (key) {
+        if (key)
+            return `Now I am a nested object under key '${key}'`;
+        else
+            return this;
+    }
+};
+
+JSON.stringify(obj);
+// '{"data":"data"}'
+
+JSON.stringify({ obj }); // Shorthand property names (ES2015).
+// '{"obj":"Now I am a nested object under key 'obj'"}'
+
+JSON.stringify([ obj ]);
+// '["Now I am a nested object under key '0'"]'
+
+```
 
 #### References :
 - [Working with JSON](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON)
