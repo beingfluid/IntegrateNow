@@ -69,5 +69,5 @@ It is based upon JavaScript syntax but is distinct from it: some JavaScript is n
 - [JSON](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON)
 - [JSON](https://developer.mozilla.org/en-US/docs/Glossary/JSON)
 - [Introducing JSON](https://www.json.org/json-en.html)
-- []()
+- [JSON.parse()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse)
 - []()
