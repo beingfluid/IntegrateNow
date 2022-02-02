@@ -43,6 +43,7 @@ It is based upon JavaScript syntax but is distinct from it: some JavaScript is n
 - The replacer option allows for specifying other behavior.
 
 ### Example
+```json
 {
   "browsers": {
     "firefox": {
@@ -59,6 +60,7 @@ It is based upon JavaScript syntax but is distinct from it: some JavaScript is n
     }
   }
 }
+```
 
 
 
