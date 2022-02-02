@@ -177,6 +177,40 @@ console.log(JSON.stringify(new Date(2006, 0, 2, 15, 4, 5)));
 ###### replacer Optional
 - A function that alters the behavior of the stringification process, or an array of String and Number that serve as an allowlist for selecting/filtering the properties of the value object to be included in the JSON string. 
 - If this value is null or not provided, all properties of the object are included in the resulting JSON string.
+- The replacer parameter can be either a function or an array.
+
+Example replacer, as a function \
+- As a function, it takes two parameters: the key and the value being stringified. 
+- The object in which the key was found is provided as the replacer's this parameter.
+\
+- Initially, the replacer function is called with an empty string as key representing the object being stringified. 
+- It is then called for each property on the object or array being stringified.
+\
+It should return the value that should be added to the JSON string, as follows:
+
+- If you return a Number, String, Boolean, or null, the stringified version of that value is used as the property's value.
+- If you return a Function, Symbol, or undefined, the property is not included in the output.
+- If you return any other object, the object is recursively stringified, calling the replacer function on each property.
+
+```js
+function replacer(key, value) {
+  // Filtering out properties
+  if (typeof value === 'string') {
+    return undefined;
+  }
+  return value;
+}
+
+var foo = {foundation: 'Mozilla', model: 'box', week: 45, transport: 'car', month: 7};
+JSON.stringify(foo, replacer);
+// '{"week":45,"month":7}'
+```
+Example replacer, as an array \
+If replacer is an array, the array's values indicate the names of the properties in the object that should be included in the resulting JSON string.
+```js
+JSON.stringify(foo, ['week', 'month']);
+// '{"week":45,"month":7}', only keep "week" and "month" properties
+```
 
 ###### space Optional (The space argument)
 - A String or Number object that's used to insert white space (including indentation, line break characters, etc.) into the output JSON string for readability purposes.
