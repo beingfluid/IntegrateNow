@@ -15,6 +15,8 @@ It is based upon JavaScript syntax but is distinct from it: some JavaScript is n
 - Property names must be double-quoted strings; trailing commas are forbidden.
 - Leading zeros are prohibited. A decimal point must be followed by at least one digit. NaN and Infinity are unsupported.
 - JSON does not natively represent more complex data types like functions, regular expressions, dates, and so on.
+- Other differences include allowing only double-quoted strings and having no provisions for undefined or comments. 
+- For those who wish to use a more human-friendly configuration format based on JSON, there is JSON5, used by the Babel compiler, and the more commonly used YAML.
 \
 ### JSON object
 - The JSON object contains methods for parsing JavaScript Object Notation (JSON) and converting values to JSON. 
