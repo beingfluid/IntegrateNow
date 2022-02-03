@@ -151,6 +151,7 @@ JSON.parse("{'foo': 1}");
 - The JSON.stringify() method converts a JavaScript object or value to a JSON string, optionally replacing values if a replacer function is specified or optionally including only the specified properties if a replacer array is specified.
 \
 ##### Syntax
+
 ```js
 JSON.stringify(value)
 JSON.stringify(value, replacer)
@@ -159,6 +160,7 @@ JSON.stringify(value, replacer, space)
 ##### Parameters
 ###### value
 The value to convert to a JSON string.
+
 ```js
 console.log(JSON.stringify({ x: 5, y: 6 }));
 // expected output: "{"x":5,"y":6}"
@@ -205,8 +207,10 @@ var foo = {foundation: 'Mozilla', model: 'box', week: 45, transport: 'car', mont
 JSON.stringify(foo, replacer);
 // '{"week":45,"month":7}'
 ```
+
 Example replacer, as an array \
 If replacer is an array, the array's values indicate the names of the properties in the object that should be included in the resulting JSON string.
+
 ```js
 JSON.stringify(foo, ['week', 'month']);
 // '{"week":45,"month":7}', only keep "week" and "month" properties
