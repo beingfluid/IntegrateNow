@@ -11,14 +11,16 @@
 ## What is API
 
 &nbsp;&nbsp;&nbsp;&nbsp;When you chat with a friend, you need a mobile (or in other words, a communication device) to do that. Or in order to open a door you need a handle. Application Programming Interface or API is a similar concept, and it helps two programs to communicate & enable access a resource with each other.
+
 &nbsp;&nbsp;&nbsp;&nbsp;Let us try to understand this another way. Think that you are hungry and want to eat a pizza. You go to the nearest restaurant, check the menu and make the order to the waiter. Waiter in turn takes the order to the kitchen, brings the pizza from the kitchen and deliver the pizza to your table. The waiter plays the similar part as of the API.
+
 &nbsp;&nbsp;&nbsp;&nbsp; In IT world, Client application makes an request to the Server and recieves the response back. API is a mid layer that handles this communication.
 
 ## What is REST API
 
 &nbsp;&nbsp;&nbsp;&nbsp;Representational state transfer or REST is the most popular approach of building APIs. When a request for data is sent to a REST API, it’s usually done through hypertext transfer protocol (HTTP). Once a request is received, APIs designed for REST can return messages in a variety of formats: HTML, XML, plain text, and JSON.
 
-### A request is made up of four things:
+#### A request is made up of four things:
 
 - The Endpoint
 - The method
