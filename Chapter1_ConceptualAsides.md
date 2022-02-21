@@ -16,7 +16,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp; In IT world, Client application makes an request to the Server and recieves the response back. API is a mid layer that handles this communication.
 
-![What is API](\images\Chapter1_1.png)
+![What is API](/images/Chapter1_1.png)
 
 ## What is REST API
 
