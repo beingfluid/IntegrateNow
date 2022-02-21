@@ -101,6 +101,8 @@ https://dev124645.service-now.com/api/now/table/incident
 Content-Type:application/json;
 ```
 
+![Accept vs Content-Type](/images/Headers.png)
+
 &nbsp;&nbsp;&nbsp;&nbsp;
 
 ##
