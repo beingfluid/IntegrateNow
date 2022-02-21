@@ -55,11 +55,37 @@ https://dev124645.service-now.com/api/now/table/incident
 
 &nbsp;&nbsp;&nbsp;&nbsp;POST method is used to delete the resource identified by the request url.
 
-&nbsp;&nbsp;&nbsp;&nbsp;
+## HTTP Headers
 
-##
+&nbsp;&nbsp;&nbsp;&nbsp;Client and Server can pass the extra bit of information with the request and response using HTTP headers.
 
-&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;The most widely used HTTP Headers are:
+
+- Accept
+- Content-Type
+- Authorization
+- Access-Control-Allow-Origin
+- Access-Control-Allow-Methods
+
+#### Accept
+
+&nbsp;&nbsp;&nbsp;&nbsp;Type of data client can understand.
+
+#### Content-Type
+
+&nbsp;&nbsp;&nbsp;&nbsp;Specifies the media type of the resource.
+
+#### Authorization
+
+&nbsp;&nbsp;&nbsp;&nbsp;Used to pass credentials so that server can authenticate.
+
+#### Access-Control-Allow-Origin
+
+&nbsp;&nbsp;&nbsp;&nbsp;Specifies which origin is allowed to access the resources.
+
+#### Access-Control-Allow-Methods
+
+&nbsp;&nbsp;&nbsp;&nbsp;Specifies which methods are allowed to access the resources.
 
 ##
 
