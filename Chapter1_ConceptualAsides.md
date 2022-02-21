@@ -103,6 +103,27 @@ Content-Type:application/json;
 
 ![Accept vs Content-Type](/images/Headers.png)
 
+## HTTP Status Codes
+
+&nbsp;&nbsp;&nbsp;&nbsp;I'm sure you have came across the scenerio, when you tried to access a webpage and recieved an 404 (Page not found) or 403 (Access Forbidden) error? This are status codes.
+&nbsp;&nbsp;&nbsp;&nbsp;Server always returns the HTTP status code with the response.
+
+![Status Code](/images/statuscode2.png)
+
+##
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+##
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+##
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+##
+
 &nbsp;&nbsp;&nbsp;&nbsp;
 
 ##
