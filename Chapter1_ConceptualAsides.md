@@ -10,11 +10,11 @@
 
 ## What is API
 
-&nbsp;&nbsp;&nbsp;&nbsp;When you chat with a friend, you need a mobile (or in other words, a communication device) to do that. Or in order to open a door you need a handle. Application Programming Interface or API is a similar concept, and it helps two programs to communicate & enable access a resource with each other.
+&nbsp;&nbsp;&nbsp;&nbsp;When you chat with a friend, you need a mobile (or in other words, a communication device) to do that. Or in order to open a door you need a handle. Application Programming Interface or API is a similar concept, and it helps two programs to communicate & enable exchange of information with each other.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Let us try to understand this another way. Think that you are hungry and want to eat a pizza. You go to the nearest restaurant, check the menu and make the order to the waiter. Waiter in turn takes the order to the kitchen, brings the pizza from the kitchen and deliver the pizza to your table. The waiter plays the similar part as of the API.
 
-&nbsp;&nbsp;&nbsp;&nbsp; In IT world, Client application makes an request to the Server and recieves the response back. API is a mid layer that handles this communication.
+&nbsp;&nbsp;&nbsp;&nbsp; In IT world, Client application requests information from a server. A server processes the request and returns a status code and a response body. When the response body is returned, the Client extracts information from the response body and takes action on the extracted data. API is a mid layer that handles this communication.
 
 ![What is API](/images/Chapter1_1.png)
 
@@ -111,7 +111,17 @@ Content-Type:application/json;
 
 ![Status Code](/images/statuscode2.png)
 
-##
+## Outbound vs. Inbound REST Integrations
+
+&nbsp;&nbsp;&nbsp;&nbsp;When ServiceNow consumes a web services from third party providers and other ServiceNow instances, It is considered as a Outbound REST Integration. Whereas, In an inbound request, a third-party application requests an action through a ServiceNow API.
+
+#### Outbound REST Integration
+
+![Outbound](/images/app_store_learnv2_rest_sandiego_outbound_images_outbound_genericrequest.png)
+
+#### Inbound REST Integration
+
+![Inbound](/images/app_store_learnv2_rest_sandiego_inbound_images_inbound_genericrequest.png)
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -123,10 +133,6 @@ Content-Type:application/json;
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 
-##
+## What's next?
 
-&nbsp;&nbsp;&nbsp;&nbsp;
-
-##
-
-&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; In next chapter, we will see some of the concepts & methods related to javascript JSON and Objects, before diving into actual ServiceNow integration jungle. Knowing this simple concepts will be extermely helpful and will make us confident about the code that we are going to write. Believe me, you are going to use hell lot of JSON.
