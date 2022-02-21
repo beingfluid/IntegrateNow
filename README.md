@@ -1,3 +1,5 @@
+<img src="/images/IntegrateNow.png" width="400" height="566">
+
 # IntegrateNow
 #### Foundation of Integrations on ServiceNow Platform
 ##### &copy; Vishal Ingle
