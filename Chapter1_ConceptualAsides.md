@@ -14,7 +14,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;Let us try to understand this another way. Think that you are hungry and want to eat a pizza. You go to the nearest restaurant, check the menu and make the order to the waiter. Waiter in turn takes the order to the kitchen, brings the pizza from the kitchen and deliver the pizza to your table. The waiter plays the similar part as of the API.
 
-&nbsp;&nbsp;&nbsp;&nbsp; In IT world, Client application requests information from a server. A server processes the request and returns a status code and a response body. When the response body is returned, the Client extracts information from the response body and takes action on the extracted data. API is a mid layer that handles this communication.
+&nbsp;&nbsp;&nbsp;&nbsp; In IT world, Client application requests information from a server. A server processes the request and returns a status code and a response body. When the response body is returned, the Client extracts information from the response body and takes action on the extracted data. API is a mid layer that handles this communication. Scripted REST Services allow developers to create their own APIs on the ServiceNow Platform.
 
 ![What is API](/images/Chapter1_1.png)
 
@@ -37,7 +37,11 @@
 https://dev124645.service-now.com/api/now/table/incident
 ```
 
+&nbsp;&nbsp;&nbsp;&nbsp;Every web service provider will have the API documentation and that needs to be referenced in order to configure the HTTP method endpoint.
+
 ## The method
+
+&nbsp;&nbsp;&nbsp;&nbsp;HTTP methods define the action to take for a resource, such as retrieving information or updating a record. The available HTTP Methods are:
 
 #### POST: Create
 
@@ -57,7 +61,7 @@ https://dev124645.service-now.com/api/now/table/incident
 
 ## HTTP Headers
 
-&nbsp;&nbsp;&nbsp;&nbsp;Client and Server can pass the extra bit of information with the request and response using HTTP headers.
+&nbsp;&nbsp;&nbsp;&nbsp;Client and Server can pass the extra bit of information with the request and response using HTTP headers. The Server determines which headers are supported or required.
 
 &nbsp;&nbsp;&nbsp;&nbsp;The most widely used HTTP Headers are:
 
@@ -77,7 +81,7 @@ https://dev124645.service-now.com/api/now/table/incident
 
 #### Authorization
 
-&nbsp;&nbsp;&nbsp;&nbsp;Used to pass credentials so that server can authenticate.
+&nbsp;&nbsp;&nbsp;&nbsp;Used to pass credentials so that server can authenticate. Different web service providers may require different types of authentication.
 
 #### Access-Control-Allow-Origin
 
@@ -107,9 +111,24 @@ Content-Type:application/json;
 
 &nbsp;&nbsp;&nbsp;&nbsp;I'm sure you have came across the scenerio, when you tried to access a webpage and recieved an 404 (Page not found) or 403 (Access Forbidden) error? This are status codes.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Server always returns the HTTP status code with the response.
+&nbsp;&nbsp;&nbsp;&nbsp;Server always returns the HTTP status code with the response. The HTTP status codes refer to the interaction with the REST service provider. The status codes do not tell anything about the requested data. ServiceNow APIs return standard HTTP status codes.:
+
+- 1xx: Informational
+- 2xx: Success
+- 3xx: Redirection
+- 4xx: Client Error
+- 5xx: Server Error
 
 ![Status Code](/images/statuscode2.png)
+
+## HTTP Query Parameters
+
+&nbsp;&nbsp;&nbsp;&nbsp;HTTP Query Parameters are appended to the endpoint url after '?'. The query parameters are specific to the selected API method and control what information developers using the API can pass in the API request URL.
+
+```js
+https://dev124645.service-now.com/api/now/table/incident?sysparm_query=active%3Dtrue&sysparm_limit=10
+
+```
 
 ## Outbound vs. Inbound REST Integrations
 
@@ -122,12 +141,6 @@ Content-Type:application/json;
 #### Inbound REST Integration
 
 ![Inbound](/images/app_store_learnv2_rest_sandiego_inbound_images_inbound_genericrequest.png)
-
-&nbsp;&nbsp;&nbsp;&nbsp;
-
-##
-
-&nbsp;&nbsp;&nbsp;&nbsp;
 
 ##
 
