@@ -31,7 +31,7 @@
 
 ## The Endpoint
 
-&nbsp;&nbsp;&nbsp;&nbsp;The endpoint is the url you request for. It generally consists of base path and resource path.
+&nbsp;&nbsp;&nbsp;&nbsp;The endpoint is the url you request for. It generally consists of base path and resource path. E.g.
 
 ```js
 https://dev124645.service-now.com/api/now/table/incident
@@ -87,7 +87,19 @@ https://dev124645.service-now.com/api/now/table/incident
 
 &nbsp;&nbsp;&nbsp;&nbsp;Specifies which methods are allowed to access the resources.
 
-##
+## Accept vs. Content-Type
+
+&nbsp;&nbsp;&nbsp;&nbsp;As we have discussed above, Accept is the type of data client can understand, whereas Content-Type specifies the media type of the resource.
+
+&nbsp;&nbsp;&nbsp;&nbsp;What this actually means is that The Accept header is used to inform the server by the client that which content type is understandable by the client expressed as MIME-types. By using the Content-negotiation the server selects a proposal of the content type and informs the client of its choice with the Content-type response header.
+
+&nbsp;&nbsp;&nbsp;&nbsp;I assume, almost all of you have worked in the Operations team. And you might have receieved an incident or an request from the user, who understand only french or german, while you can only speak english. Generally, in such instances you might use some kind of translator to convert your response in user-specific language to respond to the user. Let us consider, user does the same and convert his response into english that you understand. Now if you are asking user for an input by this means, The language in which you did respond to the user (french/german) will be an Accept and the language in which you did receieve the response (i.e. english) will be a Content-Type.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Both this headers are expressed by as MIME-types. E.g.
+
+```json
+Content-Type:application/json;
+```
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 
