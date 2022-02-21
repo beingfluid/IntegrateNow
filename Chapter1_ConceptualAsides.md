@@ -142,10 +142,6 @@ https://dev124645.service-now.com/api/now/table/incident?sysparm_query=active%3D
 
 ![Inbound](/images/app_store_learnv2_rest_sandiego_inbound_images_inbound_genericrequest.png)
 
-##
-
-&nbsp;&nbsp;&nbsp;&nbsp;
-
 ## What's next?
 
 &nbsp;&nbsp;&nbsp;&nbsp; In next chapter, we will see some of the concepts & methods related to javascript JSON and Objects, before diving into actual ServiceNow integration jungle. Knowing this simple concepts will be extermely helpful and will make us confident about the code that we are going to write. Believe me, you are going to use hell lot of JSON.
