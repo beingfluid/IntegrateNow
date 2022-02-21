@@ -97,7 +97,7 @@ https://dev124645.service-now.com/api/now/table/incident
 
 &nbsp;&nbsp;&nbsp;&nbsp;Both this headers are expressed by as MIME-types. E.g.
 
-```json
+```js
 Content-Type:application/json;
 ```
 
