@@ -16,6 +16,8 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp; In IT world, Client application makes an request to the Server and recieves the response back. API is a mid layer that handles this communication.
 
+![What is API](\images\Chapter1_1.png)
+
 ## What is REST API
 
 &nbsp;&nbsp;&nbsp;&nbsp;Representational state transfer or REST is the most popular approach of building APIs. When a request for data is sent to a REST API, it’s usually done through hypertext transfer protocol (HTTP). Once a request is received, APIs designed for REST can return messages in a variety of formats: HTML, XML, plain text, and JSON.
