@@ -29,11 +29,35 @@
 - The headers
 - The body
 
-##
+## The Endpoint
 
-&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;The endpoint is the url you request for. It generally consists of base path and resource path.
 
-##
+```js
+https://dev124645.service-now.com/api/now/table/incident
+```
+
+## The method
+
+#### POST: Create
+
+POST method is used to submit the information to the server.
+
+#### GET: Read
+
+GET method is the most common of all the request methods. It is used to fetch the desired resource from the server.
+
+#### PUT/PATCH: Update
+
+Both PUT & PATCH are used to modify the resources on the server with a slight difference.
+
+PUT is a method of modifying resource where the client sends data that updates the entire resource.
+
+PATCH is a method of modifying resources where the client sends partial data that is to be updated without modifying the entire data.
+
+#### DELETE: Delete
+
+POST method is used to delete the resource identified by the request url.
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 
