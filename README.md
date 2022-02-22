@@ -1,4 +1,4 @@
-<img src="/images/IntegrateNow.png" width="400" height="566">
+![IntegrateNow](/images/IntegrateNow.png)
 
 # IntegrateNow
 
