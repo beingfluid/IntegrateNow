@@ -204,7 +204,7 @@ gs.info(JSON.stringify(jsonObj, null, "\t"))
 &nbsp;&nbsp;&nbsp;&nbsp;Now click the Run Script button to execute the script. You should see the following output :
 ![json 2](/images/json4.png)
 
-## &nbsp;&nbsp;&nbsp;&nbsp;Both the outputs are now displayed in more readable format.
+&nbsp;&nbsp;&nbsp;&nbsp;Both the outputs are now displayed in more readable format.
 
 #### JSON.parse(text[, reviver])
 
