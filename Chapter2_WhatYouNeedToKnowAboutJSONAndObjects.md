@@ -206,7 +206,7 @@ gs.info(JSON.stringify(jsonObj, null, "\t"))
 
 &nbsp;&nbsp;&nbsp;&nbsp;Both the outputs are now displayed in more readable format.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Finally, Let us talk about the second parameter, replacer. In can be a function that alters the behavior of the stringification process, or an array of String and Number that serve as an allowlist for selecting/filtering the properties of the value object to be included in the JSON string. If this value is null or not provided, all properties of the object are included in the resulting JSON string.
+&nbsp;&nbsp;&nbsp;&nbsp;Finally, Let us talk about the second parameter, replacer. It can be a function that alters the behavior of the stringification process, or an array of String and Number that serve as an allowlist for selecting/filtering the properties of the value object to be included in the JSON string. If this value is null or not provided, all properties of the object are included in the resulting JSON string.
 
 &nbsp;&nbsp;&nbsp;&nbsp;The replacer parameter can be either a function or an array.
 
@@ -244,7 +244,8 @@ JSON.stringify(foo, replacer)
 // '{"week":45,"month":7}'
 ```
 
-Example replacer, as an array \
+###### Example replacer, as an array
+
 If replacer is an array, the array's values indicate the names of the properties in the object that should be included in the resulting JSON string.
 
 ```js
