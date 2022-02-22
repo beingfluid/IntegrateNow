@@ -96,7 +96,19 @@ The first incident with number INC0000039 raised by "Bud Richman" have the short
 
 &nbsp;&nbsp;&nbsp;&nbsp;JSON is a syntax for serializing objects, arrays, numbers, strings, booleans, and null. Serialization means to convert an object into that string, and deserialization is its inverse operation.
 
-&nbsp;&nbsp;&nbsp;&nbsp;The JSON object contains methods for parsing JavaScript Object Notation (JSON) and converting values to JSON.
+&nbsp;&nbsp;&nbsp;&nbsp;The JSON object contains methods for parsing JavaScript Object Notation (JSON) and converting values to JSON. We are going to use these methods to see how it works.
+
+#### ServiceNow Scripts - Background
+
+&nbsp;&nbsp;&nbsp;&nbsp;I would like to quote Ben Sweetser as is when it comes to Scripts - Background :
+
+> Scripts - Background was this magical place in the platform where you could run any server-side script. It became my testing ground for any server-side method I wanted to learn about or new script I wanted to test because I did not need to configure When to run logic around it like a Business Rule. Running a script in Scripts - Background was as easy as putting a script in the field and clicking the Run script button.
+
+&nbsp;&nbsp;&nbsp;&nbsp;You can read the article by Ben Sweetser [here](https://developer.servicenow.com/blog.do?p=/post/training-scriptsbg/) if you need to learn more about it.
+
+&nbsp;&nbsp;&nbsp;&nbsp;To open Scripts - Background, use the Application Navigator to open System Definition > Scripts - Background. It is going to be our playground and a friend in our journey.
+
+![Scripts Background](/images/Screenshot 2022-02-22 220024.png)
 
 ---
 
