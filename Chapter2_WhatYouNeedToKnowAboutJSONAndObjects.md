@@ -95,6 +95,7 @@ The first incident with number INC0000039 raised by "Bud Richman" have the short
 #### JSON serialization & deserialization
 
 &nbsp;&nbsp;&nbsp;&nbsp;JSON is a syntax for serializing objects, arrays, numbers, strings, booleans, and null. Serialization means to convert an object into that string, and deserialization is its inverse operation.
+
 &nbsp;&nbsp;&nbsp;&nbsp;The JSON object contains methods for parsing JavaScript Object Notation (JSON) and converting values to JSON.
 
 ---
