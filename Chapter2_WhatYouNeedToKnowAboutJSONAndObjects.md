@@ -63,7 +63,7 @@ The first incident with number INC0000039 raised by "Bud Richman" have the short
 
 &nbsp;&nbsp;&nbsp;&nbsp;So, if you could just use JSON and not XML that would be great.
 
-![XML vs JSON](/images/jlibgkfs8yf21.png.png)
+![XML vs JSON](/images/jlibgkfs8yf21.png)
 
 ##
 
