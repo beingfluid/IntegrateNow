@@ -145,6 +145,8 @@ JSON.stringify(value, replacer)
 JSON.stringify(value, replacer, space)
 ```
 
+##### JSON.stringify(value)
+
 &nbsp;&nbsp;&nbsp;&nbsp;Copy the following code and paste it into the Scripts - Background.
 
 ```js
