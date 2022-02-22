@@ -168,6 +168,8 @@ gs.info(typeof jsonStr)
 &nbsp;&nbsp;&nbsp;&nbsp;Now click the Run Script button to execute the script. You should see the following output :
 ![json 2](/images/json2.png)
 
+&nbsp;&nbsp;&nbsp;&nbsp;The first and second line of output displays the stringified version of JSON object and the third line indicates that it is of type string.
+
 ---
 
 #### JSON.parse(text[, reviver])
