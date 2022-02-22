@@ -77,7 +77,7 @@ The first incident with number INC0000039 raised by "Bud Richman" have the short
 - Property names are double-quoted.
 - Properties are separated by commas.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Here is an example of a JSON :
+&nbsp;&nbsp;&nbsp;&nbsp;Here is an example of a JSON, You are free to play around it :
 
 ```json
 {
@@ -109,6 +109,31 @@ The first incident with number INC0000039 raised by "Bud Richman" have the short
 &nbsp;&nbsp;&nbsp;&nbsp;To open Scripts - Background, use the Application Navigator to open System Definition > Scripts - Background. It is going to be our playground and a friend in our journey.
 
 ![Scripts Background](/images/sba.png)
+
+#### typeof & gs.info()
+
+&nbsp;&nbsp;&nbsp;&nbsp;The typeof operator returns a string indicating the type of the value provided, Whereas, gs.info method writes an info message to the system log. Copy the following code and paste it into the Scripts - Background.
+
+```js
+var jsonObj = {
+  Course: "IntegrateNow",
+  Skills: ["Integration", "JSON", "ServiceNow"],
+  name: {
+    first_name: "Vishal",
+    last_name: "Ingle",
+  },
+}
+
+gs.info(jsonObj)
+gs.info(typeof jsonObj)
+```
+
+![typeof 1](/images/typeof1.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Now click the Run Script button to execute the script. You should see the following output :
+![typeof 2](/images/typeof2.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;The second line of the output indicates that jsonObj variable stores an object. Though, The first line of the output does not display the content of jsonObj variable.
 
 ---
 
