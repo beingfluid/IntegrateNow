@@ -172,7 +172,39 @@ gs.info(typeof jsonStr)
 
 &nbsp;&nbsp;&nbsp;&nbsp;The first and second line of output displays the stringified version of JSON object and the third line indicates that it is of type string.
 
----
+##### JSON.stringify(value, replacer, space)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Before we talk about the second parameter, replacer, I would like you to be familiar with the third parameter i.e. space. It can be a String or Number object that's used to insert white space (including indentation, line break characters, etc.) into the output JSON string for readability purposes.
+
+- If this parameter is not provided (or is null), no white space is used.
+- If this is a Number, it indicates the number of space characters to use as white space for indenting purposes; this number is capped at 10 (if it is greater, the value is just 10).
+- Values less than 1 indicate that no space should be used.
+- If this is a String, the string (or the first 10 characters of the string, if it's longer than that) is used as white space.
+- If it is a number, successive levels in the stringification will each be indented by this many space characters (up to 10).
+- If it is a string, successive levels will be indented by this string (or the first ten characters of it).
+
+&nbsp;&nbsp;&nbsp;&nbsp;Copy the following code and paste it into the Scripts - Background.
+
+```js
+var jsonObj = {
+  Course: "IntegrateNow",
+  Skills: ["Integration", "JSON", "ServiceNow"],
+  name: {
+    first_name: "Vishal",
+    last_name: "Ingle",
+  },
+}
+
+gs.info(JSON.stringify(jsonObj, null, 4))
+gs.info(JSON.stringify(jsonObj, null, "\t"))
+```
+
+![json 1](/images/json3.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Now click the Run Script button to execute the script. You should see the following output :
+![json 2](/images/json4.png)
+
+## &nbsp;&nbsp;&nbsp;&nbsp;Both the outputs are now displayed in more readable format.
 
 #### JSON.parse(text[, reviver])
 
@@ -280,43 +312,6 @@ JSON.parse("{'foo': 1}")
 
 #### JSON.stringify(value[, replacer[, space]])
 
-- Return a JSON string corresponding to the specified value, optionally including only certain properties or replacing property values in a user-defined manner.
-- By default, all instances of undefined are replaced with null, and other unsupported native data types are censored.
-- The replacer option allows for specifying other behavior.
-  \
-- The JSON.stringify() method converts a JavaScript object or value to a JSON string, optionally replacing values if a replacer function is specified or optionally including only the specified properties if a replacer array is specified.
-  \
-
-##### Syntax
-
-```js
-JSON.stringify(value)
-JSON.stringify(value, replacer)
-JSON.stringify(value, replacer, space)
-```
-
-##### Parameters
-
-###### value
-
-The value to convert to a JSON string.
-
-```js
-console.log(JSON.stringify({ x: 5, y: 6 }))
-// expected output: "{"x":5,"y":6}"
-
-console.log(
-  JSON.stringify([new Number(3), new String("false"), new Boolean(false)])
-)
-// expected output: "[3,"false",false]"
-
-console.log(JSON.stringify({ x: [10, undefined, function () {}, Symbol("")] }))
-// expected output: "{"x":[10,null,null,null]}"
-
-console.log(JSON.stringify(new Date(2006, 0, 2, 15, 4, 5)))
-// expected output: ""2006-01-02T15:04:05.000Z""
-```
-
 ###### replacer Optional
 
 - A function that alters the behavior of the stringification process, or an array of String and Number that serve as an allowlist for selecting/filtering the properties of the value object to be included in the JSON string.
@@ -364,34 +359,6 @@ If replacer is an array, the array's values indicate the names of the properties
 JSON.stringify(foo, ["week", "month"])
 // '{"week":45,"month":7}', only keep "week" and "month" properties
 ```
-
-###### space Optional (The space argument)
-
-- A String or Number object that's used to insert white space (including indentation, line break characters, etc.) into the output JSON string for readability purposes.
-- If this parameter is not provided (or is null), no white space is used.
-  \
-- If this is a Number, it indicates the number of space characters to use as white space for indenting purposes; this number is capped at 10 (if it is greater, the value is just 10).
-- Values less than 1 indicate that no space should be used.
-  \
-- If this is a String, the string (or the first 10 characters of the string, if it's longer than that) is used as white space.
-  \
-  The space argument may be used to control spacing in the final string.
-
-- If it is a number, successive levels in the stringification will each be indented by this many space characters (up to 10).
-- If it is a string, successive levels will be indented by this string (or the first ten characters of it).
-
-```js
-JSON.stringify({ uno: 1, dos: 2 }, null, "\t")
-// returns the string:
-// '{
-//     "uno": 1,
-//     "dos": 2
-// }'
-```
-
-##### Return value
-
-A JSON string representing the given value, or undefined.
 
 ##### Description
 
