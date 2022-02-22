@@ -10,13 +10,56 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;The simplest introduction to JSON I've ever read was in the short presentation on instagram by [codechips](https://www.instagram.com/codechips/?hl=en). I think there is no better way of explaining it than this. I've tweaked the scenerio a bit to make it little familiar, but make sure to look for the original presentation [here](https://www.instagram.com/p/CWTAVdbtKv0/?utm_source=ig_web_copy_link).
 
-&nbsp;&nbsp;&nbsp;&nbsp;Let's say, you are working on the integration between ServiceNow & Google sheet. You want to fetch the information about all the incidents from ServiceNow and store it in google sheet for some reason. But in what format the data should be transferred? The plain text format, as you can notice below, is easy to read but not easy to interpret on client side.
+&nbsp;&nbsp;&nbsp;&nbsp;Let's say, you are working on the integration between ServiceNow & Google sheet. You want to fetch the information about all the incidents from ServiceNow and store it in google sheet for some reason. But in what format the data should be transferred? The plain text format, as you can notice below, is easy to read but not easy to interpret on client side. Also it is difficult to fetch the individual data from it :
 
 ```text
 The first incident with number INC0000039 raised by "Bud Richman" have the short description "Trouble getting to Oregon mail server" and the second incident with number INC0000003 raised by "Joe Employee" have the short description "Wireless access is down in my area".
 ```
 
-![](/images/*.png)
+&nbsp;&nbsp;&nbsp;&nbsp;Then, the XML was introduced and used very widely, but the format was bulky and much overhead to web service :
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<response>
+	<result>
+		<number>INC0000039</number>
+		<short_description>Trouble getting to Oregon mail server</short_description>
+		<caller_id>
+			<display_value>Bud Richman</display_value>
+		</caller_id>
+	</result>
+	<result>
+		<number>INC0000003</number>
+		<short_description>Wireless access is down in my area</short_description>
+		<caller_id>
+			<display_value>Joe Employee</display_value>
+		</caller_id>
+	</result>
+</response>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;Then, Javascript Object Notation or JSON came into picture. It is faster and easy to read, undersatand & work with:
+
+```json
+{
+  "result": [
+    {
+      "number": "INC0000039",
+      "short_description": "Trouble getting to Oregon mail server",
+      "caller_id": {
+        "display_value": "Bud Richman"
+      }
+    },
+    {
+      "number": "INC0000003",
+      "short_description": "Wireless access is down in my area",
+      "caller_id": {
+        "display_value": "Joe Employee"
+      }
+    }
+  ]
+}
+```
 
 ##
 
@@ -28,6 +71,8 @@ The first incident with number INC0000039 raised by "Bud Richman" have the short
 -
 -
 -
+
+![](/images/*.png)
 
 ## What's next?
 
