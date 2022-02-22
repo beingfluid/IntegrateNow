@@ -137,7 +137,7 @@ gs.info(typeof jsonObj)
 
 #### JSON.stringify(value[, replacer[, space]])
 
-&nbsp;&nbsp;&nbsp;&nbsp;The JSON.stringify() method converts a JavaScript object or value to a JSON string, optionally replacing values if a replacer function is specified or optionally including only the specified properties if a replacer array is specified. Following are three variations of the method and we will go through each one by one :
+&nbsp;&nbsp;&nbsp;&nbsp;The JSON.stringify() method converts a JavaScript object or value to a JSON string, optionally replacing values if a replacer function is specified or optionally including only the specified properties if a replacer array is specified. Following are three variations of the method and we will go through each of them one by one :
 
 ```js
 JSON.stringify(value)
