@@ -108,7 +108,7 @@ The first incident with number INC0000039 raised by "Bud Richman" have the short
 
 &nbsp;&nbsp;&nbsp;&nbsp;To open Scripts - Background, use the Application Navigator to open System Definition > Scripts - Background. It is going to be our playground and a friend in our journey.
 
-![Scripts Background](/images/Screenshot 2022-02-22 220024.png)
+![Scripts Background](/images/sba.png)
 
 ---
 
