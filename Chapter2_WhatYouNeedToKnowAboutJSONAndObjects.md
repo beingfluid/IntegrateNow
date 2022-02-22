@@ -12,7 +12,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;Let's say, you are working on the integration between ServiceNow & Google sheet. You want to fetch the information about all the incidents from ServiceNow and store it in google sheet for some reason. But in what format the data should be transferred? The plain text format, as you can notice below, is easy to read but not easy to interpret on client side.
 
-```js
+```text
 The first incident with number INC0000039 raised by "Bud Richman" have the short description "Trouble getting to Oregon mail server" and the second incident with number INC0000003 raised by "Joe Employee" have the short description "Wireless access is down in my area".
 ```
 
