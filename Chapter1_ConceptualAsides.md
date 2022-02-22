@@ -130,6 +130,15 @@ https://dev124645.service-now.com/api/now/table/incident?sysparm_query=active%3D
 
 ```
 
+## Path Parameters
+
+&nbsp;&nbsp;&nbsp;&nbsp;Path parameters are enclosed in curly braces in the endpoint URL. The values set in the path parameter field are substituted into the endpoint URL when a request is sent. This makes the endpoint dynamic and more useful.
+
+```js
+https://dev124645.service-now.com/api/now/table/{tableName}
+
+```
+
 ## Outbound vs. Inbound REST Integrations
 
 &nbsp;&nbsp;&nbsp;&nbsp;When ServiceNow consumes a web services from third party providers and other ServiceNow instances, It is considered as a Outbound REST Integration. Whereas, In an inbound request, a third-party application requests an action through a ServiceNow API.
