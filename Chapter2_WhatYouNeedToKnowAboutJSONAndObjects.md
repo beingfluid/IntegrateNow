@@ -172,7 +172,7 @@ gs.info(typeof jsonStr)
 
 &nbsp;&nbsp;&nbsp;&nbsp;The first and second line of output displays the stringified version of JSON object and the third line indicates that it is of type string.
 
-##### JSON.stringify(value, replacer, space)
+##### JSON.stringify(value, replacer) & JSON.stringify(value, replacer, space)
 
 &nbsp;&nbsp;&nbsp;&nbsp;Before we talk about the second parameter, replacer, I would like you to be familiar with the third parameter i.e. space. It can be a String or Number object that's used to insert white space (including indentation, line break characters, etc.) into the output JSON string for readability purposes.
 
@@ -182,6 +182,75 @@ gs.info(typeof jsonStr)
 - If this is a String, the string (or the first 10 characters of the string, if it's longer than that) is used as white space.
 - If it is a number, successive levels in the stringification will each be indented by this many space characters (up to 10).
 - If it is a string, successive levels will be indented by this string (or the first ten characters of it).
+
+&nbsp;&nbsp;&nbsp;&nbsp;Copy the following code and paste it into the Scripts - Background.
+
+```js
+var jsonObj = {
+  Course: "IntegrateNow",
+  Skills: ["Integration", "JSON", "ServiceNow"],
+  name: {
+    first_name: "Vishal",
+    last_name: "Ingle",
+  },
+}
+
+gs.info(JSON.stringify(jsonObj, null, 4))
+gs.info(JSON.stringify(jsonObj, null, "\t"))
+```
+
+![json 1](/images/json3.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Now click the Run Script button to execute the script. You should see the following output :
+![json 2](/images/json4.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Both the outputs are now displayed in more readable format.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Finally, Let us talk about the second parameter, replacer. In can be a function that alters the behavior of the stringification process, or an array of String and Number that serve as an allowlist for selecting/filtering the properties of the value object to be included in the JSON string. If this value is null or not provided, all properties of the object are included in the resulting JSON string.
+
+&nbsp;&nbsp;&nbsp;&nbsp;The replacer parameter can be either a function or an array.
+
+###### replacer, as a function :
+
+- As a function, it takes two parameters: the key and the value being stringified.
+- The object in which the key was found is provided as the replacer's this parameter.
+  \
+- Initially, the replacer function is called with an empty string as key representing the object being stringified.
+- It is then called for each property on the object or array being stringified.
+  \
+  It should return the value that should be added to the JSON string, as follows:
+
+- If you return a Number, String, Boolean, or null, the stringified version of that value is used as the property's value.
+- If you return a Function, Symbol, or undefined, the property is not included in the output.
+- If you return any other object, the object is recursively stringified, calling the replacer function on each property.
+
+```js
+function replacer(key, value) {
+  // Filtering out properties
+  if (typeof value === "string") {
+    return undefined
+  }
+  return value
+}
+
+var foo = {
+  foundation: "Mozilla",
+  model: "box",
+  week: 45,
+  transport: "car",
+  month: 7,
+}
+JSON.stringify(foo, replacer)
+// '{"week":45,"month":7}'
+```
+
+Example replacer, as an array \
+If replacer is an array, the array's values indicate the names of the properties in the object that should be included in the resulting JSON string.
+
+```js
+JSON.stringify(foo, ["week", "month"])
+// '{"week":45,"month":7}', only keep "week" and "month" properties
+```
 
 &nbsp;&nbsp;&nbsp;&nbsp;Copy the following code and paste it into the Scripts - Background.
 
