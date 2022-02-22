@@ -2,11 +2,11 @@
 
 # What You Need To Know About JSON And Objects
 
-&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Many times, I have received a feedback from my peers that, I can do this crazy thing cause I know how to work with JSON and Objects. And it is surprising. JSON and Objects are one of the most important and very useful concepts in JavaScript. Though, you do not need to know everything it.
 
-&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Here, we will learn about some of the most commonly used concepts related to JSON and Objects, That are extermely useful not just when you are working with integrations but elsewhere as well.
 
-##
+## What is JSON
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 
