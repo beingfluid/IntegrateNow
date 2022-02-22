@@ -8,6 +8,8 @@
 
 ## What is JSON
 
+&nbsp;&nbsp;&nbsp;&nbsp;The simplest introduction to JSON I've ever read was in the short presentation on instagram by [codechips](https://www.instagram.com/codechips/?hl=en). I think there is no better way of explaining it than this. I've tweaked the scenerio a bit to make it little familiar, but make sure to look for the original presentation [here](https://www.instagram.com/p/CWTAVdbtKv0/?utm_source=ig_web_copy_link)
+
 &nbsp;&nbsp;&nbsp;&nbsp;
 
 ![](/images/*.png)
