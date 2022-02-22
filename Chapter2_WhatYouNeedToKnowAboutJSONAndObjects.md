@@ -92,12 +92,6 @@ The first incident with number INC0000039 raised by "Bud Richman" have the short
 }
 ```
 
-#### JSON serialization & deserialization
-
-&nbsp;&nbsp;&nbsp;&nbsp;JSON is a syntax for serializing objects, arrays, numbers, strings, booleans, and null. Serialization means to convert an object into that string, and deserialization is its inverse operation.
-
-&nbsp;&nbsp;&nbsp;&nbsp;The JSON object contains methods for parsing JavaScript Object Notation (JSON) and converting values to JSON. We are going to use these methods to see how it works.
-
 #### ServiceNow Scripts - Background
 
 &nbsp;&nbsp;&nbsp;&nbsp;I would like to quote Ben Sweetser as is when it comes to Scripts - Background :
@@ -135,7 +129,44 @@ gs.info(typeof jsonObj)
 &nbsp;&nbsp;&nbsp;&nbsp;Now click the Run Script button to execute the script. You should see the following output :
 ![typeof 2](/images/typeof2.png)
 
-&nbsp;&nbsp;&nbsp;&nbsp;The second line of the output indicates that jsonObj variable stores an object. Though, The first line of the output does not display the content of jsonObj variable.
+&nbsp;&nbsp;&nbsp;&nbsp;The second line of the output indicates that jsonObj variable stores an object. Though, notice that the first line of the output does not display the content of jsonObj variable.
+
+#### JSON serialization & deserialization
+
+&nbsp;&nbsp;&nbsp;&nbsp;JSON is a syntax for serializing objects, arrays, numbers, strings, booleans, and null. Serialization means to convert an object into that string, and deserialization is its inverse operation.
+
+#### JSON.stringify(value[, replacer[, space]])
+
+&nbsp;&nbsp;&nbsp;&nbsp;The JSON.stringify() method converts a JavaScript object or value to a JSON string, optionally replacing values if a replacer function is specified or optionally including only the specified properties if a replacer array is specified. Following are three variations of the method and we will go through each one by one :
+
+```js
+JSON.stringify(value)
+JSON.stringify(value, replacer)
+JSON.stringify(value, replacer, space)
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;Copy the following code and paste it into the Scripts - Background.
+
+```js
+var jsonObj = {
+  Course: "IntegrateNow",
+  Skills: ["Integration", "JSON", "ServiceNow"],
+  name: {
+    first_name: "Vishal",
+    last_name: "Ingle",
+  },
+}
+
+gs.info(JSON.stringify(jsonObj))
+var jsonStr = JSON.stringify(jsonObj)
+gs.info(jsonStr)
+gs.info(typeof jsonStr)
+```
+
+![json 1](/images/json1.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Now click the Run Script button to execute the script. You should see the following output :
+![json 2](/images/json2.png)
 
 ---
 
