@@ -112,7 +112,9 @@ The first incident with number INC0000039 raised by "Bud Richman" have the short
 
 #### typeof & gs.info()
 
-&nbsp;&nbsp;&nbsp;&nbsp;The typeof operator returns a string indicating the type of the value provided, Whereas, gs.info method writes an info message to the system log. Copy the following code and paste it into the Scripts - Background.
+&nbsp;&nbsp;&nbsp;&nbsp;The typeof operator returns a string indicating the type of the value provided, Whereas, gs.info method writes an info message to the system log. Combination of both of them are extremely useful when it comes to debugging but let us use them here for another purpose. You can read more about them typeof [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof) and info as well as other useful GlideSystem methods [here](https://developer.servicenow.com/dev.do#!/reference/api/sandiego/server/no-namespace/c_GlideSystemScopedAPI#r_ScopedGlideSystemInf_String_Object_Object_Object_Object_Object).
+
+&nbsp;&nbsp;&nbsp;&nbsp;Copy the following code and paste it into the Scripts - Background.
 
 ```js
 var jsonObj = {
