@@ -369,9 +369,46 @@ function reviver(key, value) {
 
 &nbsp;&nbsp;&nbsp;&nbsp;We have modified every string value using our reviver function and removed "test\_" from it, Output shows the stringified version of this modified object.
 
-&nbsp;&nbsp;&nbsp;&nbsp;We have seen examples of JSON.parse() and how it works. But we are not done yet, There are still few more things we need to know.
+&nbsp;&nbsp;&nbsp;&nbsp;We have seen examples of JSON.parse() and how it works. If you are interested in learning more about JSON and its methods, Mozilla developer documentation is a best place to start with, It has everything you need right [here](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON).
 
-If you are interested in learning more about JSON and its methods, Mozilla developer documentation is a best place to start with, It has everything you need right [here](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON).
+&nbsp;&nbsp;&nbsp;&nbsp;Hey, we are not done yet, There are still few more things we need to know.
+
+#### Working with JSON properties
+
+&nbsp;&nbsp;&nbsp;&nbsp;We have kind of already touched these concepts, but let us be more specific to them because they are far more important and needful to us.
+
+&nbsp;&nbsp;&nbsp;&nbsp;we could then access the data inside an object using the dot or bracket notation. An object property can itself be an object, to access these items you just need to chain the extra step onto the end with another dot or bracket. We can also set (update) the value of object members by declaring the member the same way. Let us look at the example to understand what I mean.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Copy the following code and paste it into the Scripts - Background.
+
+```js
+var jsonObj = {
+  Course: "IntegrateNow",
+  Skills: ["Integration", "JSON", "ServiceNow"],
+  name: {
+    first_name: "Vishal",
+    last_name: "Ingle",
+  },
+}
+
+gs.info(JSON.stringify(jsonObj, null, 4))
+gs.info(jsonObj.Course)
+gs.info(jsonObj.name.first_name)
+gs.info(jsonObj["Course"])
+gs.info(jsonObj["name"]["first_name"])
+
+jsonObj.chapter = "Chapter 2"
+jsonObj["title"] = "What you need to know abour JSON and Objects"
+
+gs.info(JSON.stringify(jsonObj, null, 4))
+```
+
+![json 1](/images/json13.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Now click the Run Script button to execute the script. You should see the following output :
+![json 2](/images/json14.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;First we did display the stringified version of initial JSON Object. Next we did log the properties course and first_name from object using dot notation and brackets notation both. Though we have received the same response, it is best to use dot notation for performance reasons. but brackets notation has it's own use cases e.g. if you want to access the array type property's elements. After that we did add two more properties to our object using both dot and brackets notation and then logged the stringified version of object. We can see that our object now contains two new properties chapter & title.
 
 ---
 
