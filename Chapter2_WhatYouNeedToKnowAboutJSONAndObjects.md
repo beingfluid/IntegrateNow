@@ -410,6 +410,36 @@ gs.info(JSON.stringify(jsonObj, null, 4))
 
 &nbsp;&nbsp;&nbsp;&nbsp;First we did display the stringified version of initial JSON Object. Next we did log the properties course and first_name from object using dot notation and brackets notation both. Though we have received the same response, it is best to use dot notation for performance reasons. but brackets notation has it's own use cases e.g. if you want to access the array type property's elements. After that we did add two more properties to our object using both dot and brackets notation and then logged the stringified version of object. We can see that our object now contains two new properties chapter & title.
 
+###### Object.keys() & hasOwnProperty()
+
+&nbsp;&nbsp;&nbsp;&nbsp;The Object.keys() method returns an array of a given object's own enumerable property names. And the hasOwnProperty() method returns a boolean indicating whether the object has the specified property as its own property.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Copy the following code and paste it into the Scripts - Background.
+
+```js
+var jsonObj = {
+  Course: "IntegrateNow",
+  Skills: ["Integration", "JSON", "ServiceNow"],
+  name: {
+    first_name: "Vishal",
+    last_name: "Ingle",
+  },
+}
+
+gs.info(Object.keys(jsonObj))
+gs.info(jsonObj.hasOwnProperty("Skills"))
+gs.info(jsonObj.hasOwnProperty("more_skills"))
+```
+
+![json 1](/images/json15.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Now click the Run Script button to execute the script. You should see the following output :
+![json 2](/images/json16.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;The first line of output lists all the property names of our objects. Line two of our output indicates that we have the property named Skills in our object. Line three does indicate the same by returning false.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Finally, We did reach to the end of this chapter. This is the minimum you need to know about JSON and Objects to follow along with me. If you want to dig deep, Mozilla is again the best platform right [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) to learn about objects.
+
 ---
 
 ## What's next?
