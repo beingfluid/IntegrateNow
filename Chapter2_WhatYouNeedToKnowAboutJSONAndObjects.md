@@ -382,6 +382,8 @@ function reviver(key, value) {
 
 &nbsp;&nbsp;&nbsp;&nbsp;We have seen examples of JSON.parse() and how it works. But we are not done yet, There are still few more things we need to know.
 
+If you are interested in learning more about JSON and its methods, Mozilla developer documentation is a best place to start with, It has everything you need right [here](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON).
+
 ---
 
 ## What's next?
