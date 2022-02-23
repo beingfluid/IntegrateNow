@@ -282,7 +282,7 @@ function replacer(key, value) {
 
 &nbsp;&nbsp;&nbsp;&nbsp;We have seen examples of JSON.stringify() and how it works. It converts a value to JSON notation representing it:
 
-- Boolean, Number, and String objects are converted to the corresponding primitive values during stringification,.
+- Boolean, Number, and String objects are converted to the corresponding primitive values during stringification.
 - undefined, Functions, and Symbols are not valid JSON values. If any such values are encountered during conversion they are either omitted (when found in an object) or changed to null (when found in an array). JSON.stringify() can return undefined when passing in "pure" values like JSON.
 - The numbers Infinity and NaN, as well as the value null, are all considered null.
 - If the value has a toJSON() method, it's responsible to define what data will be serialized.
