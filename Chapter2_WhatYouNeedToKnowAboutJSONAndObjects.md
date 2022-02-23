@@ -1,4 +1,4 @@
-## Chapter 2 (Draft)
+## Chapter 2
 
 # What You Need To Know About JSON And Objects
 
