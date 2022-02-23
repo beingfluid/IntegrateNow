@@ -244,7 +244,7 @@ gs.info(JSON.stringify(jsonObj, ["Course", "Skills"]))
 - Initially, the replacer function is called with an empty string as key representing the object being stringified.
 - It is then called for each property on the object or array being stringified.
 
-  &nbsp;&nbsp;&nbsp;&nbsp;It should return the value that should be added to the JSON string, as follows:
+It should return the value that should be added to the JSON string, as follows:
 
 - If you return a Number, String, Boolean, or null, the stringified version of that value is used as the property's value.
 - If you return a Function, Symbol, or undefined, the property is not included in the output.
@@ -294,17 +294,6 @@ function replacer(key, value) {
 ```js
 JSON.parse(text)
 JSON.parse(text, reviver)
-```
-
-```js
-const json = '{"result":true, "count":42}'
-const obj = JSON.parse(json)
-
-console.log(obj.count)
-// expected output: 42
-
-console.log(obj.result)
-// expected output: true
 ```
 
 &nbsp;&nbsp;&nbsp;&nbsp;Copy the following code and paste it into the Scripts - Background.
