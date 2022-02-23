@@ -210,48 +210,9 @@ gs.info(JSON.stringify(jsonObj, null, "\t"))
 
 &nbsp;&nbsp;&nbsp;&nbsp;The replacer parameter can be either a function or an array.
 
-###### replacer, as a function :
-
-- As a function, it takes two parameters: the key and the value being stringified.
-- The object in which the key was found is provided as the replacer's this parameter.
-  \
-- Initially, the replacer function is called with an empty string as key representing the object being stringified.
-- It is then called for each property on the object or array being stringified.
-  \
-  It should return the value that should be added to the JSON string, as follows:
-
-- If you return a Number, String, Boolean, or null, the stringified version of that value is used as the property's value.
-- If you return a Function, Symbol, or undefined, the property is not included in the output.
-- If you return any other object, the object is recursively stringified, calling the replacer function on each property.
-
-```js
-function replacer(key, value) {
-  // Filtering out properties
-  if (typeof value === "string") {
-    return undefined
-  }
-  return value
-}
-
-var foo = {
-  foundation: "Mozilla",
-  model: "box",
-  week: 45,
-  transport: "car",
-  month: 7,
-}
-JSON.stringify(foo, replacer)
-// '{"week":45,"month":7}'
-```
-
-###### Example replacer, as an array
+###### replacer, as an array
 
 If replacer is an array, the array's values indicate the names of the properties in the object that should be included in the resulting JSON string.
-
-```js
-JSON.stringify(foo, ["week", "month"])
-// '{"week":45,"month":7}', only keep "week" and "month" properties
-```
 
 &nbsp;&nbsp;&nbsp;&nbsp;Copy the following code and paste it into the Scripts - Background.
 
@@ -265,39 +226,75 @@ var jsonObj = {
   },
 }
 
-gs.info(JSON.stringify(jsonObj, null, 4))
-gs.info(JSON.stringify(jsonObj, null, "\t"))
+gs.info(JSON.stringify(jsonObj, ["Course", "Skills"], 4))
+gs.info(JSON.stringify(jsonObj, ["Course", "Skills"]))
 ```
 
-![json 1](/images/json3.png)
+![json 1](/images/json5.png)
 
 &nbsp;&nbsp;&nbsp;&nbsp;Now click the Run Script button to execute the script. You should see the following output :
-![json 2](/images/json4.png)
+![json 2](/images/json6.png)
 
-&nbsp;&nbsp;&nbsp;&nbsp;Both the outputs are now displayed in more readable format.
+&nbsp;&nbsp;&nbsp;&nbsp;As you might have noticed already, only course and skills are the properties that are added to the new JSON string.
+
+###### replacer, as a function :
+
+- As a function, it takes two parameters: the key and the value being stringified.
+- The object in which the key was found is provided as the replacer's this parameter.
+- Initially, the replacer function is called with an empty string as key representing the object being stringified.
+- It is then called for each property on the object or array being stringified.
+
+  &nbsp;&nbsp;&nbsp;&nbsp;It should return the value that should be added to the JSON string, as follows:
+
+- If you return a Number, String, Boolean, or null, the stringified version of that value is used as the property's value.
+- If you return a Function, Symbol, or undefined, the property is not included in the output.
+- If you return any other object, the object is recursively stringified, calling the replacer function on each property.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Copy the following code and paste it into the Scripts - Background.
+
+```js
+var jsonObj = {
+  Course: "IntegrateNow",
+  Skills: ["Integration", "JSON", "ServiceNow"],
+  name: {
+    first_name: "Vishal",
+    last_name: "Ingle",
+  },
+}
+
+gs.info(JSON.stringify(jsonObj, replacer))
+gs.info(JSON.stringify(jsonObj, replacer, 4))
+
+function replacer(key, value) {
+  if (typeof value == "string") {
+    return "test_" + value
+  }
+  return value
+}
+```
+
+![json 1](/images/json7.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Now click the Run Script button to execute the script. You should see the following output :
+![json 2](/images/json8.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;We have modified every string value using our replacer function and appended by "test\_".
+
+&nbsp;&nbsp;&nbsp;&nbsp;We have seen examples of JSON.stringify() and how it works. It converts a value to JSON notation representing it:
+
+- Boolean, Number, and String objects are converted to the corresponding primitive values during stringification,.
+- undefined, Functions, and Symbols are not valid JSON values. If any such values are encountered during conversion they are either omitted (when found in an object) or changed to null (when found in an array). JSON.stringify() can return undefined when passing in "pure" values like JSON.
+- The numbers Infinity and NaN, as well as the value null, are all considered null.
+- If the value has a toJSON() method, it's responsible to define what data will be serialized.
 
 #### JSON.parse(text[, reviver])
 
-- Parse the string text as JSON, optionally transform the produced value and its properties, and return the value.
-- Any violations of the JSON syntax, including those pertaining to the differences between JavaScript and JSON, cause a SyntaxError to be thrown.
-- The reviver option allows for interpreting what the replacer has used to stand in for other datatypes.
-  \
-- The JSON.parse() method parses a JSON string, constructing the JavaScript value or object described by the string.
-- An optional reviver function can be provided to perform a transformation on the resulting object before it is returned.
-  \
-
-##### Syntax
+&nbsp;&nbsp;&nbsp;&nbsp;The JSON.parse() method parses a JSON string, constructing the JavaScript value or object described by the string. It parses the string text as JSON, optionally transform the produced value and its properties, and return the value. Following are three variations of the method and we will go through each of them one by one :
 
 ```js
 JSON.parse(text)
 JSON.parse(text, reviver)
 ```
-
-##### Parameters
-
-###### text
-
-The string to parse as JSON. See the JSON object for a description of JSON syntax.
 
 ```js
 const json = '{"result":true, "count":42}'
@@ -310,280 +307,82 @@ console.log(obj.result)
 // expected output: true
 ```
 
-###### reviver Optional (Using the reviver parameter)
+&nbsp;&nbsp;&nbsp;&nbsp;Copy the following code and paste it into the Scripts - Background.
 
-- If a function, this prescribes how the value originally produced by parsing is transformed, before being returned.
-- If a reviver is specified, the value computed by parsing is transformed before being returned.
-- Specifically, the computed value and all its properties (beginning with the most nested properties and proceeding to the original value itself) are individually run through the reviver.
+```js
+var jsonObj = {
+  Course: "test_IntegrateNow",
+  Skills: ["test_Integration", "test_JSON", "test_ServiceNow"],
+  name: {
+    first_name: "test_Vishal",
+    last_name: "test_Ingle",
+  },
+}
+
+var jsonStr = JSON.stringify(jsonObj)
+gs.info(jsonStr)
+gs.info(typeof jsonStr)
+
+gs.info(JSON.parse(jsonStr))
+var jsonObjFromString = JSON.parse(jsonStr)
+gs.info(jsonObjFromString)
+gs.info(typeof jsonObjFromString)
+```
+
+![json 1](/images/json9.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Now click the Run Script button to execute the script. You should see the following output :
+![json 2](/images/json10.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;After executing the code we are certain that jsonStr is a string and line two of output conveys that. JSON.parse() method converts this json string into an JSON object, last line of the output shows that jsonObjFromString is now an object.
+
+##### Using the reviver parameter
+
+&nbsp;&nbsp;&nbsp;&nbsp;An optional reviver function can be provided to perform a transformation on the resulting object before it is returned or in other words, If a reviver is specified, the value computed by parsing is transformed before being returned. It allows for interpreting what the replacer has used to stand in for other datatypes.
+
+- The computed value and all its properties (beginning with the most nested properties and proceeding to the original value itself) are individually run through the reviver.
 - Then it is called, with the object containing the property being processed as this, and with the property name as a string, and the property value as arguments.
 - If the reviver function returns undefined (or returns no value, for example, if execution falls off the end of the function), the property is deleted from the object.
 - Otherwise, the property is redefined to be the return value.
-  \
 - If the reviver only transforms some values and not others, be certain to return all untransformed values as-is, otherwise, they will be deleted from the resulting object.
-  \
+
+&nbsp;&nbsp;&nbsp;&nbsp;Copy the following code and paste it into the Scripts - Background.
 
 ```js
-JSON.parse(
-  '{"p": 5}',
-  (key, value) =>
-    typeof value === "number"
-      ? value * 2 // return value * 2 for numbers
-      : value // return everything else unchanged
-)
+var jsonObj = {
+  Course: "test_IntegrateNow",
+  Skills: ["test_Integration", "test_JSON", "test_ServiceNow"],
+  name: {
+    first_name: "test_Vishal",
+    last_name: "test_Ingle",
+  },
+}
 
-// { p: 10 }
+var jsonStr = JSON.stringify(jsonObj)
 
-JSON.parse('{"1": 1, "2": 2, "3": {"4": 4, "5": {"6": 6}}}', (key, value) => {
-  console.log(key) // log the current property name, the last is "".
-  return value // return the unchanged property value.
-})
+var jsonObjFromString = JSON.parse(jsonStr, reviver)
 
-// 1
-// 2
-// 4
-// 6
-// 5
-// 3
-// ""
-```
+gs.info(JSON.stringify(jsonObjFromString, null, 4))
 
-###### Return value
-
-The Object, Array, string, number, boolean, or null value corresponding to the given JSON text.
-
-```js
-JSON.parse("{}") // {}
-JSON.parse("true") // true
-JSON.parse('"foo"') // "foo"
-JSON.parse('[1, 5, "false"]') // [1, 5, "false"]
-JSON.parse("null") // null
-```
-
-###### Exceptions
-
-- Throws a SyntaxError exception if the string to parse is not valid JSON.
-  \
-- JSON.parse() does not allow trailing commas
-
-```js
-// both will throw a SyntaxError
-JSON.parse("[1, 2, 3, 4, ]")
-JSON.parse('{"foo" : 1, }')
-```
-
-\
-
-- JSON.parse() does not allow single quotes
-
-```js
-// will throw a SyntaxError
-JSON.parse("{'foo': 1}")
-```
-
-#### JSON.stringify(value[, replacer[, space]])
-
-###### replacer Optional
-
-- A function that alters the behavior of the stringification process, or an array of String and Number that serve as an allowlist for selecting/filtering the properties of the value object to be included in the JSON string.
-- If this value is null or not provided, all properties of the object are included in the resulting JSON string.
-- The replacer parameter can be either a function or an array.
-
-Example replacer, as a function \
-
-- As a function, it takes two parameters: the key and the value being stringified.
-- The object in which the key was found is provided as the replacer's this parameter.
-  \
-- Initially, the replacer function is called with an empty string as key representing the object being stringified.
-- It is then called for each property on the object or array being stringified.
-  \
-  It should return the value that should be added to the JSON string, as follows:
-
-- If you return a Number, String, Boolean, or null, the stringified version of that value is used as the property's value.
-- If you return a Function, Symbol, or undefined, the property is not included in the output.
-- If you return any other object, the object is recursively stringified, calling the replacer function on each property.
-
-```js
-function replacer(key, value) {
-  // Filtering out properties
+function reviver(key, value) {
   if (typeof value === "string") {
-    return undefined
+    return value.toString().slice(5)
+  } else {
+    return value
   }
-  return value
 }
-
-var foo = {
-  foundation: "Mozilla",
-  model: "box",
-  week: 45,
-  transport: "car",
-  month: 7,
-}
-JSON.stringify(foo, replacer)
-// '{"week":45,"month":7}'
 ```
 
-Example replacer, as an array \
-If replacer is an array, the array's values indicate the names of the properties in the object that should be included in the resulting JSON string.
+![json 1](/images/json11.png)
 
-```js
-JSON.stringify(foo, ["week", "month"])
-// '{"week":45,"month":7}', only keep "week" and "month" properties
-```
+&nbsp;&nbsp;&nbsp;&nbsp;Now click the Run Script button to execute the script. You should see the following output :
+![json 2](/images/json12.png)
 
-##### Description
+&nbsp;&nbsp;&nbsp;&nbsp;We have modified every string value using our reviver function and removed "test\_" from it, Output shows the stringified version of this modified object.
 
-JSON.stringify() converts a value to JSON notation representing it:
+&nbsp;&nbsp;&nbsp;&nbsp;We have seen examples of JSON.parse() and how it works. But we are not done yet, There are still few more things we need to know.
 
-- If the value has a toJSON() method, it's responsible to define what data will be serialized.
-- Boolean, Number, and String objects are converted to the corresponding primitive values during stringification, in accord with the traditional conversion semantics.
-- undefined, Functions, and Symbols are not valid JSON values. If any such values are encountered during conversion they are either omitted (when found in an object) or changed to null (when found in an array). JSON.stringify() can return undefined when passing in "pure" values like JSON.stringify(function() {}) or JSON.stringify(undefined).
-- All Symbol-keyed properties will be completely ignored, even when using the replacer function.
-- The instances of Date implement the toJSON() function by returning a string (the same as date.toISOString()). Thus, they are treated as strings.
-- The numbers Infinity and NaN, as well as the value null, are all considered null.
-- All the other Object instances (including Map, Set, WeakMap, and WeakSet) will have only their enumerable properties serialized.
-
-```js
-JSON.stringify({}) // '{}'
-JSON.stringify(true) // 'true'
-JSON.stringify("foo") // '"foo"'
-JSON.stringify([1, "false", false]) // '[1,"false",false]'
-JSON.stringify([NaN, null, Infinity]) // '[null,null,null]'
-JSON.stringify({ x: 5 }) // '{"x":5}'
-
-JSON.stringify(new Date(2006, 0, 2, 15, 4, 5))
-// '"2006-01-02T15:04:05.000Z"'
-
-JSON.stringify({ x: 5, y: 6 })
-// '{"x":5,"y":6}'
-JSON.stringify([new Number(3), new String("false"), new Boolean(false)])
-// '[3,"false",false]'
-
-// String-keyed array elements are not enumerable and make no sense in JSON
-let a = ["foo", "bar"]
-a["baz"] = "quux" // a: [ 0: 'foo', 1: 'bar', baz: 'quux' ]
-JSON.stringify(a)
-// '["foo","bar"]'
-
-JSON.stringify({ x: [10, undefined, function () {}, Symbol("")] })
-// '{"x":[10,null,null,null]}'
-
-// Standard data structures
-JSON.stringify([
-  new Set([1]),
-  new Map([[1, 2]]),
-  new WeakSet([{ a: 1 }]),
-  new WeakMap([[{ a: 1 }, 2]]),
-])
-// '[{},{},{},{}]'
-
-// TypedArray
-JSON.stringify([new Int8Array([1]), new Int16Array([1]), new Int32Array([1])])
-// '[{"0":1},{"0":1},{"0":1}]'
-JSON.stringify([
-  new Uint8Array([1]),
-  new Uint8ClampedArray([1]),
-  new Uint16Array([1]),
-  new Uint32Array([1]),
-])
-// '[{"0":1},{"0":1},{"0":1},{"0":1}]'
-JSON.stringify([new Float32Array([1]), new Float64Array([1])])
-// '[{"0":1},{"0":1}]'
-
-// toJSON()
-JSON.stringify({
-  x: 5,
-  y: 6,
-  toJSON() {
-    return this.x + this.y
-  },
-})
-// '11'
-
-// Symbols:
-JSON.stringify({ x: undefined, y: Object, z: Symbol("") })
-// '{}'
-JSON.stringify({ [Symbol("foo")]: "foo" })
-// '{}'
-JSON.stringify({ [Symbol.for("foo")]: "foo" }, [Symbol.for("foo")])
-// '{}'
-JSON.stringify({ [Symbol.for("foo")]: "foo" }, function (k, v) {
-  if (typeof k === "symbol") {
-    return "a symbol"
-  }
-})
-// undefined
-
-// Non-enumerable properties:
-JSON.stringify(
-  Object.create(null, {
-    x: { value: "x", enumerable: false },
-    y: { value: "y", enumerable: true },
-  })
-)
-// '{"y":"y"}'
-
-// BigInt values throw
-JSON.stringify({ x: 2n })
-// TypeError: BigInt value can't be serialized in JSON
-```
-
-Note: Properties of non-array objects are not guaranteed to be stringified in any particular order. Do not rely on ordering of properties within the same object within the stringification.
-
-```js
-var a = JSON.stringify({ foo: "bar", baz: "quux" })
-//'{"foo":"bar","baz":"quux"}'
-var b = JSON.stringify({ baz: "quux", foo: "bar" })
-//'{"baz":"quux","foo":"bar"}'
-console.log(a !== b) // true
-
-// some memoization functions use JSON.stringify to serialize arguments,
-// which may cause a cache miss when encountering the same object like above
-```
-
-##### toJSON() behavior
-
-- If an object being stringified has a property named toJSON whose value is a function, then the toJSON() method customizes JSON stringification behavior: instead of the object being serialized, the value returned by the toJSON() method when called will be serialized.
-  \
-  JSON.stringify() calls toJSON with one parameter:
-
-- if this object is a property value, the property name
-- if it is in an array, the index in the array, as a string
-- an empty string if JSON.stringify() was directly called on this object
-
-```js
-var obj = {
-  data: "data",
-
-  toJSON(key) {
-    if (key) return `Now I am a nested object under key '${key}'`
-    else return this
-  },
-}
-
-JSON.stringify(obj)
-// '{"data":"data"}'
-
-JSON.stringify({ obj }) // Shorthand property names (ES2015).
-// '{"obj":"Now I am a nested object under key 'obj'"}'
-
-JSON.stringify([obj])
-// '["Now I am a nested object under key '0'"]'
-```
-
-&nbsp;&nbsp;&nbsp;&nbsp;
-
-##
-
-&nbsp;&nbsp;&nbsp;&nbsp;
-
-####
-
--
--
--
--
-
-![](/images/*.png)
+---
 
 ## What's next?
 
