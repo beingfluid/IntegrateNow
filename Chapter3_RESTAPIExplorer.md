@@ -90,7 +90,7 @@ Lets say, we want to retrieve all of the active incidents from the server instan
 
   ![RESTAPIExplorer6](/images/restmethod.png)
 
-The fields in the Prepare request section of the REST API Explorer form are determined by which Namespace, API Name, API Version, and REST method is selected.
+**The fields in the Prepare request section of the REST API Explorer form are determined by which Namespace, API Name, API Version, and REST method is selected.**
 
 - Navigate to **System Web Services > REST > REST API Explorer**.
 
