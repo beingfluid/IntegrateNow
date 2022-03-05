@@ -50,7 +50,41 @@
 
   ![REST API Explorer 2](/images/app_store_learnv2_rest_sandiego_inbound_images_inbound_apiexploreranatomy.png)
 
-We want to gather up all of the active instances from the Client instance, but we will only need a couple of the fields for our purpose here. We can specify those in the sysparm_fields parameter. I also like to alter the sysparm_limit parameter from the default of 1 to the alternative of 10, just to get more than one result in the output to help verify the query.
+### Understanding how to use the REST API Explorer
+
+&nbsp;&nbsp;&nbsp;&nbsp;There is no better way of learning something new than trying it, so let us try some simple use cases. Lets say, we want to retrieve all of the active incidents from the server instance, but we will only need a couple of the fields back in our response. We can test it within REST API Explorer :
+
+- Navigate to **System Web Services > REST > REST API Explorer**.
+
+![RESTAPIExplorer1](/images/RESTAPIExplorer1.png)
+
+- In the top-left of the REST API Explorer, select Namespace as **now**, API Name as **Table API** & API Version as **latest**.
+
+  - Namespace specifies the scope of the web service :
+
+    - global indicates Globally scoped APIs
+    - now indicates REST APIs that are provided by ServiceNow
+    - private_scope_name indicates APIs (scripted web services) in privately-scoped applications
+
+    ![RESTAPIExplorer1](/images/namespace.png)
+
+  - API Name specifies API to configure and test in the REST API Explorer
+
+    ![RESTAPIExplorer1](/images/apiname.png)
+
+  - API Version allows you to Select a specific API version or use latest version
+
+    ![RESTAPIExplorer1](/images/apiversion.png)
+
+Retrieve records from a table (GET)
+
+The fields in the Prepare request section of the REST API Explorer form are determined by which Namespace, API Name, API Version, and REST method is selected.
+
+- Navigate to **System Web Services > REST > REST API Explorer**.
+
+![RESTAPIExplorer1](/images/RESTAPIExplorer1.png)
+
+We can specify those in the sysparm_fields parameter. I also like to alter the sysparm_limit parameter from the default of 1 to the alternative of 10, just to get more than one result in the output to help verify the query.
 Once we have entered all of the appropriate parameters, we can hit the Send button, which will produce the URL and also display some sample results in the Response Body section. After stripping off the server portion and removing the limitation parameter, we are left with the following value to use as our end point:
 
 ###### what about other web services?
