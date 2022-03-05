@@ -52,11 +52,15 @@
 
 ### Understanding how to use the REST API Explorer
 
-&nbsp;&nbsp;&nbsp;&nbsp;There is no better way of learning something new than trying it, so let us try some simple use cases. Lets say, we want to retrieve all of the active incidents from the server instance, but we will only need a couple of the fields back in our response. We can test it within REST API Explorer :
+&nbsp;&nbsp;&nbsp;&nbsp;There is no better way of learning something new than trying it, so let us try some simple use cases :
+
+#### GET request
+
+Lets say, we want to retrieve all of the active incidents from the server instance, but we will only need a couple of the fields back in our response. We can test it within REST API Explorer :
 
 - Navigate to **System Web Services > REST > REST API Explorer**.
 
-![RESTAPIExplorer1](/images/RESTAPIExplorer1.png)
+![RESTAPIExplorer2](/images/RESTAPIExplorer1.png)
 
 - In the top-left of the REST API Explorer, select Namespace as **now**, API Name as **Table API** & API Version as **latest**.
 
@@ -66,21 +70,25 @@
     - now indicates REST APIs that are provided by ServiceNow
     - private_scope_name indicates APIs (scripted web services) in privately-scoped applications
 
-    ![RESTAPIExplorer1](/images/namespace.png)
+    ![RESTAPIExplorer3](/images/namespace.png)
 
   - API Name specifies API to configure and test in the REST API Explorer.
 
     - The Table API provides endpoints that allow you to perform create, read, update, and delete (CRUD) operations on existing tables.
 
-    ![RESTAPIExplorer1](/images/apiname.png)
+    ![RESTAPIExplorer4](/images/apiname.png)
 
   - API Version allows you to select a specific API version or use latest version.
 
     - Depending on the version, endpoint returns different results on a valid query.
 
-    ![RESTAPIExplorer1](/images/apiversion.png)
+    ![RESTAPIExplorer5](/images/apiversion.png)
 
 - Click **Retrieve records from a table (GET)**
+
+      - "Retrieve records from a table" is a HTTP GET method that retrieves multiple records from the specified table.
+
+  ![RESTAPIExplorer6](/images/restmethod.png)
 
 The fields in the Prepare request section of the REST API Explorer form are determined by which Namespace, API Name, API Version, and REST method is selected.
 
