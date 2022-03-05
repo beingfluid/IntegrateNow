@@ -218,6 +218,8 @@ Lets say, we want to retrieve all of the active incidents from the server instan
 
   ![RESTAPIExplorer6](/images/post6.png)
 
+&nbsp;&nbsp;&nbsp;&nbsp;Okay, we are not done yet with REST API explorer, But that's it for this chapter. I am going to let you guys experiment with REST API explorer for now and in next chapter we will look at the other missing pieces. ServiceNow documentation is still the best way to learn about REST API explorer. Two of the best resources can be found [here](https://developer.servicenow.com/dev.do#!/learn/courses/sandiego/app_store_learnv2_rest_sandiego_rest_integrations/app_store_learnv2_rest_sandiego_inbound_rest_integrations/app_store_learnv2_rest_sandiego_introduction_to_the_rest_api_explorer) & [here](https://docs.servicenow.com/bundle/paris-application-development/page/integrate/inbound-rest/concept/use-REST-API-Explorer.html#use-REST-API-Explorer).
+
 ###### what about other web services?
 
 &nbsp;&nbsp;&nbsp;&nbsp;Some of you might be thinking, why we are only talking about REST and not SOAP or GraphQL? Remember, I did promise you to be able to do any kind of integrations! It is a foundation and we are starting with the most widely used and easiest web service. But bear with me, we will be there and be soon.
@@ -226,4 +228,4 @@ Lets say, we want to retrieve all of the active incidents from the server instan
 
 ## What's next?
 
-&nbsp;&nbsp;&nbsp;&nbsp; In next chapter, we are going to use the information that we did gathered today and implement our first use case using old-school approach of script, point out some of the concerns and start looking for better solutions. The Journey to begin in true sense.
+&nbsp;&nbsp;&nbsp;&nbsp; In next chapter, we are going to build on top of information that we did gathered today, extract the useful information from the response, cover some of the missing pieces that we did not cover yet, and implement our first use case by old-school approach of script, point out some of the concerns, and start the quest for better solutions.
