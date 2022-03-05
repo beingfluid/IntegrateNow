@@ -140,16 +140,20 @@ Lets say, we want to retrieve all of the active incidents from the server instan
 &nbsp;&nbsp;&nbsp;&nbsp;Also, we want to return only active incidents. we can fetch the filtered records based on specified encoded query for parameter sysparm_query.
 ![q3](/images/query2.png)
 
+&nbsp;&nbsp;&nbsp;&nbsp;Click send, the new request response should have only active incidents and specified four fields information returned :
+![q3](/images/query9.png)
+
 &nbsp;&nbsp;&nbsp;&nbsp;Qury parameters are added to the endpoint URL by the REST API Explorer when the request is sent. The query parameters are specific to the selected API method. A default set of query parameters are displayed for the API. To add additional query parameters, use the Add query parameter button to add a new parameter to the query. For a complete list and detailed description of an API's query parameters, select the API documentation menu item from the REST API Explorer menu. The query parameters are added to the URI in the Request after '?'.
+
 ![q4](/images/query_app_store_learnv2_rest_sandiego_inbound_images_inbound_queryparmsuri.png)
 
 &nbsp;&nbsp;&nbsp;&nbsp;REST headers are the meta-data associated with an API request and response E.g. format of the Request and Response.
 
-![q5](/images/headers_app_store_learnv2_rest_sandiego_inbound_images_inbound_requestheadersrequest.png.crdownload)
+![q6](/images/rh2_app_store_learnv2_rest_sandiego_inbound_images_inbound_requestheaders.png)
 
 &nbsp;&nbsp;&nbsp;&nbsp;The Request Header settings appear in the request.
 
-![q6](/images/rh2_app_store_learnv2_rest_sandiego_inbound_images_inbound_requestheaders.png)
+![q5](/images/headers_app_store_learnv2_rest_sandiego_inbound_images_inbound_requestheadersrequest.png.crdownload)
 
 ###### what about other web services?
 
