@@ -99,12 +99,10 @@ Lets say, we want to retrieve all of the active incidents from the server instan
     - Request headers
 
 - In the Path Parameters section, select the **Incident (incident)** table.
-
+  ![pathparam1](/images/pathparam.png)
   - The list of path parameters depends on the endpoint URL.
   - Path parameters are enclosed in curly braces in the endpoint URL.
   - The values set in the path parameter field are substituted into the endpoint URL when a request is sent.
-
-![pathparam1](/images/pathparam.png)
 
 ![pathparam2](/images/app_store_learnv2_rest_sandiego_inbound_images_inbound_pathparms.png)
 
