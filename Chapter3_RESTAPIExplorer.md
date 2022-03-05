@@ -155,6 +155,13 @@ Lets say, we want to retrieve all of the active incidents from the server instan
 
 ![q5](/images/rh3_app_store_learnv2_rest_sandiego_inbound_images_inbound_requestheadersrequest.png)
 
+&nbsp;&nbsp;&nbsp;&nbsp;As you have noticed from the screenshot above, The request format corresponds to Accept header and similarly, the response format corresponds to the Content-Type header. If you can recall from first chapter, Accept or request format is the format in which client sends the data to the server or to be precise, the format in which server is expecting the data. Similarly, Content-Type or request format is the format in which server returns the data. Both the headers are expressed as the MIME Types e.g. application/json. You can read more about the MIME types [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types).
+
+&nbsp;&nbsp;&nbsp;&nbsp;Let us do one more test, by changing the Reesponse format to application/xml and observe the response by clicking send :
+
+![xml1](/images/xmlres.png)
+![xml2](/images/xmlres2.png)
+
 ###### what about other web services?
 
 &nbsp;&nbsp;&nbsp;&nbsp;Some of you might be thinking, why we are only talking about REST and not SOAP or GraphQL? Remember, I did promise you to be able to do any kind of integrations! It is a foundation and we are starting with the most widely used and easiest web service. But bear with me, we will be there and be soon.
