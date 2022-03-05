@@ -16,7 +16,7 @@
 
 ### API Documentation Best Practices
 
-&nbsp;&nbsp;&nbsp;&nbsp;I would like to name few best practices that makes API documentation great :
+&nbsp;&nbsp;&nbsp;&nbsp;Sometimes, you can see the documentions where the APIs are fully documented, but it is still terribly confusing. I would like to name few best practices that makes API documentation great :
 
 - A good documentation is consistent with universally accepted naming conventions and terminologies.
 - It uses a language that is simple and easily understandable by users.
