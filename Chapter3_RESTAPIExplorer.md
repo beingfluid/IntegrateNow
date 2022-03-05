@@ -124,11 +124,21 @@ Lets say, we want to retrieve all of the active incidents from the server instan
 
     ![sendget](/images/path_app_store_learnv2_rest_sandiego_inbound_images_inbound_requestpopulated.png)
 
-The REST API Explorer limits queries to 10 records at a time. Only the first 10 incident records appear.
-The response also indicates the Status code and Execution time (in milliseconds) of the request.
+&nbsp;&nbsp;&nbsp;&nbsp;The REST API Explorer limits queries to 10 records at a time. Only the first 10 incident records appear. However, you can also limit the maximum number of records returned in response when implementing a REST API using "Query parameters", sysparm_limit. Let us change it to return only one record and click send to observe new response.
 
-We can specify those in the sysparm_fields parameter. I also like to alter the sysparm_limit parameter from the default of 1 to the alternative of 10, just to get more than one result in the output to help verify the query.
-Once we have entered all of the appropriate parameters, we can hit the Send button, which will produce the URL and also display some sample results in the Response Body section. After stripping off the server portion and removing the limitation parameter, we are left with the following value to use as our end point:
+![sendget](/images/restlimit.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;As you have noticed, we have only one incident information returned in the response.
+
+![sendget](/images/restlimit2.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Let's set our sysparm_limit Query parameters back to 10, click send again and again we should get information about 10 incidents. The response by default will return all the incident fields, but we will only need a couple of the fields back in our response, We can specify those in the sysparm_fields parameter.
+
+![sendget](/images/queryparam1.png)
+![sendget](/images/queryparam2.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Also, we want to return only active incidents. we can fetch the filtered records based on specified encoded query for parameter sysparm_query.
+![sendget](/images/query2.png)
 
 ###### what about other web services?
 
