@@ -162,6 +162,62 @@ Lets say, we want to retrieve all of the active incidents from the server instan
 ![xml1](/images/xmlres.png)
 ![xml2](/images/xmlres2.png)
 
+#### POST request
+
+##### Requirements gathering
+
+&nbsp;&nbsp;&nbsp;&nbsp;Now, we have reached the point from where we can think of the complete business use case. But before technical implementation, we need to gather the information of what needs to be done from business based on their need. **This process of understanding what you are trying to build and why you are building it is known as "Requirements gathering".** Requirements gathering is very very essential in any project. Don't worry, If you are just a developer you do not need to do all that stuff. Let me tell you what is the requirement. Just for the desclaimer, The actual use case is bi-directional and involves some complex logic, So I am going to explain just a part of it here to not complicate things right away.
+
+##### Business use case
+
+&nbsp;&nbsp;&nbsp;&nbsp;**This use case is to integrate two servicenow instances, so that when the incident is created on one instance, the incident will automatically be created on another instance.** Why so? Let us say, Instance 1 is a Customer instance for "A" company & Instance 2 is a Vendor instance of company "B" that provides services to company "A", And business want to have incident created on Vendor instance to be also replicated to customer instance. Now, using bi-directional integration, the incident can be handled by either side or can be updated on both the side, and as you can sense it can get complicated real fast. Though, later you will realise it was not so complicated as it seems now.
+
+##### Prapare the pre-requisites
+
+&nbsp;&nbsp;&nbsp;&nbsp;For above use case, we are going to use OOTB Table APIs again and REST API explorer to perform test.
+
+- Navigate to **System Web Services > REST > REST API Explorer**.
+
+![RESTAPIExplorer2](/images/RESTAPIExplorer1.png)
+
+- In the top-left of the REST API Explorer, select Namespace as **now**, API Name as **Table API** & API Version as **latest**.
+
+![RESTAPIExplorer3](/images/namespace.png)
+![RESTAPIExplorer4](/images/apiname.png)
+![RESTAPIExplorer5](/images/apiversion.png)
+
+- Click **Create a record (POST)**
+
+  - "Create a record" is a HTTP POST method that Inserts one record in the specified table.
+
+  ![RESTAPIExplorer6](/images/post1.png)
+
+- In the Path Parameters section, set the "tableName" parameter as **Incident (incident)** table.
+
+  ![RESTAPIExplorer6](/images/post2.png)
+
+- In the Request Body section, click **Add a field**.
+
+  ![RESTAPIExplorer6](/images/post3.png)
+  ![RESTAPIExplorer6](/images/post32.png)
+
+- Select a field and specify a value for that field. The request body updates automatically based on your entries.
+
+  ![RESTAPIExplorer6](/images/post4.png)
+  ![RESTAPIExplorer6](/images/post42.png)
+
+- Click the plus sign (+) and specify any additional field to assign a value to.
+
+  ![RESTAPIExplorer6](/images/post5.png)
+
+- After constructing the request, click **Send** & Select **OK** for the popup.
+
+  ![RESTAPIExplorer6](/images/post52.png)
+
+- Observe the response from the server, It returnes the information of newely created incident.
+
+  ![RESTAPIExplorer6](/images/post6.png)
+
 ###### what about other web services?
 
 &nbsp;&nbsp;&nbsp;&nbsp;Some of you might be thinking, why we are only talking about REST and not SOAP or GraphQL? Remember, I did promise you to be able to do any kind of integrations! It is a foundation and we are starting with the most widely used and easiest web service. But bear with me, we will be there and be soon.
