@@ -37,17 +37,28 @@
 
 ![Inbound](/images/app_store_learnv2_rest_sandiego_inbound_images_inbound_genericrequest.png)
 
-&nbsp;&nbsp;&nbsp;&nbsp;To open REST API Explorer, Navigate to System Web Services > REST > REST API Explorer. It displays all available APIs, API versions, and methods for each API. We can use the REST API Explorer to find an end point URL, method and variables that will get us the results that we need.
+&nbsp;&nbsp;&nbsp;&nbsp;To open REST API Explorer, Navigate to **System Web Services > REST > REST API Explorer**. It displays all available APIs, API versions, and methods for each API. We can use the REST API Explorer to find an end point URL, method and variables that will get us the results that we need.
+
+![RESTAPIExplorer1](/images/RESTAPIExplorer1.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;The REST API Explorer consists of:
+
+- A pane to select the Namespace, API Name, API Version, and REST method
+- A listpane to view and configure the endpoint
+- A menu to access documentation for the selected API and an API analytics dashboard
+- A section to test the endpoint
+
+  ![REST API Explorer 2](/images/app_store_learnv2_rest_sandiego_inbound_images_inbound_apiexploreranatomy.png)
 
 We want to gather up all of the active instances from the Client instance, but we will only need a couple of the fields for our purpose here. We can specify those in the sysparm_fields parameter. I also like to alter the sysparm_limit parameter from the default of 1 to the alternative of 10, just to get more than one result in the output to help verify the query.
 Once we have entered all of the appropriate parameters, we can hit the Send button, which will produce the URL and also display some sample results in the Response Body section. After stripping off the server portion and removing the limitation parameter, we are left with the following value to use as our end point:
 
 ###### what about other web services?
 
-&nbsp;&nbsp;&nbsp;&nbsp;Some of you might be thinking, why we are only talking about REST & not SOAP, JSONv2 or GraphQL? Remember, I did promise you to be able to do any kind of integrations! It is foundation and we are starting with the most widely used and easiest web service. But bear with me, we will be there and be soon.
+&nbsp;&nbsp;&nbsp;&nbsp;Some of you might be thinking, why we are only talking about REST and not SOAP or GraphQL? Remember, I did promise you to be able to do any kind of integrations! It is foundation and we are starting with the most widely used and easiest web service. But bear with me, we will be there and be soon.
 
 ---
 
 ## What's next?
 
-&nbsp;&nbsp;&nbsp;&nbsp; In next chapter, we are going to implement our use case using old-school approach of script, point out some of the concerns and start looking for better solutions.
+&nbsp;&nbsp;&nbsp;&nbsp; In next chapter, we are going to use the information that we did gather today and implement our first use case using old-school approach of script, point out some of the concerns and start looking for better solutions.
