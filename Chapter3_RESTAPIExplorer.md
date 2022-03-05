@@ -86,7 +86,7 @@ Lets say, we want to retrieve all of the active incidents from the server instan
 
 - Click **Retrieve records from a table (GET)**
 
-      - "Retrieve records from a table" is a HTTP GET method that retrieves multiple records from the specified table.
+  - "Retrieve records from a table" is a HTTP GET method that retrieves multiple records from the specified table.
 
   ![RESTAPIExplorer6](/images/restmethod.png)
 
