@@ -100,13 +100,13 @@ Lets say, we want to retrieve all of the active incidents from the server instan
 
 - In the Path Parameters section, select the **Incident (incident)** table.
 
+  - The list of path parameters depends on the endpoint URL.
+  - Path parameters are enclosed in curly braces in the endpoint URL.
+  - The values set in the path parameter field are substituted into the endpoint URL when a request is sent.
+
 ![pathparam1](/images/pathparam.png)
 
-    - The list of path parameters depends on the endpoint URL.
-    - Path parameters are enclosed in curly braces in the endpoint URL.
-    - The values set in the path parameter field are substituted into the endpoint URL when a request is sent.
-
-![pathparam2](/images/pathparam2.png)
+![pathparam2](/images/app_store_learnv2_rest_sandiego_inbound_images_inbound_pathparms.png)
 
 We can specify those in the sysparm_fields parameter. I also like to alter the sysparm_limit parameter from the default of 1 to the alternative of 10, just to get more than one result in the output to help verify the query.
 Once we have entered all of the appropriate parameters, we can hit the Send button, which will produce the URL and also display some sample results in the Response Body section. After stripping off the server portion and removing the limitation parameter, we are left with the following value to use as our end point:
