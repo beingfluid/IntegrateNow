@@ -106,6 +106,27 @@ Lets say, we want to retrieve all of the active incidents from the server instan
 
 ![pathparam2](/images/app_store_learnv2_rest_sandiego_inbound_images_inbound_pathparms.png)
 
+- Scroll to the bottom of the page and click **Send**.
+
+  - After configuring the REST method, one can click the Send button to send the request to the API.
+  - The REST API Explorer constructs the request to send to the ServiceNow API using the settings configured by the developer.
+
+  ![sendget](/images/sendget.png)
+
+- Observe the request that is sent and recieved response.
+  ![sendget](/images/getres1.png)
+  ![sendget](/images/getres2.png)
+
+  - The response includes incident records from the instance.
+  - The response also indicates the Status code and Execution time (in milliseconds) of the request.
+  - The Request section displays the HTTP Method / URI to send to the ServiceNow web service. The method is from the selected API.
+  - The path parameter values are set when configuring the request.
+
+    ![sendget](/images/path_app_store_learnv2_rest_sandiego_inbound_images_inbound_requestpopulated.png)
+
+The REST API Explorer limits queries to 10 records at a time. Only the first 10 incident records appear.
+The response also indicates the Status code and Execution time (in milliseconds) of the request.
+
 We can specify those in the sysparm_fields parameter. I also like to alter the sysparm_limit parameter from the default of 1 to the alternative of 10, just to get more than one result in the output to help verify the query.
 Once we have entered all of the appropriate parameters, we can hit the Send button, which will produce the URL and also display some sample results in the Response Body section. After stripping off the server portion and removing the limitation parameter, we are left with the following value to use as our end point:
 
