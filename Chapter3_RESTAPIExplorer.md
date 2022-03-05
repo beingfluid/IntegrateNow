@@ -28,3 +28,26 @@
 &nbsp;&nbsp;&nbsp;&nbsp;Another important feature that makes a documentation more better is it's user interface, If you don't have a visible user interface and you can't know how to use an API just by looking at it.
 
 ## ServiceNow REST API Explorer
+
+&nbsp;&nbsp;&nbsp;&nbsp;Though many documentations are crap, ServiceNow did a great job to maintain the documentation and following all the best practices. The REST API Explorer allows you to discover ServiceNow REST APIs, quickly construct and execute requests, and view responses from ServiceNow REST APIs within your browser.
+
+![Good Documentation](/images/stop-documentation-madness.webp)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Before we step forward, let us step back a little and recall what is "Inbound REST Integration"? In an inbound request, a third-party application requests an action through a ServiceNow API. ServiceNow processes the request and returns a status code and a response body. When the response body is returned, the Client application can extracts information from the response body and take action on the extracted data. The REST API Explorer helps us to test Inbound requests. In fact, you need to always refer the documentation of destination ServiceNow instance/3rd party application or server.
+
+![Inbound](/images/app_store_learnv2_rest_sandiego_inbound_images_inbound_genericrequest.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;To open REST API Explorer, Navigate to System Web Services > REST > REST API Explorer. It displays all available APIs, API versions, and methods for each API. We can use the REST API Explorer to find an end point URL, method and variables that will get us the results that we need.
+
+We want to gather up all of the active instances from the Client instance, but we will only need a couple of the fields for our purpose here. We can specify those in the sysparm_fields parameter. I also like to alter the sysparm_limit parameter from the default of 1 to the alternative of 10, just to get more than one result in the output to help verify the query.
+Once we have entered all of the appropriate parameters, we can hit the Send button, which will produce the URL and also display some sample results in the Response Body section. After stripping off the server portion and removing the limitation parameter, we are left with the following value to use as our end point:
+
+###### what about other web services?
+
+&nbsp;&nbsp;&nbsp;&nbsp;Some of you might be thinking, why we are only talking about REST & not SOAP, JSONv2 or GraphQL? Remember, I did promise you to be able to do any kind of integrations! It is foundation and we are starting with the most widely used and easiest web service. But bear with me, we will be there and be soon.
+
+---
+
+## What's next?
+
+&nbsp;&nbsp;&nbsp;&nbsp; In next chapter, we are going to implement our use case using old-school approach of script, point out some of the concerns and start looking for better solutions.
