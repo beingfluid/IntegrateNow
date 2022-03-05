@@ -134,21 +134,29 @@ Lets say, we want to retrieve all of the active incidents from the server instan
 
 &nbsp;&nbsp;&nbsp;&nbsp;Let's set our sysparm_limit Query parameters back to 10, click send again and again we should get information about 10 incidents. The response by default will return all the incident fields, but we will only need a couple of the fields back in our response, We can specify those in the sysparm_fields parameter.
 
-![sendget](/images/queryparam1.png)
-![sendget](/images/queryparam2.png)
+![q1](/images/queryparam1.png)
+![q2](/images/queryparam2.png)
 
 &nbsp;&nbsp;&nbsp;&nbsp;Also, we want to return only active incidents. we can fetch the filtered records based on specified encoded query for parameter sysparm_query.
-![sendget](/images/query2.png)
+![q3](/images/query2.png)
 
 &nbsp;&nbsp;&nbsp;&nbsp;Qury parameters are added to the endpoint URL by the REST API Explorer when the request is sent. The query parameters are specific to the selected API method. A default set of query parameters are displayed for the API. To add additional query parameters, use the Add query parameter button to add a new parameter to the query. For a complete list and detailed description of an API's query parameters, select the API documentation menu item from the REST API Explorer menu. The query parameters are added to the URI in the Request after '?'.
-![sendget](/images/query_app_store_learnv2_rest_sandiego_inbound_images_inbound_queryparmsuri.png)
+![q4](/images/query_app_store_learnv2_rest_sandiego_inbound_images_inbound_queryparmsuri.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;REST headers are the meta-data associated with an API request and response E.g. format of the Request and Response.
+
+![q5](/images/headers_app_store_learnv2_rest_sandiego_inbound_images_inbound_requestheadersrequest.png.crdownload)
+
+&nbsp;&nbsp;&nbsp;&nbsp;The Request Header settings appear in the request.
+
+![q6](/images/rh2_app_store_learnv2_rest_sandiego_inbound_images_inbound_requestheaders.png)
 
 ###### what about other web services?
 
-&nbsp;&nbsp;&nbsp;&nbsp;Some of you might be thinking, why we are only talking about REST and not SOAP or GraphQL? Remember, I did promise you to be able to do any kind of integrations! It is foundation and we are starting with the most widely used and easiest web service. But bear with me, we will be there and be soon.
+&nbsp;&nbsp;&nbsp;&nbsp;Some of you might be thinking, why we are only talking about REST and not SOAP or GraphQL? Remember, I did promise you to be able to do any kind of integrations! It is a foundation and we are starting with the most widely used and easiest web service. But bear with me, we will be there and be soon.
 
 ---
 
 ## What's next?
 
-&nbsp;&nbsp;&nbsp;&nbsp; In next chapter, we are going to use the information that we did gather today and implement our first use case using old-school approach of script, point out some of the concerns and start looking for better solutions.
+&nbsp;&nbsp;&nbsp;&nbsp; In next chapter, we are going to use the information that we did gathered today and implement our first use case using old-school approach of script, point out some of the concerns and start looking for better solutions. The Journey to begin in true sense.
