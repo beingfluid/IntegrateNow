@@ -1,4 +1,4 @@
-## Chapter 3 (Draft)
+## Chapter 3
 
 # REST API Explorer
 
