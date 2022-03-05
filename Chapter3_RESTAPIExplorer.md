@@ -140,6 +140,9 @@ Lets say, we want to retrieve all of the active incidents from the server instan
 &nbsp;&nbsp;&nbsp;&nbsp;Also, we want to return only active incidents. we can fetch the filtered records based on specified encoded query for parameter sysparm_query.
 ![sendget](/images/query2.png)
 
+&nbsp;&nbsp;&nbsp;&nbsp;Qury parameters are added to the endpoint URL by the REST API Explorer when the request is sent. The query parameters are specific to the selected API method. A default set of query parameters are displayed for the API. To add additional query parameters, use the Add query parameter button to add a new parameter to the query. For a complete list and detailed description of an API's query parameters, select the API documentation menu item from the REST API Explorer menu. The query parameters are added to the URI in the Request after '?'.
+![sendget](/images/query_app_store_learnv2_rest_sandiego_inbound_images_inbound_queryparmsuri.png)
+
 ###### what about other web services?
 
 &nbsp;&nbsp;&nbsp;&nbsp;Some of you might be thinking, why we are only talking about REST and not SOAP or GraphQL? Remember, I did promise you to be able to do any kind of integrations! It is foundation and we are starting with the most widely used and easiest web service. But bear with me, we will be there and be soon.
