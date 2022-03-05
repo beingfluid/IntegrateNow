@@ -68,15 +68,19 @@
 
     ![RESTAPIExplorer1](/images/namespace.png)
 
-  - API Name specifies API to configure and test in the REST API Explorer
+  - API Name specifies API to configure and test in the REST API Explorer.
+
+    - The Table API provides endpoints that allow you to perform create, read, update, and delete (CRUD) operations on existing tables.
 
     ![RESTAPIExplorer1](/images/apiname.png)
 
-  - API Version allows you to Select a specific API version or use latest version
+  - API Version allows you to select a specific API version or use latest version.
+
+    - Depending on the version, endpoint returns different results on a valid query.
 
     ![RESTAPIExplorer1](/images/apiversion.png)
 
-Retrieve records from a table (GET)
+- Click **Retrieve records from a table (GET)**
 
 The fields in the Prepare request section of the REST API Explorer form are determined by which Namespace, API Name, API Version, and REST method is selected.
 
