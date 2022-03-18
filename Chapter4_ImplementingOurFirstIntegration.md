@@ -23,8 +23,28 @@
 - **Awaiting Change:** Change record has been opened from (or associated to) the incident and you're waiting for more information from the change management process before continuing on.
 - **Awaiting Vendor:** Waiting on information from a vendor assisting with resolution of the incident.
 
-&nbsp;&nbsp;&nbsp;&nbsp;drawio3. Please refer the following image:
+&nbsp;&nbsp;&nbsp;&nbsp;Now, it is time for another tweak. Please refer the following images:
 
 ![drawio3](./images/drawio3.png)
 
-&nbsp;&nbsp;&nbsp;&nbsp;As we can notice from the above image,drawio3.
+&nbsp;&nbsp;&nbsp;&nbsp;As you can notice from the above image, We have an additional Contact type "API" on Customer instance and no matter through which channel the incident is created on Vendor instance, the target incident on Customer instance should have the Contact type set as "API".
+
+&nbsp;&nbsp;&nbsp;&nbsp;We also have the requirement to always map the incident to the "Inquiry / Help" category on Customer instance:
+
+![drawio4](./images/drawio4.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;And finally, we need to map the Service, Service Offering and the Description to the Description field (the justification could be that the CMDB is not implemented properly yet on Customer instance):
+
+![drawio5](./images/drawio5.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;For other fields that are shown below it is straightforward, we will map them as is:
+
+![drawio6](./images/drawio6.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Okay, we can include many other things but for now we already have much complex requirement for our first integration and we are good to go.
+
+## A clearer picture
+
+&nbsp;&nbsp;&nbsp;&nbsp;Till this point, we have seen what Inbound integration is in the context of ServiceNow, got familier with REST API explorer and got a faded picture of what we will be implementing in our first integration. I feel this is a perfect time to make that picture more clear. Please refer the following image:
+
+![drawio7](./images/drawio7.png)
