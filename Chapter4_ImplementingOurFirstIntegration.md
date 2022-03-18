@@ -177,7 +177,7 @@ gs.log(response.getBody())
 ![drawio26](./images/drawio26.png)
 ![drawio27](./images/drawio27.png)
 
-&nbsp;&nbsp;&nbsp;&nbsp;The above output indicates that our API successfully created the incident. But you surely do not want to expose your admin credentials to others. And for this purpose and for every integration you will find a Service Account created on the target tool, Let us create one on our Customer instance.
+&nbsp;&nbsp;&nbsp;&nbsp;The above output indicates that our API successfully created the incident. But you surely do not want to expose your admin credentials (and give full control of your instance) to others. And for this purpose and for every integration you will find a Service Account created on the target tool, Let us create one on our Customer instance.
 
 ### Service Account
 
