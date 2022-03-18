@@ -183,7 +183,7 @@ gs.log(response.getBody())
 
 &nbsp;&nbsp;&nbsp;&nbsp;**A service account is a special type of ServiceNow user account intended to represent a non-human user that needs to authenticate and be authorized to access data in ServiceNow APIs.** When an external system makes a web service call to your ServiceNow instance, it must provide login credentials. Rather than using a normal user account to log in, it's best to use a service account specifically set up for that particular integration. Service accounts should be carefully managed, controlled, and audited. In most cases, they can also be associated back to an identity as an owner. However, service accounts should not have the same characteristics as a person logging on to a system. They should not have interactive user interface privileges, nor the capability to operate as a normal account or user.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Dawn Jurek has written a very good community blog which can be found here and which explains why you should use service accounts instead of personal user accounts for web service activities.
+&nbsp;&nbsp;&nbsp;&nbsp;Dawn Jurek has written a very good community blog which can be found [here](https://community.servicenow.com/community?id=community_blog&sys_id=b4fca2a5dbd0dbc01dcaf3231f961900) and which explains why you should use service accounts instead of personal user accounts for web service activities.
 For the ease I would like to put them here as is:
 
 - Restrict the account activities to application program interface (API) connections, such as JavaScript Object Notation (JSON), Simple Object Access Protocol (SOAP), and Web Service Definition Language (WSDL). Accounts flagged as Web service access only cannot log into the ServiceNow user interface to perform other actions.
@@ -209,7 +209,7 @@ For the ease I would like to put them here as is:
 
   ![sa3](./images/sa3.png)
 
-- Navigate to **User Administration > Users** and then open our recently created Service Account user record **"FirstIntegrationUser"**.
+- Now we need to give the service account user any roles necessary to perform the actions that will be carried out by the integration. Navigate to **User Administration > Users** and then open our recently created Service Account user record **"FirstIntegrationUser"**.
   ![sa6](./images/sa6.png)
   ![sa7](./images/sa7.png)
 
@@ -250,4 +250,66 @@ gs.log(response.getBody())
 
 &nbsp;&nbsp;&nbsp;&nbsp;Here, we did not see in detail about creating a user or assigning a role to a user. But if you want to dig deep, ServiceNow documentation is the best place to start with and has all that you need, right [here](https://docs.servicenow.com/bundle/sandiego-platform-administration/page/administer/users-and-groups/task/t_CreateAUser.html) and [here](https://docs.servicenow.com/bundle/sandiego-platform-administration/page/administer/users-and-groups/task/t_AssignARoleToAUser.html). Also OOTB any one of itil, sn_incident_write or admin role is required to create an incident. You can read more about incident creation [here](https://docs.servicenow.com/bundle/sandiego-it-service-management/page/product/incident-management/task/create-an-incident.html)
 
-### Service Account
+### Additional Contact Type : API
+
+&nbsp;&nbsp;&nbsp;&nbsp;OOTB, we do not have the contact type as "API" on our Personal Developer Instance (PDI), Let us create one:
+![caict](./images/caict.png)
+
+- Navigate to **Incident > Open** in a new tab, Click any incident number to open the incident form:
+  ![inc1](./images/inc1.png)
+  ![inc2](./images/inc2.png)
+- Right-click the **Contact type** field label and select **Configure Choices**. The Configuring State Choices slushbucket will open.
+  ![inc3](./images/inc3.png)
+  ![inc4](./images/inc4.png)
+
+- In **Enter new item:** field type **API** and click **Add**.
+  ![inc5](./images/inc5.png)
+- Click **Save**.
+  ![inc6](./images/inc6.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;If we did everything correctly, we should have and additional contact type now named "API":
+![inc7](./images/inc7.png)
+
+### Assignment group
+
+&nbsp;&nbsp;&nbsp;&nbsp;Finally, let us create one assignment group to be assigned to the incident created by means of our integration:
+
+- Navigate to **User Administration > Groups** and click **New** button:
+  ![inc8](./images/inc8.png)
+
+- Create a group with Name as "FirstIntegrationGroup", Type as "itil" & Parent as "Incident Management" and click **Submit** button:
+  ![inc9](./images/inc9.png)
+
+## Setting up the Vendor Instance
+
+&nbsp;&nbsp;&nbsp;&nbsp;We have everything that we need from our customer instance set up, but we still need to set our Vendor instance. I have borrowed another PDI from one of my friend to use as Vendor instance, and we are ready fix the prerequisites.
+
+### Assignment group
+
+&nbsp;&nbsp;&nbsp;&nbsp;Like our customer instance we need an assignment group to be created on Vendor instance to be used as a trigger to the APIs, Let us create one:
+
+- Navigate to **User Administration > Groups** and click **New** button:
+  ![vnd1](./images/vnd1.png)
+
+- Create a group with Name as "VendorAssignmentGroup", Type as "itil" & Parent as "Incident Management" and click **Submit** button:
+  ![vnd2](./images/vnd2.png)
+
+### Additional On hold reason : Awaiting Company A Validation
+
+&nbsp;&nbsp;&nbsp;&nbsp;OOTB, we do not have the On hold reason choice as "Awaiting Company A Validation" on our Vendor PDI, Let us create one:
+![vnd3](./images/vnd3.png)
+
+- Navigate to **Incident > Open** in a new tab, Click any incident number to open the incident form:
+  ![vnd4](./images/vnd4.png)
+  ![vnd5](./images/vnd5.png)
+- Right-click the **On hold reason** field label and select **Configure Choices**. The Configuring State Choices slushbucket will open.
+  ![vnd6](./images/vnd6.png)
+  ![vnd7](./images/vnd7.png)
+
+- In **Enter new item:** field type **Awaiting Company A Validation** and click **Add**.
+  ![vnd8](./images/vnd8.png)
+- Click **Save**.
+  ![vnd9](./images/vnd9.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;If we did everything correctly, we should have and additional contact type now named "API":
+![vnd10](./images/vnd10.png)
