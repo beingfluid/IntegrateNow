@@ -152,3 +152,33 @@ gs.log(response.getBody())
   ![drawio25](./images/drawio25.png)
 
   &nbsp;&nbsp;&nbsp;&nbsp;Oops, You should receive the **User Not Authenticated** error and I am sure that you did not expect that. All the code samples generated through the REST API Explorer uses fake credentials. Before using the script in the application to integrate with ServiceNow, we need to update the code to use valid credentials.
+
+  &nbsp;&nbsp;&nbsp;&nbsp;Let us modify our code to change the fake credentials by your admin credentials, and re-execute the script:
+
+```js
+var request = new sn_ws.RESTMessageV2()
+request.setEndpoint("https://dev124645.service-now.com/api/now/table/incident")
+request.setHttpMethod("POST")
+
+//Eg. UserName="admin", Password="admin" for this code sample.
+var user = "MyAdminUserName"
+var password = "MyAdminPassword"
+
+request.setBasicAuth(user, password)
+request.setRequestHeader("Accept", "application/json")
+request.setRequestHeader("Content-Type", "application/json")
+request.setRequestBody(
+  '{"short_description":"Test SD","description":"Test Desc","assignment_group":"0a52d3dcd7011200f2d224837e6103f2","impact":"2","urgency":"1","state":"3","hold_reason":"4","category":"inquiry","contact_type":"email"}'
+)
+var response = request.execute()
+gs.log(response.getBody())
+```
+
+![drawio26](./images/drawio26.png)
+![drawio27](./images/drawio27.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;The above output indicates that our API successfully created the incident. But you surely do not want to expose your admin credentials to others. And for this purpose and for every integration you will find a Service Account created on the target tool, Let us create one on our Customer instance.
+
+### Service Account
+
+&nbsp;&nbsp;&nbsp;&nbsp;Service Account:
