@@ -16,4 +16,6 @@ Chapter 2 : [What You Need To Know About JSON And Objects](/Chapter2_WhatYouNeed
 
 Chapter 3 : [REST API Explorer](/Chapter3_RESTAPIExplorer.md)
 
+Chapter 4 : [Implementing Our First Integration](/Chapter4_ImplementingOurFirstIntegration.md)
+
 ##### Disclaimer : All the information and images used to prepare this documentation are collected from Internet and consolidated to make it work. And content is subject to change as we proceed.
