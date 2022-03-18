@@ -43,8 +43,79 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;Okay, we can include many other things but for now we already have much complex requirement for our first integration and we are good to go.
 
-## A clearer picture
+## Create the code sample
 
-&nbsp;&nbsp;&nbsp;&nbsp;Till this point, we have seen what Inbound integration is in the context of ServiceNow, got familier with REST API explorer and got a faded picture of what we will be implementing in our first integration. I feel this is a perfect time to make that picture more clear. Please refer the following image:
+&nbsp;&nbsp;&nbsp;&nbsp;The REST API Explorer creates the code samples for integrating with the ServiceNow APIs in several commonly used languages in addition to **ServiceNow Script** snippet, These are:
 
-![drawio7](./images/drawio7.png)
+- cURL
+- Python
+- Ruby
+- JavaScript
+- Perl
+- Powershell
+
+&nbsp;&nbsp;&nbsp;&nbsp;For our purpose, we are going to use the REST API Explorer to create the snippet to create an incident. You can refer [Chapter 3: REST API Explorer](/Chapter3_RESTAPIExplorer.md) for more detailed explaination:
+
+- Navigate to **System Web Services > REST > REST API Explorer**.
+  ![drawio13](./images/drawio13.png)
+- In the top-left of the REST API Explorer, click **Create a record (POST)**.
+  ![drawio7](./images/drawio7.png)
+- In the Path Parameters section, select the **Incident (incident)** table.
+  ![drawio8](./images/drawio8.png)
+- In the Request Body section, click **Add a field**.
+  ![drawio9](./images/drawio9.png)
+- Select a field and specify a value for the field **"Short description"** as "Test SD" or whatever you may like:
+  ![drawio14](./images/drawio14.png)
+- Click the plus sign **(+)** and specify additional fields:
+
+  - **Description**: Test Desc
+  - **Assignment group**: 0a52d3dcd7011200f2d224837e6103f2
+  - **Impact**: 2
+  - **Urgency**: 1
+  - **State**: 3
+  - **On hold reason**: 4
+  - **Category**: inquiry
+  - **Contact type**: email
+
+![drawio10](./images/drawio10.png)
+
+- The request body updates automatically based on your entries (shown in the above image), such as:
+
+```json
+{
+  "short_description": "Test SD",
+  "description": "Test Desc",
+  "assignment_group": "0a52d3dcd7011200f2d224837e6103f2",
+  "impact": "2",
+  "urgency": "1",
+  "state": "3",
+  "hold_reason": "4",
+  "category": "inquiry",
+  "contact_type": "email"
+}
+```
+
+- We did use all the test values here, as we do not have our instances ready yet for our use case discussed, but we are good to go. After constructing the request, click **Send**. For pop-up, select **OK**.
+  ![drawio11](./images/drawio11.png)
+  ![drawio12](./images/drawio12.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;The response includes a Location header that specifies where the incident was created and how to retrieve the incident. The response also indicates the Status code and Execution time (in milliseconds) of the request.
+![drawio15](./images/drawio15.png)
+![drawio16](./images/drawio16.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Now, let us verify if the incident really is created.
+
+- Note down the **number** property from the respose body.
+  ![drawio17](./images/drawio17.png)
+- Navigate to **Incident > Open** in a new tab, verify that the incident is created with the provided information:
+  ![drawio18](./images/drawio18.png)
+  ![drawio19](./images/drawio19.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Once you are satified with the testing, It is now time to generate the snippet and move to the next step:
+
+- To create the code sample, Navigate back to REST API Explorer window and click the link for the language of your choice in the REST API Explorer. For the sake of this example, we will select **"ServiceNow Script"**.
+  ![drawio20](./images/drawio20.png)
+- To highlight the code sample for copying, click the **Select Snippet** button.
+  ![drawio21](./images/drawio21.png)
+- After highlighting the code sample, **copy the code sample to the clipboard** by using ctrl+c.
+  ![drawio22](./images/drawio22.png)
