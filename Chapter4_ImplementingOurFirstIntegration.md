@@ -1,4 +1,4 @@
-## Chapter 4 (Draft)
+## Chapter 4
 
 # Implementing Our First Integration
 
@@ -315,3 +315,104 @@ gs.log(response.getBody())
 
 &nbsp;&nbsp;&nbsp;&nbsp;If we did everything correctly, we should have and additional On hold reason choice as "Awaiting Company A Validation":
 ![vnd10](./images/vnd10.png)
+
+### Service & Service Offering
+
+&nbsp;&nbsp;&nbsp;&nbsp;Like assignment group, we also need an Service created on Vendor instance to be used as a trigger to the APIs. In addition we also need a Service offering of which information we will map to the description:
+
+- Navigate to **All > Service Portfolio Management > Business Services** and click the **New** button:
+  ![ser1](./images/ser1.png)
+  ![ser2](./images/ser2.png)
+
+- Set the **Name** as **"IntegrateNow"** and click the **Submit** button:
+  ![ser3](./images/ser3.png)
+
+- A new Service named **"IntegrateNow"** should be created. Click on the name to open the record:
+  ![ser4](./images/ser4.png)
+
+- Scroll to the bottom of the form to find the related list **Offering** , then click **New** to create a new service offering:
+  ![ser5](./images/ser5.png)
+
+- Set the **Name** as **"IntegrateNow Support"** and click the **Submit** button:
+  ![ser6](./images/ser6.png)
+
+- A new Service offering named **"IntegrateNow Support"** should be created:
+  ![ser7](./images/ser7.png)
+
+## Integration time
+
+&nbsp;&nbsp;&nbsp;&nbsp;Till this point, we have all the pre-requisites fulfilled for our integration, and now we are ready to implement our integration. There are different ways of achieving this use case, but we are going to start with the most traditional approach of script. In coming chapters we will enhance our approach to be more efficient. So without furthur due, let us start with the last section of this chapter.
+
+### Business Rule
+
+&nbsp;&nbsp;&nbsp;&nbsp;Here, we will create a business rule on our Vendor instance that will trigger the API if our condition matches and creates the incident on customer instance.
+
+- Navigate to **All > System Definition > Business Rules**.
+  ![ibr1](./images/ibr1.png)
+- Click **New**.
+  ![ibr2](./images/ibr2.png)
+- Enter any **Name** for the business rule.
+  ![ibr3](./images/ibr3.png)
+- Select the **Table** that the business rule runs on i.e. **Incident [incident]**.
+  ![ibr4](./images/ibr4.png)
+- Select the **Advanced** check box to see the advanced version of the form.
+  ![ibr5](./images/ibr5.png)
+- For **When** field select **after**.
+  ![ibr6](./images/ibr6.png)
+- Select the **Insert** check box to execute the business rule when a record is inserted into the database.
+  ![ibr7](./images/ibr7.png)
+- Now, copy and paste our modified code sample into the **Script** field & click **Submit**.
+  ![ibr8](./images/ibr8.png)
+  ![ibr9](./images/ibr9.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;The final script in the business rule script field should look something like this :
+
+```js
+;(function executeRule(current, previous /*null when async*/) {
+  // Add your code here
+  var request = new sn_ws.RESTMessageV2()
+  request.setEndpoint(
+    "https://dev124645.service-now.com/api/now/table/incident"
+  )
+  request.setHttpMethod("POST")
+
+  //Eg. UserName="admin", Password="admin" for this code sample.
+  var user = "FirstIntegrationUser"
+  var password = "FirstIntegrationUserPassword"
+
+  request.setBasicAuth(user, password)
+  request.setRequestHeader("Accept", "application/json")
+  request.setRequestHeader("Content-Type", "application/json")
+  request.setRequestBody(
+    '{"short_description":"Test SD","description":"Test Desc","assignment_group":"0a52d3dcd7011200f2d224837e6103f2","impact":"2","urgency":"1","state":"3","hold_reason":"4","category":"inquiry","contact_type":"email"}'
+  )
+  var response = request.execute()
+  gs.log(response.getBody())
+})(current, previous)
+```
+
+- Finally, set the **Filter Conditions** as shown in below image & click **Update**:
+  ![ibr10](./images/ibr10.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Believe it or not, we can even test our integration now. Though our values are still static. If you are curious why did we set the fields the way we do, please refer the ServiceNow documentation [here](https://docs.servicenow.com/bundle/sandiego-application-development/page/script/business-rules/reference/r_HowBusinessRulesWork.html).
+
+- On Vendor instance, Navigate to **All > Incident > Create New**:
+  ![ibr11](./images/ibr11.png)
+- Set the Service as **IntegrateNow** & Assignment group as **VendorAssignmentGroup**:
+  ![ibr12](./images/ibr12.png)
+- Fill all other mandatory fields with the values you may like & click **Submit**:
+  ![ibr13](./images/ibr13.png)
+- We can notice from the recent system logs, that our API has successfully been triggered:
+  ![ibr14](./images/ibr14.png)
+- On Customer instance, we can validate that new incident has been created:
+  ![ibr15](./images/ibr15.png)
+
+## We are not done yet
+
+&nbsp;&nbsp;&nbsp;&nbsp;To be honest, I did not expect this chapter to be this long. We did lot of stuff and I would like to give yourself some time to digest all of these. In the next chapter, we will resume from where we stopped today and will complete our first integration.
+
+---
+
+## What's next?
+
+&nbsp;&nbsp;&nbsp;&nbsp; In the next chapter, we will resume from where we stopped today and will complete our first integration.We will point out some of the concerns with this traditional approach and start the quest for better solutions.
