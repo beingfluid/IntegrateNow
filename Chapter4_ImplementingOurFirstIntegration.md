@@ -181,4 +181,73 @@ gs.log(response.getBody())
 
 ### Service Account
 
-&nbsp;&nbsp;&nbsp;&nbsp;Service Account is
+&nbsp;&nbsp;&nbsp;&nbsp;**A service account is a special type of ServiceNow user account intended to represent a non-human user that needs to authenticate and be authorized to access data in ServiceNow APIs.** When an external system makes a web service call to your ServiceNow instance, it must provide login credentials. Rather than using a normal user account to log in, it's best to use a service account specifically set up for that particular integration. Service accounts should be carefully managed, controlled, and audited. In most cases, they can also be associated back to an identity as an owner. However, service accounts should not have the same characteristics as a person logging on to a system. They should not have interactive user interface privileges, nor the capability to operate as a normal account or user.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Dawn Jurek has written a very good community blog which can be found here and which explains why you should use service accounts instead of personal user accounts for web service activities.
+For the ease I would like to put them here as is:
+
+- Restrict the account activities to application program interface (API) connections, such as JavaScript Object Notation (JSON), Simple Object Access Protocol (SOAP), and Web Service Definition Language (WSDL). Accounts flagged as Web service access only cannot log into the ServiceNow user interface to perform other actions.
+- Increase security by conforming to the principle of least privilege.
+- Facilitate management, troubleshooting, and debugging of your integration. If a personal user account is used for integrations, you can't easily distinguish the integration transactions of that user from other activities the user performs in the system. On the other hand, if a service account is used for each integration, you can easily tell which integration did what in the system. The service account name is identified under Created by or Updated by in the transaction log and also appears on the records that the integration touches.
+- Ensure that everything done by a particular integration service account was related to that specific integration.
+- Improve auditability. All transactions can easily be traced to specific service accounts in the system, which facilitates examination and verification of records related to each integration.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Follow the steps below to set up a service account for our integration:
+
+- Navigate to **User Administration > Users**.
+  ![sa1](./images/sa1.png)
+- Click **New** and enter the following information:
+
+  - **User ID:** FirstIntegrationUser
+  - **Password:** FirstIntegrationUserPassword
+  - **First name:** First
+  - **Last name:** IntegrationUser
+
+  ![sa2](./images/sa2.png)
+
+- Select this check box for **Web service access only** to designate this user as a non-interactive user & Click **Submit**.
+
+  ![sa3](./images/sa3.png)
+
+- Navigate to **User Administration > Users** and then open our recently created Service Account user record **"FirstIntegrationUser"**.
+  ![sa6](./images/sa6.png)
+  ![sa7](./images/sa7.png)
+
+- In the Roles related list, click **Edit**.
+  ![sa8](./images/sa8.png)
+
+- In the Collection list, select the desired roles (for our purpose we will use **itil** role), and then click **Add**.
+  ![sa9](./images/sa9.png)
+
+- Click **Save**.
+  ![sa10](./images/sa10.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Now let us modify our script to have Service account's credentials :
+
+```js
+var request = new sn_ws.RESTMessageV2()
+request.setEndpoint("https://dev124645.service-now.com/api/now/table/incident")
+request.setHttpMethod("POST")
+
+//Eg. UserName="admin", Password="admin" for this code sample.
+var user = "FirstIntegrationUser"
+var password = "FirstIntegrationUserPassword"
+
+request.setBasicAuth(user, password)
+request.setRequestHeader("Accept", "application/json")
+request.setRequestHeader("Content-Type", "application/json")
+request.setRequestBody(
+  '{"short_description":"Test SD","description":"Test Desc","assignment_group":"0a52d3dcd7011200f2d224837e6103f2","impact":"2","urgency":"1","state":"3","hold_reason":"4","category":"inquiry","contact_type":"email"}'
+)
+var response = request.execute()
+gs.log(response.getBody())
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;And if we re-execute the script in **System Definition > Scripts - Background** with new credentials, you will get the output as below, which indicates that our snippet still works:
+
+![sa4](./images/sa4.png)
+![sa5](./images/sa5.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Here, we did not see in detail about creating a user or assigning a role to a user. But if you want to dig deep, ServiceNow documentation is the best place to start with and has all that you need, right [here](https://docs.servicenow.com/bundle/sandiego-platform-administration/page/administer/users-and-groups/task/t_CreateAUser.html) and [here](https://docs.servicenow.com/bundle/sandiego-platform-administration/page/administer/users-and-groups/task/t_AssignARoleToAUser.html). Also OOTB any one of itil, sn_incident_write or admin role is required to create an incident. You can read more about incident creation [here](https://docs.servicenow.com/bundle/sandiego-it-service-management/page/product/incident-management/task/create-an-incident.html)
+
+### Service Account
