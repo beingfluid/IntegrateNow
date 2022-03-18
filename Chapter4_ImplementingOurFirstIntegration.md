@@ -282,7 +282,7 @@ gs.log(response.getBody())
 
 ## Setting up the Vendor Instance
 
-&nbsp;&nbsp;&nbsp;&nbsp;We have everything that we need from our customer instance set up, but we still need to set our Vendor instance. I have borrowed another PDI from one of my friend to use as Vendor instance, and we are ready fix the prerequisites.
+&nbsp;&nbsp;&nbsp;&nbsp;We have everything that we need from our customer instance set up, but we still need to set our Vendor instance. I have borrowed another PDI from one of my friend to use as Vendor instance, and we are ready fix the prerequisites. However, The San Diego Release of ServiceNow comes with a brand new interface known as the Next Experience UI, or also internally known as Polaris, So you might experience a different look and feel on our Vendor instance. In a way it is good for us as we will be able to easily identify which is our Customer instance (UI16) or Vendor instance (Plaris).
 
 ### Assignment group
 
@@ -290,6 +290,7 @@ gs.log(response.getBody())
 
 - Navigate to **User Administration > Groups** and click **New** button:
   ![vnd1](./images/vnd1.png)
+  ![vnd1_1](./images/vnd1_1.png)
 
 - Create a group with Name as "VendorAssignmentGroup", Type as "itil" & Parent as "Incident Management" and click **Submit** button:
   ![vnd2](./images/vnd2.png)
@@ -302,6 +303,7 @@ gs.log(response.getBody())
 - Navigate to **Incident > Open** in a new tab, Click any incident number to open the incident form:
   ![vnd4](./images/vnd4.png)
   ![vnd5](./images/vnd5.png)
+  ![vnd5_1](./images/vnd5_1.png)
 - Right-click the **On hold reason** field label and select **Configure Choices**. The Configuring State Choices slushbucket will open.
   ![vnd6](./images/vnd6.png)
   ![vnd7](./images/vnd7.png)
@@ -311,5 +313,5 @@ gs.log(response.getBody())
 - Click **Save**.
   ![vnd9](./images/vnd9.png)
 
-&nbsp;&nbsp;&nbsp;&nbsp;If we did everything correctly, we should have and additional contact type now named "API":
+&nbsp;&nbsp;&nbsp;&nbsp;If we did everything correctly, we should have and additional On hold reason choice as "Awaiting Company A Validation":
 ![vnd10](./images/vnd10.png)
