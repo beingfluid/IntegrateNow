@@ -119,3 +119,36 @@
   ![drawio21](./images/drawio21.png)
 - After highlighting the code sample, **copy the code sample to the clipboard** by using ctrl+c.
   ![drawio22](./images/drawio22.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;If you did everything correctly you should have the code which look similar to the following copied to your clipboard:
+
+```js
+var request = new sn_ws.RESTMessageV2()
+request.setEndpoint("https://dev124645.service-now.com/api/now/table/incident")
+request.setHttpMethod("POST")
+
+//Eg. UserName="admin", Password="admin" for this code sample.
+var user = "admin"
+var password = "admin"
+
+request.setBasicAuth(user, password)
+request.setRequestHeader("Accept", "application/json")
+request.setRequestHeader("Content-Type", "application/json")
+request.setRequestBody(
+  '{"short_description":"Test SD","description":"Test Desc","assignment_group":"0a52d3dcd7011200f2d224837e6103f2","impact":"2","urgency":"1","state":"3","hold_reason":"4","category":"inquiry","contact_type":"email"}'
+)
+var response = request.execute()
+gs.log(response.getBody())
+```
+
+## Setting up the stage
+
+&nbsp;&nbsp;&nbsp;&nbsp;Once we have our code sample copied, we can use it any server side code such as Business rules, Script includes, Workflows etc. But this code is of no use yet unless we make a very small adjustment to it:
+
+- It is time to visit our old good friend. Use the Application Navigator to open **System Definition > Scripts - Background**.
+  ![drawio23](./images/drawio23.png)
+- Paste the snippet that we did copy from last section into the Run Script field And Click the **Run script** button to view the results of the script.
+  ![drawio24](./images/drawio24.png)
+  ![drawio25](./images/drawio25.png)
+
+  &nbsp;&nbsp;&nbsp;&nbsp;Oops, You should receive the **User Not Authenticated** error and I am sure that you did not expect that. All the code samples generated through the REST API Explorer uses fake credentials. Before using the script in the application to integrate with ServiceNow, we need to update the code to use valid credentials.
