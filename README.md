@@ -18,4 +18,6 @@ Chapter 3 : [REST API Explorer](/Chapter3_RESTAPIExplorer.md)
 
 Chapter 4 : [Implementing Our First Integration](/Chapter4_ImplementingOurFirstIntegration.md)
 
+Chapter 5 : [Finishing Touches](/Chapter5_FinishingTouches.md)
+
 ##### Disclaimer : All the information and images used to prepare this documentation are collected from Internet and consolidated to make it work. And content is subject to change as we proceed.
