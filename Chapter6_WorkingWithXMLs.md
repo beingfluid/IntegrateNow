@@ -697,7 +697,309 @@ xsi:schemaLocation="https://www.w3schools.com note.xsd">
 
 ### Restrictions on Content
 
-&nbsp;&nbsp;&nbsp;&nbsp;**When an XML element or attribute has a data type defined, it puts restrictions on the element's or attribute's content.** If an XML element is of type "xs:date" and contains a string like "Hello World", the element will not validate. Restrictions are used to define acceptable values for XML elements or attributes. With XML Schemas, you can also add your own restrictions to your XML elements and attributes. **These restrictions are called facets.**
+&nbsp;&nbsp;&nbsp;&nbsp;Restrictions are used to define acceptable values for XML elements or attributes. **When an XML element or attribute has a data type defined, it puts restrictions on the element's or attribute's content.** If an XML element is of type `xs:date` and contains a string like "Hello World", the element will not validate. With XML Schemas, you can also add your own restrictions to your XML elements and attributes. **Restrictions on XML elements are called facets.**
+
+#### Restrictions on Values
+
+&nbsp;&nbsp;&nbsp;&nbsp;The following example defines an element called "age" with a restriction. The value of age cannot be lower than 0 or greater than 120:
+
+```xsd
+<xs:element name="age">
+  <xs:simpleType>
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="120"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:element>
+```
+
+#### Restrictions on a Set of Values
+
+&nbsp;&nbsp;&nbsp;&nbsp;To limit the content of an XML element to a set of acceptable values, we would use the enumeration constraint. The example below defines an element called "car" with a restriction. The only acceptable values are: Audi, Golf, BMW::
+
+```xsd
+<xs:element name="car">
+  <xs:simpleType>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Audi"/>
+      <xs:enumeration value="Golf"/>
+      <xs:enumeration value="BMW"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:element>
+```
+
+#### Restrictions on a Set of Values
+
+&nbsp;&nbsp;&nbsp;&nbsp;To limit the content of an XML element to a set of acceptable values, we would use the enumeration constraint. The example below defines an element called "car" with a restriction. The only acceptable values are: Audi, Golf, BMW:
+
+```xsd
+<xs:element name="car">
+  <xs:simpleType>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Audi"/>
+      <xs:enumeration value="Golf"/>
+      <xs:enumeration value="BMW"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:element>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;The example above could also have been written like below; In this case the type "carType" can be used by other elements because it is not a part of the "car" element:
+
+```xsd
+<xs:element name="car" type="carType"/>
+
+<xs:simpleType name="carType">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="Audi"/>
+    <xs:enumeration value="Golf"/>
+    <xs:enumeration value="BMW"/>
+  </xs:restriction>
+</xs:simpleType>
+```
+
+#### Restrictions on a Series of Values
+
+&nbsp;&nbsp;&nbsp;&nbsp;To limit the content of an XML element to define a series of numbers or letters that can be used, we would use the pattern constraint. The example below defines an element called "initials" with a restriction. The only acceptable value is THREE of the LOWERCASE OR UPPERCASE letters from a to z:
+
+```xsd
+<xs:element name="initials">
+  <xs:simpleType>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[a-zA-Z][a-zA-Z][a-zA-Z]"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:element>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;The next example defines an element called "choice" with a restriction. The only acceptable value is ONE of the following letters: x, y, OR z:
+
+```xsd
+<xs:element name="choice">
+  <xs:simpleType>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[xyz]"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:element>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;The example below defines an element called "letter" with a restriction. The acceptable value is zero or more occurrences of lowercase letters from a to z:
+
+```xsd
+<xs:element name="letter">
+  <xs:simpleType>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="([a-z])*"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:element>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;The next example also defines an element called "letter" with a restriction. The acceptable value is one or more pairs of letters, each pair consisting of a lower case letter followed by an upper case letter. For example, "sToP" will be validated by this pattern, but not "Stop" or "STOP" or "stop":
+
+```xsd
+<xs:element name="letter">
+  <xs:simpleType>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="([a-z][A-Z])+"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:element>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;TThe next example defines an element called "gender" with a restriction. The only acceptable value is male OR female:
+
+```xsd
+<xs:element name="gender">
+  <xs:simpleType>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="male|female"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:element>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;The next example defines an element called "password" with a restriction. There must be exactly eight characters in a row and those characters must be lowercase or uppercase letters from a to z, or a number from 0 to 9:
+
+```xsd
+<xs:element name="password">
+  <xs:simpleType>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[a-zA-Z0-9]{8}"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:element>
+```
+
+#### Restrictions on Whitespace Characters
+
+&nbsp;&nbsp;&nbsp;&nbsp;To specify how whitespace characters should be handled, we would use the whiteSpace constraint. This example defines an element called "address" with a restriction. The whiteSpace constraint is set to "preserve", which means that the XML processor WILL NOT remove any white space characters:
+
+```xsd
+<xs:element name="address">
+  <xs:simpleType>
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="preserve"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:element>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;This example also defines an element called "address" with a restriction. The whiteSpace constraint is set to "replace", which means that the XML processor WILL REPLACE all white space characters (line feeds, tabs, spaces, and carriage returns) with spaces:
+
+```xsd
+<xs:element name="address">
+  <xs:simpleType>
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="replace"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:element>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;This example also defines an element called "address" with a restriction. The whiteSpace constraint is set to "collapse", which means that the XML processor WILL REMOVE all white space characters (line feeds, tabs, spaces, carriage returns are replaced with spaces, leading and trailing spaces are removed, and multiple spaces are reduced to a single space):
+
+```xsd
+<xs:element name="address">
+  <xs:simpleType>
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="collapse"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:element>
+```
+
+#### Restrictions on Length
+
+&nbsp;&nbsp;&nbsp;&nbsp;To limit the length of a value in an element, we would use the length, maxLength, and minLength constraints. This example defines an element called "password" with a restriction. The value must be exactly eight characters:
+
+```xsd
+<xs:element name="password">
+  <xs:simpleType>
+    <xs:restriction base="xs:string">
+      <xs:length value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:element>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;This example defines another element called "password" with a restriction. The value must be minimum five characters and maximum eight characters:
+
+```xsd
+<xs:element name="password">
+  <xs:simpleType>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="5"/>
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:element>
+```
+
+#### Restrictions for Datatypes
+
+| Constraint     | Description                                                                                             |
+| -------------- | ------------------------------------------------------------------------------------------------------- |
+| enumeration    | Defines a list of acceptable values                                                                     |
+| fractionDigits | Specifies the maximum number of decimal places allowed. Must be equal to or greater than zero           |
+| length         | Specifies the exact number of characters or list items allowed. Must be equal to or greater than zero   |
+| maxExclusive   | Specifies the upper bounds for numeric values (the value must be less than this value)                  |
+| maxInclusive   | Specifies the upper bounds for numeric values (the value must be less than or equal to this value)      |
+| maxLength      | Specifies the maximum number of characters or list items allowed. Must be equal to or greater than zero |
+| minExclusive   | Specifies the lower bounds for numeric values (the value must be greater than this value)               |
+| minInclusive   | Specifies the lower bounds for numeric values (the value must be greater than or equal to this value)   |
+| minLength      | Specifies the minimum number of characters or list items allowed. Must be equal to or greater than zero |
+| pattern        | Defines the exact sequence of characters that are acceptable                                            |
+| totalDigits    | Specifies the exact number of digits allowed. Must be greater than zero                                 |
+| whiteSpace     | Specifies how white space (line feeds, tabs, spaces, and carriage returns) is handled                   |
+
+### XSD Complex Elements
+
+&nbsp;&nbsp;&nbsp;&nbsp;**A complex element is an XML element that contains other elements and/or attributes.** There are four kinds of complex elements; Each of these elements may contain attributes as well:
+
+- empty elements
+- elements that contain only other elements
+- elements that contain only text
+- elements that contain both other elements and text:
+
+&nbsp;&nbsp;&nbsp;&nbsp;A complex XML element, "product", which is empty:
+
+```xsd
+<product pid="1345"/>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;A complex XML element, "food", which contains only text:
+
+```xsd
+<food type="dessert">Ice cream</food>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;A complex XML element, "employee", which contains only other elements:
+
+```xsd
+<employee>
+  <firstname>John</firstname>
+  <lastname>Smith</lastname>
+</employee>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;A complex XML element, "description", which contains both elements and text:
+
+```xsd
+<description>
+It happened on <date lang="norwegian">03.03.99</date>
+</description>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;Look at this complex XML element, "employee", which contains only other elements:
+
+```xsd
+<employee>
+  <firstname>John</firstname>
+  <lastname>Smith</lastname>
+</employee>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;We can define a complex element in an XML Schema like:
+
+```xsd
+<xs:element name="employee" type="personinfo"/>
+
+<xs:complexType name="personinfo">
+  <xs:sequence>
+    <xs:element name="firstname" type="xs:string"/>
+    <xs:element name="lastname" type="xs:string"/>
+  </xs:sequence>
+</xs:complexType>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;Note that the child elements, "firstname" and "lastname", are surrounded by the `<sequence>` indicator. This means that the child elements must appear in the same order as they are declared. You can also base a complex type on an existing complex type and add some elements, like this:
+
+```xsd
+<xs:element name="employee" type="fullpersoninfo"/>
+
+<xs:complexType name="personinfo">
+  <xs:sequence>
+    <xs:element name="firstname" type="xs:string"/>
+    <xs:element name="lastname" type="xs:string"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="fullpersoninfo">
+  <xs:complexContent>
+    <xs:extension base="personinfo">
+      <xs:sequence>
+        <xs:element name="address" type="xs:string"/>
+        <xs:element name="city" type="xs:string"/>
+        <xs:element name="country" type="xs:string"/>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+```
 
 ## Where can you dig more?
 
