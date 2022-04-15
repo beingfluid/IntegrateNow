@@ -2,7 +2,7 @@
 
 # Working With XMLs
 
-&nbsp;&nbsp;&nbsp;&nbsp;So far, we have worked with easier JSON responses, but often we need to work with other types e.g. XML, YAML or CSV. Understanding how to work with XMLs is extermely important not only when you work with web services like RSS or SOAP, but also REST when you receive back the responses in XML format. In this chapter, we will try to learn some of the important concepts regarding XML that will help us to work with XML when we interact with them. Though it is going to be a lengthy journey, we will try to limit ourselves to only concepts essential to work with ServiceNow web services and it is extremely important that we understand them very well.
+&nbsp;&nbsp;&nbsp;&nbsp;So far, we have worked with easier JSON responses, but often we need to work with other types e.g. XML, YAML or CSV. Understanding how to work with XMLs is extermely important not only when you work with web services like RSS or SOAP, but also REST when you receive back the responses in XML format. In this chapter, we will try to learn some of the important concepts regarding XML that will help us to work with XML when we interact with them. Here, we will try to limit ourselves to only concepts essential to work with ServiceNow web services and it is extremely important that we understand them very well. If you want to learn more about these concepts, the best place is [XML Tutorial](https://www.w3schools.com/xml/default.asp) on w3schools.com.
 
 ![xml](./images/xml-conversion.png)
 
@@ -357,7 +357,11 @@ xmlns:f="https://www.w3schools.com/furniture">
 
 ## XPath
 
-&nbsp;&nbsp;&nbsp;&nbsp;**XPath can be used to navigate through elements and attributes in an XML document.** It uses path expressions to navigate in XML documents. These path expressions look very much like the expressions you see when you work with a traditional computer file system. Consider the below w3schools example:
+&nbsp;&nbsp;&nbsp;&nbsp;XPath stands for XML Path Language. **XPath can be used to navigate through elements and attributes in an XML document.** It uses path expressions to navigate in XML documents. These path expressions look very much like the expressions you see when you work with a traditional computer file system.
+
+![img_xpath_folders](./images/xpathwin.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;XML documents are treated as trees of nodes. In XPath, there are seven kinds of nodes: element, attribute, text, namespace, processing-instruction, comment, and document nodes. The topmost element of the tree is called the root element. Look at the following XML document:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -399,11 +403,38 @@ xmlns:f="https://www.w3schools.com/furniture">
 </bookstore>
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;In the table below we have listed some XPath expressions and the result of the expressions:
+&nbsp;&nbsp;&nbsp;&nbsp;Example of nodes in the XML document above:
 
-| XPath Expression                   | Result                                                                                                                                 |
+```xml
+<bookstore> (root element node)
+
+<author>J K. Rowling</author> (element node)
+
+lang="en" (attribute node)
+```
+
+### Selecting Nodes
+
+&nbsp;&nbsp;&nbsp;&nbsp;XPath uses path expressions to select nodes in an XML document. The node is selected by following a path or steps. The most useful path expressions are listed below:
+
+| Expression | Description                                                                                           | Example         | Result                                                                                                                       |
+| ---------- | ----------------------------------------------------------------------------------------------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| nodename   | Selects all nodes with the name "nodename"                                                            | bookstore       | Selects all nodes with the name "bookstore"                                                                                  |
+| /          | Selects from the root node                                                                            | /bookstore      | Selects the root element bookstore                                                                                           |
+|            |                                                                                                       | bookstore/book  | Selects all book elements that are children of bookstore                                                                     |
+| //         | Selects nodes in the document from the current node that match the selection no matter where they are | //book          | Selects all book elements no matter where they are in the document                                                           |
+|            |                                                                                                       | bookstore//book | Selects all book elements that are descendant of the bookstore element, no matter where they are under the bookstore element |
+| .          | Selects the current node                                                                              |
+| ..         | Selects the parent of the current node                                                                |
+| @          | Selects attributes                                                                                    | //@             | lang Selects all attributes that are named lang                                                                              |
+
+### Predicates
+
+&nbsp;&nbsp;&nbsp;&nbsp;Predicates are used to find a specific node or a node that contains a specific value. Predicates are always embedded in square brackets. In the table below we have listed some path expressions with predicates and the result of the expressions:
+
+| Path Expression                    | Result                                                                                                                                 |
 | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| /bookstore/book[1]                 | Selects the first book element that is the child of the bookstore element                                                              |
+| /bookstore/book[1]                 | Selects the first book element that is the child of the bookstore element.                                                             |
 | /bookstore/book[last()]            | Selects the last book element that is the child of the bookstore element                                                               |
 | /bookstore/book[last()-1]          | Selects the last but one book element that is the child of the bookstore element                                                       |
 | /bookstore/book[position()<3]      | Selects the first two book elements that are children of the bookstore element                                                         |
@@ -412,16 +443,79 @@ xmlns:f="https://www.w3schools.com/furniture">
 | /bookstore/book[price>35.00]       | Selects all the book elements of the bookstore element that have a price element with a value greater than 35.00                       |
 | /bookstore/book[price>35.00]/title | Selects all the title elements of the book elements of the bookstore element that have a price element with a value greater than 35.00 |
 
-## XQuery
+### Selecting Unknown Nodes
 
-&nbsp;&nbsp;&nbsp;&nbsp;XQuery was designed to query XML data. It is used for finding and extracting elements and attributes from XML documents. XQuery is to XML what SQL is to databases. It is built on XPath expressions and can be used to extract information to use in a Web Service.
+&nbsp;&nbsp;&nbsp;&nbsp;XPath wildcards can be used to select unknown XML nodes. In the table below we have listed some path expressions and the result of the expressions:
 
-```JS
-for $x in doc("books.xml")/bookstore/book
-where $x/price>30
-order by $x/title
-return $x/title
+| Wildcard | Description                  | Path Expression | Result                                                                   |
+| -------- | ---------------------------- | --------------- | ------------------------------------------------------------------------ |
+| \*       | Matches any element node     | /bookstore/\*   | Selects all the child element nodes of the bookstore element             |
+|          |                              | //\*            | Selects all elements in the document                                     |
+| @\*      | Matches any attribute node   | //title[@*]     | Selects all title elements which have at least one attribute of any kind |
+| node()   | Matches any node of any kind |                 |                                                                          |
+
+### Selecting Several Paths
+
+&nbsp;&nbsp;&nbsp;&nbsp;By using the **|** operator in an XPath expression you can select several paths. In the table below we have listed some path expressions and the result of the expressions:
+
+| Path Expression                  | Result                                                                                                                 |
+| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| //book/title \| //book/price     | Selects all the title AND price elements of all book elements                                                          |
+| //title \| //price               | Selects all the title AND price elements in the document                                                               |
+| /bookstore/book/title \| //price | Selects all the title elements of the book element of the bookstore element AND all the price elements in the document |
+
+### XPath Axes
+
+&nbsp;&nbsp;&nbsp;&nbsp;An axis represents a relationship to the context (current) node, and is used to locate nodes relative to that node on the tree.
+
+| AxisName           | Result                                                                                                                       |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
+| ancestor           | Selects all ancestors (parent, grandparent, etc.) of the current node                                                        |
+| ancestor-or-self   | Selects all ancestors (parent, grandparent, etc.) of the current node and the current node itself                            |
+| attribute          | Selects all attributes of the current node                                                                                   |
+| child              | Selects all children of the current node                                                                                     |
+| descendant         | Selects all descendants (children, grandchildren, etc.) of the current node                                                  |
+| descendant-or-self | Selects all descendants (children, grandchildren, etc.) of the current node and the current node itself                      |
+| following          | Selects everything in the document after the closing tag of the current node                                                 |
+| following-sibling  | Selects all siblings after the current node                                                                                  |
+| namespace          | Selects all namespace nodes of the current node                                                                              |
+| parent             | Selects the parent of the current node                                                                                       |
+| preceding          | Selects all nodes that appear before the current node in the document, except ancestors, attribute nodes and namespace nodes |
+| preceding-sibling  | Selects all siblings before the current node                                                                                 |
+| self               | Selects the current node                                                                                                     |
+
+### Location Path Expression
+
+&nbsp;&nbsp;&nbsp;&nbsp;A location path can be absolute or relative. An absolute location path starts with a slash ( / ) and a relative location path does not. In both cases the location path consists of one or more steps, each separated by a slash:
+
+```xml
+An absolute location path:
+
+/step/step/...
+
+A relative location path:
+
+step/step/...
 ```
+
+&nbsp;&nbsp;&nbsp;&nbsp;The syntax for a location step is:
+
+```xml
+axisname::nodetest[predicate]
+```
+
+| Example                | Result                                                                                        |
+| ---------------------- | --------------------------------------------------------------------------------------------- |
+| child::book            | Selects all book nodes that are children of the current node                                  |
+| attribute::lang        | Selects the lang attribute of the current node                                                |
+| child::\*              | Selects all element children of the current node                                              |
+| attribute::\*          | Selects all attributes of the current node                                                    |
+| child::text()          | Selects all text node children of the current node                                            |
+| child::node()          | Selects all children of the current node                                                      |
+| descendant::book       | Selects all book descendants of the current node                                              |
+| ancestor::book         | Selects all book ancestors of the current node                                                |
+| ancestor-or-self::book | Selects all book ancestors of the current node - and the current as well if it is a book node |
+| child::\*/child::price | Selects all price grandchildren of the current node                                           |
 
 ## XML Schema
 
@@ -492,7 +586,7 @@ xsi:schemaLocation="https://www.w3schools.com/xml note.xsd">
 </note>
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;The following example is an XML Schema file called "note.xsd" that defines the elements of the XML document above ("note.xml"):
+&nbsp;&nbsp;&nbsp;&nbsp;The line above: `xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"` tells the XML parser that this document should be validated against a schema. The line: `xsi:schemaLocation="https://www.w3schools.com/xml note.xsd"` specifies WHERE the schema resides. The following example is an XML Schema file called "note.xsd" that defines the elements of the XML document above ("note.xml"):
 
 ```xml
 <?xml version="1.0"?>
@@ -591,6 +685,207 @@ xsi:schemaLocation="https://www.w3schools.com note.xsd">
 
 - Once you have the XML Schema Instance namespace available: `xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"`, you can use the `schemaLocation` attribute. This attribute has two values, separated by a space. The first value is the namespace to use. The second value is the location of the XML schema to use for that namespace: `xsi:schemaLocation="https://www.w3schools.com note.xsd"`
 
+### XSD Data Types
+
+&nbsp;&nbsp;&nbsp;&nbsp;XML Schema has a lot of built-in data types. The most common types are:
+
+- xs:string
+- xs:decimal
+- xs:integer
+- xs:boolean
+- xs:date
+- xs:time
+
+#### XSD String Data Types
+
+&nbsp;&nbsp;&nbsp;&nbsp;String data types are used for values that contains character strings. The string data type can contain characters, line feeds, carriage returns, and tab characters. The following is an example of a string declaration in a schema:
+
+```xsd
+<xs:element name="customer" type="xs:string"/>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;An element in your document might look like this:
+
+```xml
+<customer>John Smith</customer>
+```
+
+##### NormalizedString & Token Data Type
+
+&nbsp;&nbsp;&nbsp;&nbsp;The normalizedString & token data type are derived from the String data type. Both also contains characters, but the XML processor will remove line feeds, carriage returns, and tab characters. The following is an example of a normalizedString declaration in a schema:
+
+```xsd
+<xs:element name="customer" type="xs:normalizedString"/>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;The following is an example of a token declaration in a schema:
+
+```xsd
+<xs:element name="customer" type="xs:token"/>
+```
+
+#### XSD Date and Time Data Types
+
+&nbsp;&nbsp;&nbsp;&nbsp;Date and time data types are used for values that contain date and time.
+
+##### Date Data Type
+
+&nbsp;&nbsp;&nbsp;&nbsp;The date data type is used to specify a date. The date is specified in the following form "YYYY-MM-DD" where:
+
+- **YYYY** indicates the year
+- **MM** indicates the month
+- **DD** indicates the day
+
+&nbsp;&nbsp;&nbsp;&nbsp;The following is an example of a date declaration in a schema:
+
+```xsd
+<xs:element name="start" type="xs:date"/>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;An element in your document might look like this:
+
+```xsd
+<start>2002-09-24</start>
+```
+
+##### Time Data Type
+
+&nbsp;&nbsp;&nbsp;&nbsp;The time data type is used to specify a time. The time is specified in the following form "hh:mm:ss" where:
+
+- **hh** indicates the hour
+- **mm** indicates the minute
+- **ss** indicates the second
+
+&nbsp;&nbsp;&nbsp;&nbsp;The following is an example of a time declaration in a schema:
+
+```xsd
+<xs:element name="start" type="xs:time"/>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;An element in your document might look like this:
+
+```xsd
+<start>09:00:00</start>
+```
+
+##### DateTime Data Type
+
+&nbsp;&nbsp;&nbsp;&nbsp;The dateTime data type is used to specify a date and a time. The dateTime is specified in the following form "YYYY-MM-DDThh:mm:ss" where:
+
+- **T** indicates the start of the required time section
+
+&nbsp;&nbsp;&nbsp;&nbsp;The following is an example of a dateTime declaration in a schema:
+
+```xsd
+<xs:element name="startdate" type="xs:dateTime"/>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;An element in your document might look like this:
+
+```xsd
+<startdate>2002-05-30T09:00:00</startdate>
+```
+
+##### Time Zones
+
+&nbsp;&nbsp;&nbsp;&nbsp;To specify a time zone, you can either enter a date, time or dateTime in UTC time by adding a "Z" at the end, like this:
+
+```xml
+<startdate>2002-05-30T09:30:10Z</startdate>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;or you can specify an offset from the UTC time by adding a positive or negative time behind the time - like this:
+
+```xml
+<startdate>2002-05-30T09:30:10+06:00</startdate>
+```
+
+##### Duration Data Type
+
+&nbsp;&nbsp;&nbsp;&nbsp;The duration data type is used to specify a time interval. The time interval is specified in the following form "PnYnMnDTnHnMnS" where:
+
+- **P** indicates the period (required)
+- **nY** indicates the number of years
+- **nM** indicates the number of months
+- **nD** indicates the number of days
+- **nH** indicates the number of hours
+- **nM** indicates the number of minutes
+- **nS** indicates the number of seconds
+
+&nbsp;&nbsp;&nbsp;&nbsp;The following is an example of a duration declaration in a schema:
+
+```xsd
+<xs:element name="period" type="xs:duration"/>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;An element in your document might look like this:
+
+```xsd
+<period>P5Y2M10DT15H</period>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;The example above indicates a period of five years, two months, 10 days, and 15 hours.
+
+#### XSD Numeric Data Types
+
+&nbsp;&nbsp;&nbsp;&nbsp;Decimal data types are used for numeric values.
+
+##### Decimal Data Type
+
+&nbsp;&nbsp;&nbsp;&nbsp;The decimal data type is used to specify a numeric value. The following is an example of a decimal declaration in a schema:
+
+```xsd
+<xs:element name="price" type="xs:decimal"/>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;An element in your document might look like this:
+
+```xml
+<price>999.50</price>
+```
+
+##### Integer Data Type
+
+&nbsp;&nbsp;&nbsp;&nbsp;The integer data type is used to specify a numeric value without a fractional component. The following is an example of an integer declaration in a schema:
+
+```xsd
+<xs:element name="price" type="xs:integer"/>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;An element in your document might look like this:
+
+```xml
+<price>999</price>
+```
+
+#### Boolean Data Type
+
+&nbsp;&nbsp;&nbsp;&nbsp;The boolean data type is used to specify a true or false value. Legal values for boolean are true, false, 1 (which indicates true), and 0 (which indicates false). The following is an example of a boolean declaration in a schema:
+
+```xsd
+<xs:attribute name="disabled" type="xs:boolean"/>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;An element in your document might look like this:
+
+```xml
+<price disabled="true">999</price>
+```
+
+#### AnyURI Data Type
+
+&nbsp;&nbsp;&nbsp;&nbsp;The anyURI data type is used to specify a URI. The following is an example of an anyURI declaration in a schema:
+
+```xsd
+<xs:attribute name="src" type="xs:anyURI"/>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;An element in your document might look like this:
+
+```xml
+<pic src="https://www.w3schools.com/images/smiley.gif" />
+```
+
 ### XSD Simple Elements
 
 &nbsp;&nbsp;&nbsp;&nbsp;XML Schemas define the elements of your XML files. **A simple element is an XML element that contains only text. It cannot contain any other elements or attributes.** However, the text can be of many different types. It can be one of the types included in the XML Schema definition (boolean, string, date, etc.), or it can be a custom type that you can define yourself. You can also add restrictions (facets) to a data type in order to limit its content, or you can require the data to match a specific pattern.
@@ -602,15 +897,6 @@ xsi:schemaLocation="https://www.w3schools.com note.xsd">
 ```
 
 &nbsp;&nbsp;&nbsp;&nbsp;where xxx is the name of the element and yyy is the data type of the element.
-
-&nbsp;&nbsp;&nbsp;&nbsp;XML Schema has a lot of built-in data types. The most common types are:
-
-- xs:string
-- xs:decimal
-- xs:integer
-- xs:boolean
-- xs:date
-- xs:time
 
 &nbsp;&nbsp;&nbsp;&nbsp;Here is an example of some XML elements:
 
@@ -653,15 +939,6 @@ xsi:schemaLocation="https://www.w3schools.com note.xsd">
 ```
 
 &nbsp;&nbsp;&nbsp;&nbsp;where xxx is the name of the attribute and yyy specifies the data type of the attribute.
-
-&nbsp;&nbsp;&nbsp;&nbsp;XML Schema has a lot of built-in data types. The most common types are:
-
-- xs:string
-- xs:decimal
-- xs:integer
-- xs:boolean
-- xs:date
-- xs:time
 
 &nbsp;&nbsp;&nbsp;&nbsp;Here is an example of an XML element with an attribute:
 
@@ -925,34 +1202,101 @@ xsi:schemaLocation="https://www.w3schools.com note.xsd">
 - elements that contain only text
 - elements that contain both other elements and text:
 
-&nbsp;&nbsp;&nbsp;&nbsp;A complex XML element, "product", which is empty:
+#### XSD Empty Elements
 
-```xsd
+&nbsp;&nbsp;&nbsp;&nbsp;An empty complex element cannot have contents, only attributes. A complex XML element, "product", which is empty:
+
+```xml
 <product pid="1345"/>
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;A complex XML element, "food", which contains only text:
+&nbsp;&nbsp;&nbsp;&nbsp; The "product" element above has no content at all. It is possible to declare the "product" element more compactly, like this:
 
 ```xsd
-<food type="dessert">Ice cream</food>
+<xs:element name="product">
+  <xs:complexType>
+    <xs:attribute name="prodid" type="xs:positiveInteger"/>
+  </xs:complexType>
+</xs:element>
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;A complex XML element, "employee", which contains only other elements:
+#### XSD Text-Only Elements
+
+&nbsp;&nbsp;&nbsp;&nbsp;A complex text-only element can contain only simple content (text and attributes).Here is an example of an XML element, "shoesize", that contains text-only:
+
+```xml
+<shoesize country="france">35</shoesize>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;The following example declares a complexType, "shoesize". The content is defined as an integer value, and the "shoesize" element also contains an attribute named "country". The extension element is used to expand the base simple type for the element:
 
 ```xsd
-<employee>
+<xs:element name="shoesize">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="xs:integer">
+        <xs:attribute name="country" type="xs:string" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+```
+
+#### XSD Elements Only
+
+&nbsp;&nbsp;&nbsp;&nbsp;An "elements-only" complex type contains an element that contains only other elements. An XML element, "person", that contains only other elements:
+
+```xsd
+<person>
   <firstname>John</firstname>
   <lastname>Smith</lastname>
-</employee>
+</person>
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;A complex XML element, "description", which contains both elements and text:
+&nbsp;&nbsp;&nbsp;&nbsp;You can define the "person" element in a schema, like this:
 
 ```xsd
-<description>
-It happened on <date lang="norwegian">03.03.99</date>
-</description>
+<xs:element name="person">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="firstname" type="xs:string"/>
+      <xs:element name="lastname" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
 ```
+
+&nbsp;&nbsp;&nbsp;&nbsp;Notice the `<xs:sequence>` tag. It means that the elements defined ("firstname" and "lastname") must appear in that order inside a "person" element.
+
+#### XSD Mixed Content
+
+&nbsp;&nbsp;&nbsp;&nbsp;A mixed complex type element can contain attributes, elements, and text. An XML element, "letter", that contains both text and other elements:
+
+```xsd
+<letter>
+  Dear Mr. <name>John Smith</name>.
+  Your order <orderid>1032</orderid>
+  will be shipped on <shipdate>2001-07-13</shipdate>.
+</letter>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;The following schema declares the "letter" element:
+
+```xsd
+<xs:element name="letter">
+  <xs:complexType mixed="true">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="orderid" type="xs:positiveInteger"/>
+      <xs:element name="shipdate" type="xs:date"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;To enable character data to appear between the child-elements of "letter", the mixed attribute must be set to "true". The `<xs:sequence>` tag means that the elements defined (name, orderid and shipdate) must appear in that order inside a "letter" element.
+
+#### Base a complex type on an existing complex type
 
 &nbsp;&nbsp;&nbsp;&nbsp;Look at this complex XML element, "employee", which contains only other elements:
 
@@ -976,7 +1320,7 @@ It happened on <date lang="norwegian">03.03.99</date>
 </xs:complexType>
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;Note that the child elements, "firstname" and "lastname", are surrounded by the `<sequence>` indicator. This means that the child elements must appear in the same order as they are declared. You can also base a complex type on an existing complex type and add some elements, like this:
+&nbsp;&nbsp;&nbsp;&nbsp;We can base a complex type on an existing complex type and add some elements, like this:
 
 ```xsd
 <xs:element name="employee" type="fullpersoninfo"/>
@@ -1001,6 +1345,554 @@ It happened on <date lang="norwegian">03.03.99</date>
 </xs:complexType>
 ```
 
+### XSD Indicators
+
+&nbsp;&nbsp;&nbsp;&nbsp;We can control HOW elements are to be used in documents with indicators. There are seven indicators:
+
+- Order indicators:
+
+  - All
+  - Choice
+  - Sequence
+
+- Occurrence indicators:
+
+  - maxOccurs
+  - minOccurs
+
+- Group indicators:
+  - Group name
+  - attributeGroup name
+
+#### Order Indicators
+
+&nbsp;&nbsp;&nbsp;&nbsp;Order indicators are used to define the order of the elements. **The `<all>` indicator specifies that the child elements can appear in any order, and that each child element must occur only once**:
+
+```xsd
+<xs:element name="person">
+  <xs:complexType>
+    <xs:all>
+      <xs:element name="firstname" type="xs:string"/>
+      <xs:element name="lastname" type="xs:string"/>
+    </xs:all>
+  </xs:complexType>
+</xs:element>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;When using the `<all>` indicator you can set the `<minOccurs>` indicator to 0 or 1 and the `<maxOccurs>` indicator can only be set to 1. **The `<choice>` indicator specifies that either one child element or another can occur**:
+
+```xsd
+<xs:element name="person">
+  <xs:complexType>
+    <xs:choice>
+      <xs:element name="employee" type="employee"/>
+      <xs:element name="member" type="member"/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;**The `<sequence>` indicator specifies that the child elements must appear in a specific order**:
+
+```xsd
+<xs:element name="person">
+   <xs:complexType>
+    <xs:sequence>
+      <xs:element name="firstname" type="xs:string"/>
+      <xs:element name="lastname" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+```
+
+#### Occurrence Indicators
+
+&nbsp;&nbsp;&nbsp;&nbsp;Occurrence indicators are used to define how often an element can occur. **The `<maxOccurs>` indicator specifies the maximum number of times an element can occur**:
+
+```xsd
+<xs:element name="person">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="full_name" type="xs:string"/>
+      <xs:element name="child_name" type="xs:string" maxOccurs="10"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;The example above indicates that the "child_name" element can occur a minimum of one time (the default value for minOccurs is 1) and a maximum of ten times in the "person" element. **The `<minOccurs>` indicator specifies the minimum number of times an element can occur**:
+
+```xsd
+<xs:element name="person">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="full_name" type="xs:string"/>
+      <xs:element name="child_name" type="xs:string"
+      maxOccurs="10" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;The example above indicates that the "child_name" element can occur a minimum of zero times and a maximum of ten times in the "person" element.
+
+&nbsp;&nbsp;&nbsp;&nbsp;For all "Order" and "Group" indicators (any, all, choice, sequence, group name, and group reference) the default value for maxOccurs and minOccurs is 1. To allow an element to appear an unlimited number of times, use the maxOccurs="unbounded" statement.
+
+#### Group Indicators
+
+&nbsp;&nbsp;&nbsp;&nbsp;**Group indicators are used to define related sets of elements.** Element groups are defined with the group declaration, like this:
+
+```xsd
+<xs:group name="groupname">
+...
+</xs:group>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;You must define an all, choice, or sequence element inside the group declaration. The following example defines a group named "persongroup", that defines a group of elements that must occur in an exact sequence:
+
+```xsd
+<xs:group name="persongroup">
+  <xs:sequence>
+    <xs:element name="firstname" type="xs:string"/>
+    <xs:element name="lastname" type="xs:string"/>
+    <xs:element name="birthday" type="xs:date"/>
+  </xs:sequence>
+</xs:group>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;After you have defined a group, you can reference it in another definition, like this:
+
+```xsd
+<xs:element name="person" type="personinfo"/>
+
+<xs:complexType name="personinfo">
+  <xs:sequence>
+    <xs:group ref="persongroup"/>
+    <xs:element name="country" type="xs:string"/>
+  </xs:sequence>
+</xs:complexType>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;Attribute groups are defined with the attributeGroup declaration, like this:
+
+```xsd
+<xs:attributeGroup name="groupname">
+...
+</xs:attributeGroup>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;The following example defines an attribute group named "personattrgroup":
+
+```xsd
+<xs:attributeGroup name="personattrgroup">
+  <xs:attribute name="firstname" type="xs:string"/>
+  <xs:attribute name="lastname" type="xs:string"/>
+  <xs:attribute name="birthday" type="xs:date"/>
+</xs:attributeGroup>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;After you have defined an attribute group, you can reference it in another definition, like this:
+
+```xsd
+<xs:element name="person">
+  <xs:complexType>
+    <xs:attributeGroup ref="personattrgroup"/>
+  </xs:complexType>
+</xs:element>
+```
+
+### `<any>` and `<anyAttribute>`
+
+&nbsp;&nbsp;&nbsp;&nbsp;The `<any>` and `<anyAttribute>` elements are used to make EXTENSIBLE documents! They allow documents to contain additional elements that are not declared in the main XML schema.
+
+#### XSD The `<any>` Element
+
+&nbsp;&nbsp;&nbsp;&nbsp;The `<any>` element enables us to extend the XML document with elements not specified by the schema. The following example is a fragment from an XML schema called "family.xsd". It shows a declaration for the "person" element. By using the `<any>` element we can extend (after `<lastname>`) the content of "person" with any element:
+
+```xsd
+<xs:element name="person">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="firstname" type="xs:string"/>
+      <xs:element name="lastname" type="xs:string"/>
+      <xs:any minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+```
+
+#### XSD The `<anyAttribute>` Element
+
+&nbsp;&nbsp;&nbsp;&nbsp;The `<anyAttribute>` element enables us to extend the XML document with attributes not specified by the schema. The following example is a fragment from an XML schema called "family.xsd". It shows a declaration for the "person" element. By using the `<anyAttribute>` element we can add any number of attributes to the "person" element:
+
+```xsd
+<xs:element name="person">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="firstname" type="xs:string"/>
+      <xs:element name="lastname" type="xs:string"/>
+    </xs:sequence>
+    <xs:anyAttribute/>
+  </xs:complexType>
+</xs:element>
+```
+
+## XML Web Services
+
+&nbsp;&nbsp;&nbsp;&nbsp;Web services communicate using open protocols. By using Web services, your application can publish its function or message to the rest of the world. Web services use XML to code and to decode data, and SOAP to transport it (using open protocols).With Web services you can exchange data between different applications and different platforms.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Before you learn about these web services you should have a basic understanding of XML and XML Namespaces.
+
+### WSDL
+
+&nbsp;&nbsp;&nbsp;&nbsp;WSDL stands for Web Services Description Language. WSDL is an XML-based language for describing Web services.
+
+#### WSDL Documents
+
+&nbsp;&nbsp;&nbsp;&nbsp;An WSDL document describes a web service. It specifies the location of the service, and the methods of the service, using these major elements:
+
+| Element      | Description                                                               |
+| ------------ | ------------------------------------------------------------------------- |
+| `<types>`    | Defines the (XML Schema) data types used by the web service               |
+| `<message>`  | Defines the data elements for each operation                              |
+| `<portType>` | Describes the operations that can be performed and the messages involved. |
+| `<binding>`  | Defines the protocol and data format for each port type                   |
+
+&nbsp;&nbsp;&nbsp;&nbsp;The main structure of a WSDL document looks like this:
+
+```xml
+<definitions>
+
+<types>
+  data type definitions........
+</types>
+
+<message>
+  definition of the data being communicated....
+</message>
+
+<portType>
+  set of operations......
+</portType>
+
+<binding>
+  protocol and data format specification....
+</binding>
+
+</definitions>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;This is a simplified fraction of a WSDL document:
+
+```xml
+<message name="getTermRequest">
+  <part name="term" type="xs:string"/>
+</message>
+
+<message name="getTermResponse">
+  <part name="value" type="xs:string"/>
+</message>
+
+<portType name="glossaryTerms">
+  <operation name="getTerm">
+    <input message="getTermRequest"/>
+    <output message="getTermResponse"/>
+  </operation>
+</portType>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;**The `<portType>` element defines a web service, the operations that can be performed, and the messages that are involved.** In this example the `<portType>` element defines "glossaryTerms" as the name of a port, and "getTerm" as the name of an operation. The "getTerm" operation has an input message called "getTermRequest" and an output message called "getTermResponse". The `<message>` elements define the parts of each message and the associated data types. The "getTerm" operation requires an input message called "getTermRequest" with a parameter called "term", and will return an output message called "getTermResponse" with a parameter called "value".
+
+### SOAP
+
+&nbsp;&nbsp;&nbsp;&nbsp;SOAP stands for Simple Object Access Protocol. SOAP is an XML based format for sending and receiving messages. It is important for web applications to be able to communicate over the Internet. The best way to communicate between applications is over HTTP, because HTTP is supported by all Internet browsers and servers. SOAP was created to accomplish this. SOAP provides a way to communicate between applications running on different operating systems, with different technologies and programming languages.
+
+#### SOAP Building Blocks
+
+&nbsp;&nbsp;&nbsp;&nbsp;A SOAP message is an ordinary XML document containing the following elements:
+
+- An **Envelope** element that identifies the XML document as a SOAP message
+- A **Header** element that contains header information
+- A **Body** element that contains call and response information
+- A **Fault** element containing errors and status information
+
+&nbsp;&nbsp;&nbsp;&nbsp;All the elements above are declared in the default namespace for the SOAP envelope: `http://www.w3.org/2003/05/soap-envelope/` and the default namespace for SOAP encoding and data types is: `http://www.w3.org/2003/05/soap-encoding`.
+
+```xml
+<?xml version="1.0"?>
+
+<soap:Envelope
+xmlns:soap="http://www.w3.org/2003/05/soap-envelope/"
+soap:encodingStyle="http://www.w3.org/2003/05/soap-encoding">
+
+<soap:Header>
+...
+</soap:Header>
+
+<soap:Body>
+...
+  <soap:Fault>
+  ...
+  </soap:Fault>
+</soap:Body>
+
+</soap:Envelope>
+```
+
+##### The SOAP Envelope Element
+
+&nbsp;&nbsp;&nbsp;&nbsp;The required SOAP Envelope element is the root element of a SOAP message. This element defines the XML document as a SOAP message.
+
+```xml
+<?xml version="1.0"?>
+
+<soap:Envelope
+xmlns:soap="http://www.w3.org/2003/05/soap-envelope/"
+soap:encodingStyle="http://www.w3.org/2003/05/soap-encoding">
+  ...
+  Message information goes here
+  ...
+</soap:Envelope>
+```
+
+##### The `xmlns:soap` Namespace
+
+&nbsp;&nbsp;&nbsp;&nbsp;Notice the `xmlns:soap` namespace in the example above. It should always have the value of: `http://www.w3.org/2003/05/soap-envelope/`. **The namespace defines the Envelope as a SOAP Envelope.** If a different namespace is used, the application generates an error and discards the message.
+
+##### The encodingStyle Attribute
+
+&nbsp;&nbsp;&nbsp;&nbsp;**The encodingStyle attribute is used to define the data types used in the document.** This attribute may appear on any SOAP element, and applies to the element's contents and all child elements.
+
+##### The SOAP Header Element
+
+&nbsp;&nbsp;&nbsp;&nbsp;The optional SOAP Header element contains application-specific information (like authentication, payment, etc) about the SOAP message. If the Header element is present, it must be the first child element of the Envelope element. All immediate child elements of the Header element must be namespace-qualified.
+
+```xml
+<?xml version="1.0"?>
+
+<soap:Envelope
+xmlns:soap="http://www.w3.org/2003/05/soap-envelope/"
+soap:encodingStyle="http://www.w3.org/2003/05/soap-encoding">
+
+<soap:Header>
+  <m:Trans xmlns:m="https://www.w3schools.com/transaction/"
+  soap:mustUnderstand="1">234
+  </m:Trans>
+</soap:Header>
+...
+...
+</soap:Envelope>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;The example above contains a header with a "Trans" element, a "mustUnderstand" attribute with a value of 1, and a value of 234.
+
+&nbsp;&nbsp;&nbsp;&nbsp;SOAP defines three attributes in the default namespace. These attributes are: mustUnderstand, actor, and encodingStyle. The attributes defined in the SOAP Header defines how a recipient should process the SOAP message.
+
+##### The mustUnderstand Attribute
+
+&nbsp;&nbsp;&nbsp;&nbsp;The SOAP mustUnderstand attribute can be used to indicate whether a header entry is mandatory or optional for the recipient to process. If you add mustUnderstand="1" to a child element of the Header element it indicates that the receiver processing the Header must recognize the element. If the receiver does not recognize the element it will fail when processing the Header.
+
+##### The actor Attribute
+
+&nbsp;&nbsp;&nbsp;&nbsp;A SOAP message may travel from a sender to a receiver by passing different endpoints along the message path. However, not all parts of a SOAP message may be intended for the ultimate endpoint, instead, it may be intended for one or more of the endpoints on the message path. The SOAP actor attribute is used to address the Header element to a specific endpoint.
+
+```xml
+<?xml version="1.0"?>
+
+<soap:Envelope
+xmlns:soap="http://www.w3.org/2003/05/soap-envelope/"
+soap:encodingStyle="http://www.w3.org/2003/05/soap-encoding">
+
+<soap:Header>
+  <m:Trans xmlns:m="https://www.w3schools.com/transaction/"
+  soap:actor="https://www.w3schools.com/code/">234
+  </m:Trans>
+</soap:Header>
+...
+...
+</soap:Envelope>
+```
+
+##### The SOAP Body Element
+
+&nbsp;&nbsp;&nbsp;&nbsp;The required SOAP Body element contains the actual SOAP message intended for the ultimate endpoint of the message. Immediate child elements of the SOAP Body element may be namespace-qualified.
+
+```xml
+<?xml version="1.0"?>
+
+<soap:Envelope
+xmlns:soap="http://www.w3.org/2003/05/soap-envelope/"
+soap:encodingStyle="http://www.w3.org/2003/05/soap-encoding">
+
+<soap:Body>
+  <m:GetPrice xmlns:m="https://www.w3schools.com/prices">
+    <m:Item>Apples</m:Item>
+  </m:GetPrice>
+</soap:Body>
+
+</soap:Envelope>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;The example above requests the price of apples. Note that the m:GetPrice and the Item elements above are application-specific elements. They are not a part of the SOAP namespace. A SOAP response could look something like this:
+
+```xml
+<?xml version="1.0"?>
+
+<soap:Envelope
+xmlns:soap="http://www.w3.org/2003/05/soap-envelope/"
+soap:encodingStyle="http://www.w3.org/2003/05/soap-encoding">
+
+<soap:Body>
+  <m:GetPriceResponse xmlns:m="https://www.w3schools.com/prices">
+    <m:Price>1.90</m:Price>
+  </m:GetPriceResponse>
+</soap:Body>
+
+</soap:Envelope>
+```
+
+##### The SOAP Fault Element
+
+&nbsp;&nbsp;&nbsp;&nbsp;The optional SOAP Fault element is used to indicate error messages. The SOAP Fault element holds errors and status information for a SOAP message. If a Fault element is present, it must appear as a child element of the Body element. A Fault element can only appear once in a SOAP message. The SOAP Fault element has the following sub elements:
+
+| Sub Element     | Description                                                              |
+| --------------- | ------------------------------------------------------------------------ |
+| `<faultcode>`   | A code for identifying the fault                                         |
+| `<faultstring>` | A human readable explanation of the fault                                |
+| `<faultactor>`  | Information about who caused the fault to happen                         |
+| `<detail>`      | Holds application specific error information related to the Body element |
+
+##### SOAP Fault Codes
+
+&nbsp;&nbsp;&nbsp;&nbsp;The faultcode values defined below must be used in the faultcode element when describing faults:
+
+| Error           | Description                                                                                                        |
+| --------------- | ------------------------------------------------------------------------------------------------------------------ |
+| VersionMismatch | Found an invalid namespace for the SOAP Envelope element                                                           |
+| MustUnderstand  | An immediate child element of the Header element, with the mustUnderstand attribute set to "1", was not understood |
+| Client          | The message was incorrectly formed or contained incorrect information                                              |
+| Server          | There was a problem with the server so the message could not proceed                                               |
+
+#### SOAP Binding
+
+&nbsp;&nbsp;&nbsp;&nbsp;The SOAP specification defines the structure of the SOAP messages, not how they are exchanged. This gap is filled by what is called "SOAP Bindings". SOAP bindings are mechanisms which allow SOAP messages to be effectively exchanged using a transport protocol.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Most SOAP implementations provide bindings for common transport protocols, such as HTTP or SMTP. HTTP is synchronous and widely used. A SOAP HTTP request specifies at least two HTTP headers: Content-Type and Content-Length.
+
+##### Content-Type
+
+&nbsp;&nbsp;&nbsp;&nbsp;The Content-Type header for a SOAP request and response defines the MIME type for the message and the character encoding (optional) used for the XML body of the request or response.
+
+##### Content-Length
+
+&nbsp;&nbsp;&nbsp;&nbsp;The Content-Length header for a SOAP request and response specifies the number of bytes in the body of the request or response.
+
+#### WSDL Binding to SOAP
+
+&nbsp;&nbsp;&nbsp;&nbsp;WSDL bindings defines the message format and protocol details for a web service. A request-response operation example:
+
+```xml
+<message name="getTermRequest">
+  <part name="term" type="xs:string"/>
+</message>
+
+<message name="getTermResponse">
+  <part name="value" type="xs:string"/>
+</message>
+
+<portType name="glossaryTerms">
+  <operation name="getTerm">
+    <input message="getTermRequest"/>
+    <output message="getTermResponse"/>
+  </operation>
+</portType>
+
+<binding type="glossaryTerms" name="b1">
+   <soap:binding style="document"
+   transport="http://schemas.xmlsoap.org/soap/http" />
+   <operation>
+     <soap:operation soapAction="http://example.com/getTerm"/>
+     <input><soap:body use="literal"/></input>
+     <output><soap:body use="literal"/></output>
+  </operation>
+</binding>
+```
+
+- The **binding** element has two attributes - name and type. The name attribute (you can use any name you want) defines the name of the binding, and the type attribute points to the port for the binding, in this case the "glossaryTerms" port.
+- The **soap:binding** element has two attributes - style and transport. The style attribute can be "rpc" or "document". In this case we use document. The transport attribute defines the SOAP protocol to use. In this case we use HTTP.
+- The **operation** element defines each operation that the portType exposes. For each operation the corresponding SOAP action has to be defined. You must also specify how the input and output are encoded. In this case we use "literal".
+
+### RSS
+
+&nbsp;&nbsp;&nbsp;&nbsp;With RSS it is possible to distribute up-to-date web content from one web site to thousands of other web sites around the world. RSS stands for Really Simple Syndication. RSS allows you to syndicate your site content. It defines an easy way to share and view headlines and content.
+
+&nbsp;&nbsp;&nbsp;&nbsp;RSS was designed to show selected data. Without RSS, users will have to check your site daily for new updates. This may be too time-consuming for many users. With an RSS feed (RSS is often called a News feed or RSS feed) they can check your site faster using an RSS aggregator (a site or program that gathers and sorts out RSS feeds). Since RSS data is small and fast-loading, it can easily be used with services like cell phones or PDA's.Web-rings with similar information can easily share data on their web sites to make them better and more useful.
+
+#### How RSS Works
+
+&nbsp;&nbsp;&nbsp;&nbsp;RSS is used to share content between websites. With RSS, you register your content with companies called aggregators. So, to be a part of it:
+
+- First, create an RSS document and save it with an .xml extension.
+- Then, upload the file to your website.
+- Next, register with an RSS aggregator.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Each day the aggregator searches the registered websites for RSS documents, verifies the link, and displays information about the feed so clients can link to documents that interests them.
+
+#### RSS Example
+
+&nbsp;&nbsp;&nbsp;&nbsp;RSS documents use a self-describing and simple syntax. Here is a simple RSS document:
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+
+<channel>
+  <title>W3Schools Home Page</title>
+  <link>https://www.w3schools.com</link>
+  <description>Free web building tutorials</description>
+  <item>
+    <title>RSS Tutorial</title>
+    <link>https://www.w3schools.com/xml/xml_rss.asp</link>
+    <description>New RSS tutorial on W3Schools</description>
+  </item>
+  <item>
+    <title>XML Tutorial</title>
+    <link>https://www.w3schools.com/xml</link>
+    <description>New XML tutorial on W3Schools</description>
+  </item>
+</channel>
+
+</rss>
+```
+
+- The first line in the document - the XML declaration - defines the XML version and the character encoding used in the document. In this case the document conforms to the 1.0 specification of XML and uses the UTF-8 character set.
+- The next line is the RSS declaration which identifies that this is an RSS document (in this case, RSS version 2.0).
+- **The next line contains the `<channel>` element. This element is used to describe the RSS feed.**
+- The `<channel>` element has three required child elements:
+
+  - `<title>` - Defines the title of the channel (e.g. W3Schools Home Page)
+  - `<link>` - Defines the hyperlink to the channel (e.g. https://www.w3schools.com)
+  - `<description>` - Describes the channel (e.g. Free web building tutorials)
+
+- Each `<channel>` element can have one or more `<item>` elements. **Each `<item>` element defines an article or "story" in the RSS feed.**
+- The `<item>` element has three required child elements:
+
+  - `<title>` - Defines the title of the item (e.g. RSS Tutorial)
+  - `<link>` - Defines the hyperlink to the item (e.g. https://www.w3schools.com/xml/xml_rss.asp)
+  - `<description>` - Describes the item (e.g. New RSS tutorial on W3Schools)
+
+- Finally, the two last lines close the `<channel>` and `<rss>` elements.
+
+#### RSS Readers
+
+&nbsp;&nbsp;&nbsp;&nbsp;An RSS Reader is used to read RSS Feeds! RSS readers are available for many different devices and OS. There are a lot of different RSS readers. Some work as web services, and some are limited to windows (or Mac, PDA or UNIX):
+
+- **QuiteRSS** - An open-source, cross-platform RSS/Atom news feed reader
+- **FeedReader** - A simple, straightforward feed reader that easily handles large number of feeds
+- Most browsers have a built-in RSS Reader.
+
+---
+
 ## Where can you dig more?
 
 &nbsp;&nbsp;&nbsp;&nbsp;There is a lot of useful information about XML present on the internet. But some of the interesting resources which you should definitely visit are given below:
@@ -1008,3 +1900,7 @@ It happened on <date lang="norwegian">03.03.99</date>
 - [XML Tutorial](https://www.w3schools.com/xml/) by w3schools.com
 - [Using XML](https://alistapart.com/article/usingxml/) by J. David Eisenberg
 - [Introduction to the Annotated XML Specification](https://www.xml.com/axml/axml.html) by Tim Bray
+
+```
+
+```
