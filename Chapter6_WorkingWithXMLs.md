@@ -268,118 +268,12 @@ OR you can also use a so called self-closing tag:
 
 - Avoid ":". Colons are reserved for namespaces.
 
-## XML Namespaces
-
-&nbsp;&nbsp;&nbsp;&nbsp;**XML Namespaces provide a method to avoid element name conflicts.** In XML, element names are defined by the developer. This often results in a conflict when trying to mix XML documents from different XML applications.
-
-&nbsp;&nbsp;&nbsp;&nbsp;This XML carries HTML table information:
-
-```xml
-<table>
-  <tr>
-    <td>Apples</td>
-    <td>Bananas</td>
-  </tr>
-</table>
-```
-
-&nbsp;&nbsp;&nbsp;&nbsp;This XML carries information about a table (a piece of furniture):
-
-```xml
-<table>
-  <name>African Coffee Table</name>
-  <width>80</width>
-  <length>120</length>
-</table>
-```
-
-&nbsp;&nbsp;&nbsp;&nbsp; If these XML fragments were added together, there would be a name conflict. Both contain a <table> element, but the elements have different content and meaning. A user or an XML application will not know how to handle these differences:
-
-```xml
-<root>
-
-    <table>
-    <tr>
-        <td>Apples</td>
-        <td>Bananas</td>
-    </tr>
-    </table>
-
-    <table>
-    <name>African Coffee Table</name>
-    <width>80</width>
-    <length>120</length>
-    </table>
-
-</root>
-```
-
-&nbsp;&nbsp;&nbsp;&nbsp;Name conflicts in XML can easily be avoided using a name prefix. When using prefixes in XML, a namespace for the prefix must be defined using an xmlns attribute in the start tag of an element. The namespace declaration has the following syntax:
-
-```xml
-xmlns:prefix="URI"
-```
-
-&nbsp;&nbsp;&nbsp;&nbsp;In the example below, there will be no conflict because the two `<table>` elements have different names:
-
-```xml
-<root>
-
-<h:table xmlns:h="http://www.w3.org/TR/html4/">
-  <h:tr>
-    <h:td>Apples</h:td>
-    <h:td>Bananas</h:td>
-  </h:tr>
-</h:table>
-
-<f:table xmlns:f="https://www.w3schools.com/furniture">
-  <f:name>African Coffee Table</f:name>
-  <f:width>80</f:width>
-  <f:length>120</f:length>
-</f:table>
-
-</root>
-```
-
-&nbsp;&nbsp;&nbsp;&nbsp;Here,
-
-- The xmlns attribute in the first `<table>` element gives the h: prefix a qualified namespace.
-- The xmlns attribute in the second `<table>` element gives the f: prefix a qualified namespace.
-- When a namespace is defined for an element, all child elements with the same prefix are associated with the same namespace.
-
-&nbsp;&nbsp;&nbsp;&nbsp;Namespaces can also be declared in the XML root element:
-
-```xml
-<root xmlns:h="http://www.w3.org/TR/html4/"
-xmlns:f="https://www.w3schools.com/furniture">
-
-<h:table>
-  <h:tr>
-    <h:td>Apples</h:td>
-    <h:td>Bananas</h:td>
-  </h:tr>
-</h:table>
-
-<f:table>
-  <f:name>African Coffee Table</f:name>
-  <f:width>80</f:width>
-  <f:length>120</f:length>
-</f:table>
-
-</root>
-```
-
-&nbsp;&nbsp;&nbsp;&nbsp;The namespace URI is not used by the parser to look up information. The purpose of using an URI is to give the namespace a unique name. However, It is often used as a pointer to a web page containing namespace information. XMLs are everywhere in ServiceNow platform, but the best place to find the use of namespaces on the ServiceNow platform is UI pages module:
-![xmlns](./images/xmlns.png)
-
 ## XML DOM
 
 &nbsp;&nbsp;&nbsp;&nbsp;The **XML DOM defines a standard way for accessing and manipulating XML documents.** It presents an XML document as a tree-structure. The XML DOM is a standard for how to get, change, add, and delete XML elements. All XML elements can be accessed through the XML DOM. Understanding the DOM is a must for anyone working with XML. You can use online tools such [XML Viewer](https://www.xmlviewer.org/) to visualize a tree structure of our XML document:
 ![XMLTreeView](./images/XMLTreeView.png)
 
 ## XML Parser & XMLDocument2
-
-![xmltojson](./images/xmltojson.jpg)
 
 &nbsp;&nbsp;&nbsp;&nbsp;XML parser can convert text into an XML DOM object. ServiceNow provides a JavaScript Object wrapper for parsing and extracting XML data from an XML string known as **XMLDocument2**. An XML string has a tree structure, and the parts of the structure are called nodes. An XMLDocument2 object deals with two node types: element, and document element (root node of the XML tree).
 
@@ -958,9 +852,234 @@ gs.info(secondIncResult)
 
 &nbsp;&nbsp;&nbsp;&nbsp;The most important thing to notice here is that the parameter (The current node) passed to the getNextNode method. In our example we passed the first result node **firstIncResult** as a parameter to the getNextNode method in order to retrieve the next result node.
 
+### createElement & createElementWithTextValue
+
+&nbsp;&nbsp;&nbsp;&nbsp;**createElement** creates and adds an element node to the current node. The element name is the string passed in as a parameter. The new element has no text child nodes. **createElementWithTextValue** creates and adds an element node with a text child node to the current node. It accepts two string parameters: name of the element to add & element's text value. Lets modify our script to see these two methods in action:
+
+```js
+var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  "https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&sysparm_limit=1"
+)
+request.setHttpMethod("GET")
+
+//Eg. UserName="admin", Password="admin" for this code sample.
+var user = "MyAdminUserName"
+var password = "MyAdminPassword"
+
+request.setBasicAuth(user, password)
+request.setRequestHeader("Accept", "application/xml")
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+xmlDoc.createElement("new_element_without_text")
+xmlDoc.createElementWithTextValue(
+  "new_element_with_text",
+  "New Element With Text"
+)
+
+gs.info(xmlDoc)
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;After execution your output should be similar to the following:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<response>
+	<new_element_without_text/>
+	<new_element_with_text>New Element With Text</new_element_with_text>
+	<result>
+		<number>INC0000060</number>
+		<short_description>Unable to connect to email</short_description>
+		<caller_id>
+			<link>https://dev124645.service-now.com/api/now/table/sys_user/681ccaf9c0a8016400b98a06818d57c7</link>
+			<value>681ccaf9c0a8016400b98a06818d57c7</value>
+		</caller_id>
+	</result>
+</response>
+```
+
+![XML28](./images/XML28.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;As you can clearly notice, We have two additional nodes added to our document : `new_element_without_text` and `new_element_with_text`.
+
+### xmlToJSON
+
+![xmltojson](./images/xmltojson.jpg)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Though parsing the xml with help of XMLDocument2 is very convinient, We can leverage xmlToJSON method of GlideSystem to convert the xml to JSON object which is easier to work with. **xmlToJSON Takes an XML string and returns a JSON object.** Let us modify the script to understand how this works :
+
+```js
+var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  "https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&sysparm_limit=1"
+)
+request.setHttpMethod("GET")
+
+//Eg. UserName="admin", Password="admin" for this code sample.
+var user = "MyAdminUserName"
+var password = "MyAdminPassword"
+
+request.setBasicAuth(user, password)
+request.setRequestHeader("Accept", "application/xml")
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlObj = gs.xmlToJSON(xmlString)
+
+gs.info(JSON.stringify(xmlObj, null, 4))
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;After executing the script, our **xmlObj** contains the JSON object, the last logger function in our script pretty prints the JSON object:
+
+![XML29](./images/XML29.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Though, the script worked totally fine, It is important that you pre-process the XML input before passing to xmlToJSON. You can read more about this in the Support article [KB0784264](https://support.servicenow.com/kb?id=kb_article_view&sysparm_article=KB0784264). The modified script looks similar to this:
+
+```js
+var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  "https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&sysparm_limit=1"
+)
+request.setHttpMethod("GET")
+
+//Eg. UserName="admin", Password="admin" for this code sample.
+var user = "MyAdminUserName"
+var password = "MyAdminPassword"
+
+request.setBasicAuth(user, password)
+request.setRequestHeader("Accept", "application/xml")
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var rootNode = xmlDoc.getDocumentElement()
+
+var xmlObj = gs.xmlToJSON(rootNode)
+
+gs.info(JSON.stringify(xmlObj, null, 4))
+```
+
+![XML30](./images/XML30.png)
+
 ### XMLNode
 
 &nbsp;&nbsp;&nbsp;&nbsp;The scoped XMLNode API allows you to query values from XML nodes. XMLNodes are extracted from XMLDocument2 objects, which contain XML strings.
+
+### XML Namespaces
+
+&nbsp;&nbsp;&nbsp;&nbsp;**XML Namespaces provide a method to avoid element name conflicts.** In XML, element names are defined by the developer. This often results in a conflict when trying to mix XML documents from different XML applications.
+
+&nbsp;&nbsp;&nbsp;&nbsp;This XML carries HTML table information:
+
+```xml
+<table>
+  <tr>
+    <td>Apples</td>
+    <td>Bananas</td>
+  </tr>
+</table>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;This XML carries information about a table (a piece of furniture):
+
+```xml
+<table>
+  <name>African Coffee Table</name>
+  <width>80</width>
+  <length>120</length>
+</table>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp; If these XML fragments were added together, there would be a name conflict. Both contain a <table> element, but the elements have different content and meaning. A user or an XML application will not know how to handle these differences:
+
+```xml
+<root>
+
+    <table>
+    <tr>
+        <td>Apples</td>
+        <td>Bananas</td>
+    </tr>
+    </table>
+
+    <table>
+    <name>African Coffee Table</name>
+    <width>80</width>
+    <length>120</length>
+    </table>
+
+</root>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;Name conflicts in XML can easily be avoided using a name prefix. When using prefixes in XML, a namespace for the prefix must be defined using an xmlns attribute in the start tag of an element. The namespace declaration has the following syntax:
+
+```xml
+xmlns:prefix="URI"
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;In the example below, there will be no conflict because the two `<table>` elements have different names:
+
+```xml
+<root>
+
+<h:table xmlns:h="http://www.w3.org/TR/html4/">
+  <h:tr>
+    <h:td>Apples</h:td>
+    <h:td>Bananas</h:td>
+  </h:tr>
+</h:table>
+
+<f:table xmlns:f="https://www.w3schools.com/furniture">
+  <f:name>African Coffee Table</f:name>
+  <f:width>80</f:width>
+  <f:length>120</f:length>
+</f:table>
+
+</root>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;Here,
+
+- The xmlns attribute in the first `<table>` element gives the h: prefix a qualified namespace.
+- The xmlns attribute in the second `<table>` element gives the f: prefix a qualified namespace.
+- When a namespace is defined for an element, all child elements with the same prefix are associated with the same namespace.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Namespaces can also be declared in the XML root element:
+
+```xml
+<root xmlns:h="http://www.w3.org/TR/html4/"
+xmlns:f="https://www.w3schools.com/furniture">
+
+<h:table>
+  <h:tr>
+    <h:td>Apples</h:td>
+    <h:td>Bananas</h:td>
+  </h:tr>
+</h:table>
+
+<f:table>
+  <f:name>African Coffee Table</f:name>
+  <f:width>80</f:width>
+  <f:length>120</f:length>
+</f:table>
+
+</root>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;The namespace URI is not used by the parser to look up information. The purpose of using an URI is to give the namespace a unique name. However, It is often used as a pointer to a web page containing namespace information. XMLs are everywhere in ServiceNow platform, but the best place to find the use of namespaces on the ServiceNow platform is UI pages module:
+![xmlns](./images/xmlns.png)
 
 ## XML Schema
 
