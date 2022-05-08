@@ -908,7 +908,7 @@ gs.info(xmlDoc)
 
 &nbsp;&nbsp;&nbsp;&nbsp;As you can clearly notice, We have two additional nodes added to our document : `new_element_without_text` and `new_element_with_text`.
 
-### xmlToJSON
+## xmlToJSON
 
 ![xmltojson](./images/xmltojson.jpg)
 
@@ -973,11 +973,215 @@ gs.info(JSON.stringify(xmlObj, null, 4))
 
 ![XML30](./images/XML30.png)
 
-### XMLNode
+## XMLNode
 
-&nbsp;&nbsp;&nbsp;&nbsp;The scoped XMLNode API allows you to query values from XML nodes. XMLNodes are extracted from XMLDocument2 objects, which contain XML strings.
+&nbsp;&nbsp;&nbsp;&nbsp;**The scoped XMLNode API allows you to query values from XML nodes.** XMLNodes are extracted from XMLDocument2 objects, which contain XML strings. There are no constructors for creating a stand alone instance of an XMLNode object. Instead, use the createElement() method of XMLDocument2, which adds a node to an existing document.
 
-### XML Namespaces
+### getAttribute & getAttributes
+
+&nbsp;&nbsp;&nbsp;&nbsp;**getAttribute** gets the value of the attribute. **getAttributes** Returns an object containing the node's attributes as properties with values. Let us consider the below sample XML document:
+
+```xml
+<xml>
+	<incident>
+		<active>true</active>
+		<assignment_group display_value="Software" name="Software">8a4dde73c6112278017a6a4baf547aa7</assignment_group>
+		<caller_id display_value="Bud Richman">46c6f9efa9fe198101ddf5eed9adf6e7</caller_id>
+		<category>software</category>
+		<cmdb_ci display_value="Sales Force Automation">a9c0c8d2c6112276018f7705562f9cb0</cmdb_ci>
+		<description>Unable to login to SFA even though login credentials are correct.</description>
+		<location display_value="324 South State Street, Salt Lake City,UT">105cf7f3c611227501e75e08b14a38ba</location>
+		<short_description>Can't access SFA software</short_description>
+		<sys_class_name>incident</sys_class_name>
+		<sys_created_by>admin</sys_created_by>
+		<sys_created_on>2021-11-07 22:05:30</sys_created_on>
+		<sys_id>a9e30c7dc61122760116894de7bcc7bd</sys_id>
+		<urgency>3</urgency>
+	</incident>
+</xml>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;Now, Let us modify the script to convert above XML string to XMLDocument2 Object and fetch the attribute `display_value` of element `location` i.e. `324 South State Street, Salt Lake City,UT`:
+
+```js
+var xmlString =
+  '<xml><incident><active>true</active><assignment_group display_value="Software" name="Software">8a4dde73c6112278017a6a4baf547aa7</assignment_group><caller_id display_value="Bud Richman">46c6f9efa9fe198101ddf5eed9adf6e7</caller_id><category>software</category><cmdb_ci display_value="Sales Force Automation">a9c0c8d2c6112276018f7705562f9cb0</cmdb_ci><description>Unable to login to SFA even though login credentials are correct.</description><location display_value="324 South State Street, Salt Lake City,UT">105cf7f3c611227501e75e08b14a38ba</location><short_description>Cant access SFA software</short_description><sys_class_name>incident</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2021-11-07 22:05:30</sys_created_on><sys_id>a9e30c7dc61122760116894de7bcc7bd</sys_id><urgency>3</urgency></incident></xml>'
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var node = xmlDoc.getNode("//location")
+gs.info(node.getAttribute("display_value"))
+```
+
+![XML31](./images/XML31.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Now, Let us modify the script one more time to retrieve all attributes of element `assignment_group` as an object:
+
+```js
+var xmlString =
+  '<xml><incident><active>true</active><assignment_group display_value="Software" name="Software">8a4dde73c6112278017a6a4baf547aa7</assignment_group><caller_id display_value="Bud Richman">46c6f9efa9fe198101ddf5eed9adf6e7</caller_id><category>software</category><cmdb_ci display_value="Sales Force Automation">a9c0c8d2c6112276018f7705562f9cb0</cmdb_ci><description>Unable to login to SFA even though login credentials are correct.</description><location display_value="324 South State Street, Salt Lake City,UT">105cf7f3c611227501e75e08b14a38ba</location><short_description>Cant access SFA software</short_description><sys_class_name>incident</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2021-11-07 22:05:30</sys_created_on><sys_id>a9e30c7dc61122760116894de7bcc7bd</sys_id><urgency>3</urgency></incident></xml>'
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var node = xmlDoc.getNode("//assignment_group")
+gs.info(node.getAttributes())
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;After executing the script, you should get an object logged to the output screen with all the attributes of `assignment_group` as properties with values.
+
+![XML32](./images/XML32.png)
+
+### getFirstChild & getLastChild
+
+&nbsp;&nbsp;&nbsp;&nbsp;**getFirstChild** gets the node's first child node. **getLastChild** gets the node's last child node. Let us modify our script to see this in action:
+
+```js
+var xmlString =
+  '<xml><incident><active>true</active><assignment_group display_value="Software" name="Software">8a4dde73c6112278017a6a4baf547aa7</assignment_group><caller_id display_value="Bud Richman">46c6f9efa9fe198101ddf5eed9adf6e7</caller_id><category>software</category><cmdb_ci display_value="Sales Force Automation">a9c0c8d2c6112276018f7705562f9cb0</cmdb_ci><description>Unable to login to SFA even though login credentials are correct.</description><location display_value="324 South State Street, Salt Lake City,UT">105cf7f3c611227501e75e08b14a38ba</location><short_description>Cant access SFA software</short_description><sys_class_name>incident</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2021-11-07 22:05:30</sys_created_on><sys_id>a9e30c7dc61122760116894de7bcc7bd</sys_id><urgency>3</urgency></incident></xml>'
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var node = xmlDoc.getNode("//incident")
+
+gs.info(node.getFirstChild())
+
+gs.info(node.getLastChild())
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;Once the script is executed you should see the output as below, indicating first child element and last child element of node `incident` :
+
+```xml
+<active>true</active>
+<urgency>3</urgency>
+```
+
+![XML33](./images/XML33.png)
+
+### getTextContent
+
+&nbsp;&nbsp;&nbsp;&nbsp;**getTextContent** gets the text content of the current node. **The text content of a node consists of all the node's child text nodes.**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Let us modify our script to understand these better :
+
+```js
+var xmlString =
+  '<xml><incident><active>true</active><assignment_group display_value="Software" name="Software">8a4dde73c6112278017a6a4baf547aa7</assignment_group><caller_id display_value="Bud Richman">46c6f9efa9fe198101ddf5eed9adf6e7</caller_id><category>software</category><cmdb_ci display_value="Sales Force Automation">a9c0c8d2c6112276018f7705562f9cb0</cmdb_ci><description>Unable to login to SFA even though login credentials are correct.</description><location display_value="324 South State Street, Salt Lake City,UT">105cf7f3c611227501e75e08b14a38ba</location><short_description>Cant access SFA software</short_description><sys_class_name>incident</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2021-11-07 22:05:30</sys_created_on><sys_id>a9e30c7dc61122760116894de7bcc7bd</sys_id><urgency>3</urgency></incident></xml>'
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var rootNode = xmlDoc.getDocumentElement()
+
+var firstNode = rootNode.getFirstChild()
+
+gs.info(firstNode.getTextContent())
+
+var shortDescription = xmlDoc.getNode("//short_description")
+gs.info(shortDescription.getTextContent())
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;You should be receiving the output as following :
+![XML34](./images/XML34.png)
+
+### hasAttribute
+
+&nbsp;&nbsp;&nbsp;&nbsp;**hasAttribute** determines if the node has the specified attribute. Let us modify the script to see this method in action :
+
+```js
+var xmlString =
+  '<xml><incident><active>true</active><assignment_group display_value="Software" name="Software">8a4dde73c6112278017a6a4baf547aa7</assignment_group><caller_id display_value="Bud Richman">46c6f9efa9fe198101ddf5eed9adf6e7</caller_id><category>software</category><cmdb_ci display_value="Sales Force Automation">a9c0c8d2c6112276018f7705562f9cb0</cmdb_ci><description>Unable to login to SFA even though login credentials are correct.</description><location display_value="324 South State Street, Salt Lake City,UT">105cf7f3c611227501e75e08b14a38ba</location><short_description>Cant access SFA software</short_description><sys_class_name>incident</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2021-11-07 22:05:30</sys_created_on><sys_id>a9e30c7dc61122760116894de7bcc7bd</sys_id><urgency>3</urgency></incident></xml>'
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var locationNode = xmlDoc.getNode("//location")
+
+gs.info(locationNode.hasAttribute("display_value"))
+
+gs.info(locationNode.hasAttribute("display_name"))
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;After the excution of the script you should be able to see the output as follows:
+![XML35](./images/XML35.png)
+
+### setAttribute
+
+```js
+var xmlString =
+  '<xml><incident><active>true</active><assignment_group display_value="Software" name="Software">8a4dde73c6112278017a6a4baf547aa7</assignment_group><caller_id display_value="Bud Richman">46c6f9efa9fe198101ddf5eed9adf6e7</caller_id><category>software</category><cmdb_ci display_value="Sales Force Automation">a9c0c8d2c6112276018f7705562f9cb0</cmdb_ci><description>Unable to login to SFA even though login credentials are correct.</description><location display_value="324 South State Street, Salt Lake City,UT">105cf7f3c611227501e75e08b14a38ba</location><short_description>Cant access SFA software</short_description><sys_class_name>incident</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2021-11-07 22:05:30</sys_created_on><sys_id>a9e30c7dc61122760116894de7bcc7bd</sys_id><urgency>3</urgency></incident></xml>'
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var activeNode = xmlDoc.getNode("//active")
+gs.info(activeNode.hasAttribute("state"))
+
+activeNode.setAttribute("state", "open")
+
+gs.info(activeNode.hasAttribute("state"))
+gs.info(activeNode.getAttribute("state"))
+gs.info(activeNode)
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;After executing above script you should receive the output as below, indicating a new attribute `state` has been added to the `active` node with the value of `open`:
+![XMLSetAttr](./images/XMLSetAttr.png)
+
+### getChildNodeIterator & XMLNodeIterator
+
+&nbsp;&nbsp;&nbsp;&nbsp;**getChildNodeIterator** gets a XMLNodeIterator object that can be used to walk through the list of child nodes. **The scoped XMLNodeIterator class allows you to iterate through a node of a XML document.** There are no constructors for creating a stand alone instance of a XMLNodeIterator object. To create a XMLNodeIterator object use the getChildNodeIterator() method of the XMLNode object. Let us assume the below example:
+
+```js
+var xmlString =
+  '<xml><incident><active>true</active><assignment_group display_value="Software" name="Software">8a4dde73c6112278017a6a4baf547aa7</assignment_group><caller_id display_value="Bud Richman">46c6f9efa9fe198101ddf5eed9adf6e7</caller_id><category>software</category><cmdb_ci display_value="Sales Force Automation">a9c0c8d2c6112276018f7705562f9cb0</cmdb_ci><description>Unable to login to SFA even though login credentials are correct.</description><location display_value="324 South State Street, Salt Lake City,UT">105cf7f3c611227501e75e08b14a38ba</location><short_description>Cant access SFA software</short_description><sys_class_name>incident</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2021-11-07 22:05:30</sys_created_on><sys_id>a9e30c7dc61122760116894de7bcc7bd</sys_id><urgency>3</urgency></incident></xml>'
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var node = xmlDoc.getNode("//incident")
+var iter = node.getChildNodeIterator()
+while (iter.hasNext()) {
+  var currentNode = iter.next()
+  gs.info(currentNode)
+}
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;The ouput of these script logs all the nodes within the `incident` element :
+![XMLNodeIter](./images/XMLNodeIter.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;The **hasNext()** method in the above code returns true if the iteration has more elements. Similarly, **next()** method gets the next element in the iteration.
+
+### getNodeName & getNodeValue
+
+&nbsp;&nbsp;&nbsp;&nbsp;**getNodeName** gets the node's name. A node's name is determined by the node type. **A document-element node's name is #document. A text node's name is #text. An element node's name is the element's name.** **getNodeValue** gets the node's value. A node's value is also determined by the node type. **Element and document-element nodes return null.** Let us consider the below example from [ServiceNow API documentation](https://developer.servicenow.com/dev.do#!/reference/api/sandiego/server/no-namespace/c_XMLNodeScopedAPI):
+
+```js
+var xmlString =
+  "<test>" +
+  "  <one>" +
+  '    <two att="xxx">abcd1234</two>' +
+  '    <three boo="yah" att="yyy">1234abcd</three>' +
+  "    <two>another</two>" +
+  "  </one>" +
+  "  <number>1234</number>" +
+  "</test>"
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+var node = xmlDoc.getNode("//one")
+var iter = node.getChildNodeIterator()
+while (iter.hasNext()) {
+  var n = iter.next()
+  gs.info("Node name: " + n.getNodeName())
+  gs.info("Node value: " + n.getNodeValue())
+}
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;The above script should display the output as below:
+![XMLNodeProp](./images/XMLNodeProp.png)
+
+## XML Namespaces
 
 &nbsp;&nbsp;&nbsp;&nbsp;**XML Namespaces provide a method to avoid element name conflicts.** In XML, element names are defined by the developer. This often results in a conflict when trying to mix XML documents from different XML applications.
 
@@ -2386,11 +2590,11 @@ soap:encodingStyle="http://www.w3.org/2003/05/soap-encoding">
 - The **soap:binding** element has two attributes - style and transport. The style attribute can be "rpc" or "document". In this case we use document. The transport attribute defines the SOAP protocol to use. In this case we use HTTP.
 - The **operation** element defines each operation that the portType exposes. For each operation the corresponding SOAP action has to be defined. You must also specify how the input and output are encoded. In this case we use "literal".
 
-### RSS
+### RSS web service
 
-&nbsp;&nbsp;&nbsp;&nbsp;With RSS it is possible to distribute up-to-date web content from one web site to thousands of other web sites around the world. RSS stands for Really Simple Syndication. RSS allows you to syndicate your site content. It defines an easy way to share and view headlines and content.
+&nbsp;&nbsp;&nbsp;&nbsp;**RSS (Rich Site Summary) is a format for delivering web-based information that changes regularly.** With RSS it is possible to distribute up-to-date web content from one web site to thousands of other web sites around the world. RSS allows you to syndicate your site content. It defines an easy way to share and view headlines and content.
 
-&nbsp;&nbsp;&nbsp;&nbsp;RSS was designed to show selected data. Without RSS, users will have to check your site daily for new updates. This may be too time-consuming for many users. With an RSS feed (RSS is often called a News feed or RSS feed) they can check your site faster using an RSS aggregator (a site or program that gathers and sorts out RSS feeds). Since RSS data is small and fast-loading, it can easily be used with services like cell phones or PDA's.Web-rings with similar information can easily share data on their web sites to make them better and more useful.
+&nbsp;&nbsp;&nbsp;&nbsp;RSS was designed to show selected data. Without RSS, users will have to check your site daily for new updates. This may be too time-consuming for many users. With an RSS feed (RSS is often called a News feed or RSS feed) they can check your site faster using an RSS aggregator (a site or program that gathers and sorts out RSS feeds).
 
 #### How RSS Works
 
@@ -2401,6 +2605,37 @@ soap:encodingStyle="http://www.w3.org/2003/05/soap-encoding">
 - Next, register with an RSS aggregator.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Each day the aggregator searches the registered websites for RSS documents, verifies the link, and displays information about the feed so clients can link to documents that interests them.
+
+#### RSS feed generator
+
+&nbsp;&nbsp;&nbsp;&nbsp;ServiceNow supports the dynamic generation of RSS feeds. Much like our Web Services implementation, the retrieval of an RSS feed representation of information is simply done by specifying an RSS parameter at the end of the URL to a table list. For example, the following will return a list of all incidents in RSS 2.0 format :
+
+```js
+https://dev124645.service-now.com/incident_list.do?&RSS
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;Copy and paste the above URL to your browser and replace the instance name with your own, you should see the following output :
+
+![RSS1](./images/RSS1.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;To associate a query to the list so that a filtered list is returned, use the sysparm_query parameter. If you have a multi part query then you would separate the parts with the `^` character. For example, following will return a list of all incidents where the priority as 1 (Critical) and category as software :
+
+```js
+https://dev124645.service-now.com/incident_list.do?sysparm_query=priority=1^category=software&RSS
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;Copy and paste the above URL to your browser and replace the instance name with your own, you should see the following output :
+
+![RSS2](./images/RSS2.png)
+
+&nbsp;&nbsp;&nbsp;&nbsp;If you want to query on a field that is a reference to another file then you need to use javascript to resolve the reference to the other file. For example, the assigned_to field in incident is a reference to a user record. If you wanted to find all the incidents assigned to "ITIL User" then you would do the following:
+
+```js
+https://dev124645.service-now.com/incident.do?sysparm_query=assigned_to=javascript:GetIDValue(%27sys_user%27,%27ITIL%20User%27)&RSS
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;Copy and paste the above URL to your browser and replace the instance name with your own, you should see the following output :
+![RSS3](./images/RSS3.png)
 
 #### RSS Example
 
