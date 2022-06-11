@@ -20,4 +20,6 @@ Chapter 4 : [Implementing Our First Integration](/Chapter4_ImplementingOurFirstI
 
 Chapter 5 : [Finishing Touches](/Chapter5_FinishingTouches.md)
 
+Chapter 6 : [Working With XMLs](/Chapter6_WorkingWithXMLs.md)
+
 ##### Disclaimer : All the information and images used to prepare this documentation are collected from Internet and consolidated to make it work. And content is subject to change as we proceed.
