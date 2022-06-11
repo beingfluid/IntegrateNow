@@ -8,6 +8,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;**XML** or **Extensible Markup Language** is a markup language much like HTML, but without predefined tags to use. Instead, you define your own tags designed specifically for your needs. **XML was designed and is a powerful way to store and transport data in a format that can be both human and machine-readable.** Because of the custom tags, it's something that humans can read and understand. Web services use XML to code and to decode data, and SOAP to transport it.
 ![XMLResponse](./images/1_XuRqFNT2fMExddcrERq-6g.jpeg)
+
 &nbsp;&nbsp;&nbsp;&nbsp;Many finds working with XML difficult because of its structured nature, which requires more efforts for parsing the XML document. But once you understand the magic that is known as XML, you will be amazed with it's capabilities. And most important thing about XML is, it is everywhere!
 ![XMLResponse](./images/1m5efq.jpg)
 
