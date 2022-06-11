@@ -527,7 +527,7 @@ lang="en" (attribute node)
 
 ### Selecting Several Paths
 
-&nbsp;&nbsp;&nbsp;&nbsp;By using the **|** operator in an XPath expression you can select several paths. In the table below we have listed some path expressions and the result of the expressions:
+&nbsp;&nbsp;&nbsp;&nbsp;By using the `|` operator in an XPath expression you can select several paths. In the table below we have listed some path expressions and the result of the expressions:
 
 | Path Expression                  | Result                                                                                                                 |
 | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
