@@ -107,6 +107,7 @@
 ```
 
 &nbsp;&nbsp;&nbsp;&nbsp;Consider the below image, copied from [w3schools.com](https://www.w3schools.com/xml/xml_tree.asp):
+
 ![nodetree](./images/nodetree.gif)
 
 &nbsp;&nbsp;&nbsp;&nbsp;The image above represents books in this XML:
