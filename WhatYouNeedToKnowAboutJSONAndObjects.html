@@ -1,0 +1,558 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>What You Need To Know About JSON And Objects - IntegrateNow</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="cover.html">IntegrateNow</a></li><li class="chapter-item expanded affix "><li class="part-title">Index</li><li class="chapter-item expanded "><a href="ConceptualAsides.html"><strong aria-hidden="true">1.</strong> Conceptual Asides</a></li><li class="chapter-item expanded "><a href="WhatYouNeedToKnowAboutJSONAndObjects.html" class="active"><strong aria-hidden="true">2.</strong> What You Need To Know About JSON And Objects</a></li><li class="chapter-item expanded "><a href="RESTAPIExplorer.html"><strong aria-hidden="true">3.</strong> REST API Explorer</a></li><li class="chapter-item expanded "><a href="ImplementingOurFirstIntegration.html"><strong aria-hidden="true">4.</strong> Implementing Our First Integration</a></li><li class="chapter-item expanded "><a href="FinishingTouches.html"><strong aria-hidden="true">5.</strong> Finishing Touches</a></li><li class="chapter-item expanded "><a href="WorkingWithXMLs.html"><strong aria-hidden="true">6.</strong> Working With XMLs</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">IntegrateNow</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="chapter-2"><a class="header" href="#chapter-2">Chapter 2</a></h2>
+<h1 id="what-you-need-to-know-about-json-and-objects"><a class="header" href="#what-you-need-to-know-about-json-and-objects">What You Need To Know About JSON And Objects</a></h1>
+<p>    Many times, I have received a feedback from my peers that, I can do this crazy thing cause I know how to work with JSON and Objects. And it is surprising. JSON and Objects are one of the most important and very useful concepts in JavaScript. Though, you do not need to know everything about it.</p>
+<p>    Here, we will learn about some of the most commonly used concepts related to JSON and Objects, That are extermely useful not just when you are working with integrations but elsewhere as well.</p>
+<h2 id="what-is-json"><a class="header" href="#what-is-json">What is JSON</a></h2>
+<p>    The simplest introduction to JSON I've ever read was in the short presentation on instagram by <a href="https://www.instagram.com/codechips/?hl=en">codechips</a>. I think there is no better way of explaining it than this. I've tweaked the scenerio a bit to make it little familiar, but make sure to look for the original presentation <a href="https://www.instagram.com/p/CWTAVdbtKv0/?utm_source=ig_web_copy_link">here</a>.</p>
+<p>    Let's say, you are working on the integration between ServiceNow &amp; Google sheet. You want to fetch the information about all the incidents from ServiceNow and store it in google sheet for some reason. But in what format the data should be transferred? The plain text format, as you can notice below, is easy to read but not easy to interpret on client side. Also it is difficult to fetch the individual data from it :</p>
+<pre><code class="language-text">The first incident with number INC0000039 raised by &quot;Bud Richman&quot; have the short description &quot;Trouble getting to Oregon mail server&quot; and the second incident with number INC0000003 raised by &quot;Joe Employee&quot; have the short description &quot;Wireless access is down in my area&quot;.
+</code></pre>
+<p>    Then, the XML was introduced and used very widely, but the format was bulky and much overhead to web service :</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;response&gt;
+	&lt;result&gt;
+		&lt;number&gt;INC0000039&lt;/number&gt;
+		&lt;short_description&gt;Trouble getting to Oregon mail server&lt;/short_description&gt;
+		&lt;caller_id&gt;
+			&lt;display_value&gt;Bud Richman&lt;/display_value&gt;
+		&lt;/caller_id&gt;
+	&lt;/result&gt;
+	&lt;result&gt;
+		&lt;number&gt;INC0000003&lt;/number&gt;
+		&lt;short_description&gt;Wireless access is down in my area&lt;/short_description&gt;
+		&lt;caller_id&gt;
+			&lt;display_value&gt;Joe Employee&lt;/display_value&gt;
+		&lt;/caller_id&gt;
+	&lt;/result&gt;
+&lt;/response&gt;
+</code></pre>
+<p>    Then, Javascript Object Notation or JSON came into picture. It is faster and easy to read, undersatand &amp; work with:</p>
+<pre><code class="language-json">{
+  &quot;result&quot;: [
+    {
+      &quot;number&quot;: &quot;INC0000039&quot;,
+      &quot;short_description&quot;: &quot;Trouble getting to Oregon mail server&quot;,
+      &quot;caller_id&quot;: {
+        &quot;display_value&quot;: &quot;Bud Richman&quot;
+      }
+    },
+    {
+      &quot;number&quot;: &quot;INC0000003&quot;,
+      &quot;short_description&quot;: &quot;Wireless access is down in my area&quot;,
+      &quot;caller_id&quot;: {
+        &quot;display_value&quot;: &quot;Joe Employee&quot;
+      }
+    }
+  ]
+}
+</code></pre>
+<p>    So, if you could just use JSON and not XML that would be great.</p>
+<p><img src="/images/jlibgkfs8yf21.png" alt="XML vs JSON" /></p>
+<h2 id="working-with-json"><a class="header" href="#working-with-json">Working with JSON</a></h2>
+<p>    JSON is easy for humans to read and write &amp; for machines to parse and generate. It is supported by many programming languages and is especially useful for JavaScript-based apps, websites and browser extensions.</p>
+<h4 id="how-it-looks"><a class="header" href="#how-it-looks">How it looks</a></h4>
+<ul>
+<li>JSON represents numbers, booleans, strings, null, arrays, and objects made up of these values (or of other arrays and objects).</li>
+<li>The curly brackets holds objects.</li>
+<li>The square brackets holds arrays.</li>
+<li>Property names are double-quoted.</li>
+<li>Properties are separated by commas.</li>
+</ul>
+<p>    Here is an example of a JSON, You are free to play around it :</p>
+<pre><code class="language-json">{
+  &quot;first_property_name&quot;: &quot;First Property Value of type String&quot;,
+  &quot;property_name_is_aka_key&quot;: 2022,
+  &quot;boolean_property_true_or_false&quot;: true,
+  &quot;null_property&quot;: null,
+  &quot;array_type_property&quot;: [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;],
+  &quot;object_type_property&quot;: {
+    &quot;number_type_property&quot;: 2022
+  }
+}
+</code></pre>
+<h4 id="servicenow-scripts---background"><a class="header" href="#servicenow-scripts---background">ServiceNow Scripts - Background</a></h4>
+<p>    I would like to quote Ben Sweetser as is when it comes to Scripts - Background :</p>
+<blockquote>
+<p>Scripts - Background was this magical place in the platform where you could run any server-side script. It became my testing ground for any server-side method I wanted to learn about or new script I wanted to test because I did not need to configure When to run logic around it like a Business Rule. Running a script in Scripts - Background was as easy as putting a script in the field and clicking the Run script button.</p>
+</blockquote>
+<p>    You can read the article by Ben Sweetser <a href="https://developer.servicenow.com/blog.do?p=/post/training-scriptsbg/">here</a> if you need to learn more about it.</p>
+<p>    To open Scripts - Background, use the Application Navigator to open System Definition &gt; Scripts - Background. It is going to be our playground and a friend in our journey.</p>
+<p><img src="/images/sba.png" alt="Scripts Background" /></p>
+<h4 id="typeof--gsinfo"><a class="header" href="#typeof--gsinfo">typeof &amp; gs.info()</a></h4>
+<p>    The typeof operator returns a string indicating the type of the value provided, Whereas, gs.info method writes an info message to the system log. Combination of both of them are extremely useful when it comes to debugging but let us use them here for another purpose. You can read more about them typeof <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof">here</a> and info as well as other useful GlideSystem methods <a href="https://developer.servicenow.com/dev.do#!/reference/api/sandiego/server/no-namespace/c_GlideSystemScopedAPI#r_ScopedGlideSystemInf_String_Object_Object_Object_Object_Object">here</a>.</p>
+<p>    Copy the following code and paste it into the Scripts - Background.</p>
+<pre><code class="language-js">var jsonObj = {
+  Course: &quot;IntegrateNow&quot;,
+  Skills: [&quot;Integration&quot;, &quot;JSON&quot;, &quot;ServiceNow&quot;],
+  name: {
+    first_name: &quot;Vishal&quot;,
+    last_name: &quot;Ingle&quot;,
+  },
+}
+
+gs.info(jsonObj)
+gs.info(typeof jsonObj)
+</code></pre>
+<p><img src="/images/typeof1.png" alt="typeof 1" /></p>
+<p>    Now click the Run Script button to execute the script. You should see the following output :
+<img src="/images/typeof2.png" alt="typeof 2" /></p>
+<p>    The second line of the output indicates that jsonObj variable stores an object. Though, notice that the first line of the output does not display the content of jsonObj variable.</p>
+<h4 id="json-serialization--deserialization"><a class="header" href="#json-serialization--deserialization">JSON serialization &amp; deserialization</a></h4>
+<p>    JSON is a syntax for serializing objects, arrays, numbers, strings, booleans, and null. Serialization means to convert an object into that string, and deserialization is its inverse operation.</p>
+<h4 id="jsonstringifyvalue-replacer-space"><a class="header" href="#jsonstringifyvalue-replacer-space">JSON.stringify(value[, replacer[, space]])</a></h4>
+<p>    The JSON.stringify() method converts a JavaScript object or value to a JSON string, optionally replacing values if a replacer function is specified or optionally including only the specified properties if a replacer array is specified. Following are three variations of the method and we will go through each of them one by one :</p>
+<pre><code class="language-js">JSON.stringify(value)
+JSON.stringify(value, replacer)
+JSON.stringify(value, replacer, space)
+</code></pre>
+<h5 id="jsonstringifyvalue"><a class="header" href="#jsonstringifyvalue">JSON.stringify(value)</a></h5>
+<p>    Copy the following code and paste it into the Scripts - Background.</p>
+<pre><code class="language-js">var jsonObj = {
+  Course: &quot;IntegrateNow&quot;,
+  Skills: [&quot;Integration&quot;, &quot;JSON&quot;, &quot;ServiceNow&quot;],
+  name: {
+    first_name: &quot;Vishal&quot;,
+    last_name: &quot;Ingle&quot;,
+  },
+}
+
+gs.info(JSON.stringify(jsonObj))
+var jsonStr = JSON.stringify(jsonObj)
+gs.info(jsonStr)
+gs.info(typeof jsonStr)
+</code></pre>
+<p><img src="/images/json1.png" alt="json 1" /></p>
+<p>    Now click the Run Script button to execute the script. You should see the following output :
+<img src="/images/json2.png" alt="json 2" /></p>
+<p>    The first and second line of output displays the stringified version of JSON object and the third line indicates that it is of type string.</p>
+<h5 id="jsonstringifyvalue-replacer--jsonstringifyvalue-replacer-space"><a class="header" href="#jsonstringifyvalue-replacer--jsonstringifyvalue-replacer-space">JSON.stringify(value, replacer) &amp; JSON.stringify(value, replacer, space)</a></h5>
+<p>    Before we talk about the second parameter, replacer, I would like you to be familiar with the third parameter i.e. space. It can be a String or Number object that's used to insert white space (including indentation, line break characters, etc.) into the output JSON string for readability purposes.</p>
+<ul>
+<li>If this parameter is not provided (or is null), no white space is used.</li>
+<li>If this is a Number, it indicates the number of space characters to use as white space for indenting purposes; this number is capped at 10 (if it is greater, the value is just 10).</li>
+<li>Values less than 1 indicate that no space should be used.</li>
+<li>If this is a String, the string (or the first 10 characters of the string, if it's longer than that) is used as white space.</li>
+<li>If it is a number, successive levels in the stringification will each be indented by this many space characters (up to 10).</li>
+<li>If it is a string, successive levels will be indented by this string (or the first ten characters of it).</li>
+</ul>
+<p>    Copy the following code and paste it into the Scripts - Background.</p>
+<pre><code class="language-js">var jsonObj = {
+  Course: &quot;IntegrateNow&quot;,
+  Skills: [&quot;Integration&quot;, &quot;JSON&quot;, &quot;ServiceNow&quot;],
+  name: {
+    first_name: &quot;Vishal&quot;,
+    last_name: &quot;Ingle&quot;,
+  },
+}
+
+gs.info(JSON.stringify(jsonObj, null, 4))
+gs.info(JSON.stringify(jsonObj, null, &quot;\t&quot;))
+</code></pre>
+<p><img src="/images/json3.png" alt="json 1" /></p>
+<p>    Now click the Run Script button to execute the script. You should see the following output :
+<img src="/images/json4.png" alt="json 2" /></p>
+<p>    Both the outputs are now displayed in more readable format.</p>
+<p>    Finally, Let us talk about the second parameter, replacer. It can be a function that alters the behavior of the stringification process, or an array of String and Number that serve as an allowlist for selecting/filtering the properties of the value object to be included in the JSON string. If this value is null or not provided, all properties of the object are included in the resulting JSON string.</p>
+<p>    The replacer parameter can be either a function or an array.</p>
+<h6 id="replacer-as-an-array"><a class="header" href="#replacer-as-an-array">replacer, as an array</a></h6>
+<p>If replacer is an array, the array's values indicate the names of the properties in the object that should be included in the resulting JSON string.</p>
+<p>    Copy the following code and paste it into the Scripts - Background.</p>
+<pre><code class="language-js">var jsonObj = {
+  Course: &quot;IntegrateNow&quot;,
+  Skills: [&quot;Integration&quot;, &quot;JSON&quot;, &quot;ServiceNow&quot;],
+  name: {
+    first_name: &quot;Vishal&quot;,
+    last_name: &quot;Ingle&quot;,
+  },
+}
+
+gs.info(JSON.stringify(jsonObj, [&quot;Course&quot;, &quot;Skills&quot;], 4))
+gs.info(JSON.stringify(jsonObj, [&quot;Course&quot;, &quot;Skills&quot;]))
+</code></pre>
+<p><img src="/images/json5.png" alt="json 1" /></p>
+<p>    Now click the Run Script button to execute the script. You should see the following output :
+<img src="/images/json6.png" alt="json 2" /></p>
+<p>    As you might have noticed already, only course and skills are the properties that are added to the new JSON string.</p>
+<h6 id="replacer-as-a-function-"><a class="header" href="#replacer-as-a-function-">replacer, as a function :</a></h6>
+<ul>
+<li>As a function, it takes two parameters: the key and the value being stringified.</li>
+<li>The object in which the key was found is provided as the replacer's this parameter.</li>
+<li>Initially, the replacer function is called with an empty string as key representing the object being stringified.</li>
+<li>It is then called for each property on the object or array being stringified.</li>
+</ul>
+<p>It should return the value that should be added to the JSON string, as follows:</p>
+<ul>
+<li>If you return a Number, String, Boolean, or null, the stringified version of that value is used as the property's value.</li>
+<li>If you return a Function, Symbol, or undefined, the property is not included in the output.</li>
+<li>If you return any other object, the object is recursively stringified, calling the replacer function on each property.</li>
+</ul>
+<p>    Copy the following code and paste it into the Scripts - Background.</p>
+<pre><code class="language-js">var jsonObj = {
+  Course: &quot;IntegrateNow&quot;,
+  Skills: [&quot;Integration&quot;, &quot;JSON&quot;, &quot;ServiceNow&quot;],
+  name: {
+    first_name: &quot;Vishal&quot;,
+    last_name: &quot;Ingle&quot;,
+  },
+}
+
+gs.info(JSON.stringify(jsonObj, replacer))
+gs.info(JSON.stringify(jsonObj, replacer, 4))
+
+function replacer(key, value) {
+  if (typeof value == &quot;string&quot;) {
+    return &quot;test_&quot; + value
+  }
+  return value
+}
+</code></pre>
+<p><img src="/images/json7.png" alt="json 1" /></p>
+<p>    Now click the Run Script button to execute the script. You should see the following output :
+<img src="/images/json8.png" alt="json 2" /></p>
+<p>    We have modified every string value using our replacer function and appended by &quot;test_&quot;.</p>
+<p>    We have seen examples of JSON.stringify() and how it works. It converts a value to JSON notation representing it:</p>
+<ul>
+<li>Boolean, Number, and String objects are converted to the corresponding primitive values during stringification.</li>
+<li>undefined, Functions, and Symbols are not valid JSON values. If any such values are encountered during conversion they are either omitted (when found in an object) or changed to null (when found in an array). JSON.stringify() can return undefined when passing in &quot;pure&quot; values like JSON.</li>
+<li>The numbers Infinity and NaN, as well as the value null, are all considered null.</li>
+<li>If the value has a toJSON() method, it's responsible to define what data will be serialized.</li>
+</ul>
+<h4 id="jsonparsetext-reviver"><a class="header" href="#jsonparsetext-reviver">JSON.parse(text[, reviver])</a></h4>
+<p>    The JSON.parse() method parses a JSON string, constructing the JavaScript value or object described by the string. It parses the string text as JSON, optionally transform the produced value and its properties, and return the value. Following are three variations of the method and we will go through each of them one by one :</p>
+<pre><code class="language-js">JSON.parse(text)
+JSON.parse(text, reviver)
+</code></pre>
+<p>    Copy the following code and paste it into the Scripts - Background.</p>
+<pre><code class="language-js">var jsonObj = {
+  Course: &quot;test_IntegrateNow&quot;,
+  Skills: [&quot;test_Integration&quot;, &quot;test_JSON&quot;, &quot;test_ServiceNow&quot;],
+  name: {
+    first_name: &quot;test_Vishal&quot;,
+    last_name: &quot;test_Ingle&quot;,
+  },
+}
+
+var jsonStr = JSON.stringify(jsonObj)
+gs.info(jsonStr)
+gs.info(typeof jsonStr)
+
+gs.info(JSON.parse(jsonStr))
+var jsonObjFromString = JSON.parse(jsonStr)
+gs.info(jsonObjFromString)
+gs.info(typeof jsonObjFromString)
+</code></pre>
+<p><img src="/images/json9.png" alt="json 1" /></p>
+<p>    Now click the Run Script button to execute the script. You should see the following output :
+<img src="/images/json10.png" alt="json 2" /></p>
+<p>    After executing the code we are certain that jsonStr is a string and line two of output conveys that. JSON.parse() method converts this json string into an JSON object, last line of the output shows that jsonObjFromString is now an object.</p>
+<h5 id="using-the-reviver-parameter"><a class="header" href="#using-the-reviver-parameter">Using the reviver parameter</a></h5>
+<p>    An optional reviver function can be provided to perform a transformation on the resulting object before it is returned or in other words, If a reviver is specified, the value computed by parsing is transformed before being returned. It allows for interpreting what the replacer has used to stand in for other datatypes.</p>
+<ul>
+<li>The computed value and all its properties (beginning with the most nested properties and proceeding to the original value itself) are individually run through the reviver.</li>
+<li>Then it is called, with the object containing the property being processed as this, and with the property name as a string, and the property value as arguments.</li>
+<li>If the reviver function returns undefined (or returns no value, for example, if execution falls off the end of the function), the property is deleted from the object.</li>
+<li>Otherwise, the property is redefined to be the return value.</li>
+<li>If the reviver only transforms some values and not others, be certain to return all untransformed values as-is, otherwise, they will be deleted from the resulting object.</li>
+</ul>
+<p>    Copy the following code and paste it into the Scripts - Background.</p>
+<pre><code class="language-js">var jsonObj = {
+  Course: &quot;test_IntegrateNow&quot;,
+  Skills: [&quot;test_Integration&quot;, &quot;test_JSON&quot;, &quot;test_ServiceNow&quot;],
+  name: {
+    first_name: &quot;test_Vishal&quot;,
+    last_name: &quot;test_Ingle&quot;,
+  },
+}
+
+var jsonStr = JSON.stringify(jsonObj)
+
+var jsonObjFromString = JSON.parse(jsonStr, reviver)
+
+gs.info(JSON.stringify(jsonObjFromString, null, 4))
+
+function reviver(key, value) {
+  if (typeof value === &quot;string&quot;) {
+    return value.toString().slice(5)
+  } else {
+    return value
+  }
+}
+</code></pre>
+<p><img src="/images/json11.png" alt="json 1" /></p>
+<p>    Now click the Run Script button to execute the script. You should see the following output :
+<img src="/images/json12.png" alt="json 2" /></p>
+<p>    We have modified every string value using our reviver function and removed &quot;test_&quot; from it, Output shows the stringified version of this modified object.</p>
+<p>    We have seen examples of JSON.parse() and how it works. If you are interested in learning more about JSON and its methods, Mozilla developer documentation is a best place to start with, It has everything you need right <a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON">here</a>.</p>
+<p>    Hey, we are not done yet, There are still few more things we need to know.</p>
+<h4 id="working-with-json-properties"><a class="header" href="#working-with-json-properties">Working with JSON properties</a></h4>
+<p>    We have kind of already touched these concepts, but let us be more specific to them because they are far more important and needful to us.</p>
+<p>    we could then access the data inside an object using the dot or bracket notation. An object property can itself be an object, to access these items you just need to chain the extra step onto the end with another dot or bracket. We can also set (update) the value of object members by declaring the member the same way. Let us look at the example to understand what I mean.</p>
+<p>    Copy the following code and paste it into the Scripts - Background.</p>
+<pre><code class="language-js">var jsonObj = {
+  Course: &quot;IntegrateNow&quot;,
+  Skills: [&quot;Integration&quot;, &quot;JSON&quot;, &quot;ServiceNow&quot;],
+  name: {
+    first_name: &quot;Vishal&quot;,
+    last_name: &quot;Ingle&quot;,
+  },
+}
+
+gs.info(JSON.stringify(jsonObj, null, 4))
+gs.info(jsonObj.Course)
+gs.info(jsonObj.name.first_name)
+gs.info(jsonObj[&quot;Course&quot;])
+gs.info(jsonObj[&quot;name&quot;][&quot;first_name&quot;])
+
+jsonObj.chapter = &quot;Chapter 2&quot;
+jsonObj[&quot;title&quot;] = &quot;What you need to know abour JSON and Objects&quot;
+
+gs.info(JSON.stringify(jsonObj, null, 4))
+</code></pre>
+<p><img src="/images/json13.png" alt="json 1" /></p>
+<p>    Now click the Run Script button to execute the script. You should see the following output :
+<img src="/images/json14.png" alt="json 2" /></p>
+<p>    First we did display the stringified version of initial JSON Object. Next we did log the properties course and first_name from object using dot notation and brackets notation both. Though we have received the same response, it is best to use dot notation for performance reasons. but brackets notation has it's own use cases e.g. if you want to access the array type property's elements. After that we did add two more properties to our object using both dot and brackets notation and then logged the stringified version of object. We can see that our object now contains two new properties chapter &amp; title.</p>
+<h6 id="objectkeys--hasownproperty"><a class="header" href="#objectkeys--hasownproperty">Object.keys() &amp; hasOwnProperty()</a></h6>
+<p>    The Object.keys() method returns an array of a given object's own enumerable property names. And the hasOwnProperty() method returns a boolean indicating whether the object has the specified property as its own property.</p>
+<p>    Copy the following code and paste it into the Scripts - Background.</p>
+<pre><code class="language-js">var jsonObj = {
+  Course: &quot;IntegrateNow&quot;,
+  Skills: [&quot;Integration&quot;, &quot;JSON&quot;, &quot;ServiceNow&quot;],
+  name: {
+    first_name: &quot;Vishal&quot;,
+    last_name: &quot;Ingle&quot;,
+  },
+}
+
+gs.info(Object.keys(jsonObj))
+gs.info(jsonObj.hasOwnProperty(&quot;Skills&quot;))
+gs.info(jsonObj.hasOwnProperty(&quot;more_skills&quot;))
+</code></pre>
+<p><img src="/images/json15.png" alt="json 1" /></p>
+<p>    Now click the Run Script button to execute the script. You should see the following output :
+<img src="/images/json16.png" alt="json 2" /></p>
+<p>    The first line of output lists all the property names of our objects. Line two of our output indicates that we have the property named Skills in our object. Line three does indicate the same by returning false.</p>
+<p>    Finally, We did reach to the end of this chapter. This is the minimum you need to know about JSON and Objects to follow along with me. If you want to dig deep, Mozilla is again the best platform right <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">here</a> to learn about objects.</p>
+<hr />
+<h2 id="whats-next"><a class="header" href="#whats-next">What's next?</a></h2>
+<p>     In next chapter, we are actually starting our adventure in the ServiceNow land. I will explain one of the simplest real life use case and start gathering what all is needed to start implementing it. We will talk about ServiceNow API documentation (REST API Explorer), Will understand how to use it, touch back and expand some of the concepts we saw already and introduce some new ones. It will be fun, if you do it by yourself, if not already.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ConceptualAsides.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="RESTAPIExplorer.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ConceptualAsides.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="RESTAPIExplorer.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

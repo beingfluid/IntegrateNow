@@ -1,0 +1,1197 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Working With XMLs - IntegrateNow</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="cover.html">IntegrateNow</a></li><li class="chapter-item expanded affix "><li class="part-title">Index</li><li class="chapter-item expanded "><a href="ConceptualAsides.html"><strong aria-hidden="true">1.</strong> Conceptual Asides</a></li><li class="chapter-item expanded "><a href="WhatYouNeedToKnowAboutJSONAndObjects.html"><strong aria-hidden="true">2.</strong> What You Need To Know About JSON And Objects</a></li><li class="chapter-item expanded "><a href="RESTAPIExplorer.html"><strong aria-hidden="true">3.</strong> REST API Explorer</a></li><li class="chapter-item expanded "><a href="ImplementingOurFirstIntegration.html"><strong aria-hidden="true">4.</strong> Implementing Our First Integration</a></li><li class="chapter-item expanded "><a href="FinishingTouches.html"><strong aria-hidden="true">5.</strong> Finishing Touches</a></li><li class="chapter-item expanded "><a href="WorkingWithXMLs.html" class="active"><strong aria-hidden="true">6.</strong> Working With XMLs</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">IntegrateNow</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="chapter-6"><a class="header" href="#chapter-6">Chapter 6</a></h2>
+<h1 id="working-with-xmls"><a class="header" href="#working-with-xmls">Working With XMLs</a></h1>
+<p>    So far, we have worked with easier JSON responses, but often we need to work with other types e.g. XML, YAML or CSV. Understanding how to work with XMLs is extermely important not only when you work with web services like RSS or SOAP, but also REST when you receive back the responses in XML format. In this chapter, we will try to learn some of the important concepts regarding XML that will help us to work with XML when we interact with them. Here, we will try to limit ourselves to only concepts essential to work with ServiceNow web services and it is extremely important that we understand them very well. If you want to learn more about these concepts, the best place is <a href="https://www.w3schools.com/xml/default.asp">XML Tutorial</a> on w3schools.com.</p>
+<p><img src="./images/xml-conversion.png" alt="xml" /></p>
+<p>    <strong>XML</strong> or <strong>Extensible Markup Language</strong> is a markup language much like HTML, but without predefined tags to use. Instead, you define your own tags designed specifically for your needs. <strong>XML was designed and is a powerful way to store and transport data in a format that can be both human and machine-readable.</strong> Because of the custom tags, it's something that humans can read and understand. Web services use XML to code and to decode data, and SOAP to transport it.</p>
+<p><img src="./images/1_XuRqFNT2fMExddcrERq-6g.jpeg" alt="XMLResponse" /></p>
+<p>    Many finds working with XML difficult because of its structured nature, which requires more efforts for parsing the XML document. But once you understand the magic that is known as XML, you will be amazed with it's capabilities. And most important thing about XML is, it is everywhere!</p>
+<p><img src="./images/1m5efq.jpg" alt="XMLResponse" /></p>
+<h2 id="structure-of-an-xml-document"><a class="header" href="#structure-of-an-xml-document">Structure of an XML document</a></h2>
+<p>    XML describes a class of data objects called XML documents. The whole structure of XML is built on tags. Use the Application Navigator to open <strong>REST &gt; REST API Explorer</strong>:
+<img src="./images/XML1.png" alt="XML1" />
+    In the top-left of the REST API Explorer, Make sure that method selected is <strong>Retrieve records from a table (GET)</strong>. In the Path Parameters section, select the <strong>Incident (incident)</strong> table.
+<img src="./images/XML2.png" alt="XML2" />
+    The response by default will return all the incident fields, but we will only need a couple of the fields back in our response, We can specify those in the <strong>sysparm_fields</strong> parameter. Let us limit sysparm_fields to Number, Caller and Short Description:
+<img src="./images/XML3.png" alt="XML3" />
+<img src="./images/XML4.png" alt="XML4" />
+    Let us change the Reesponse format to <strong>application/xml</strong> and click <strong>Send</strong>.
+<img src="./images/XML7.png" alt="XML7" /></p>
+<p>    Observe the response body. This, like JSON, is a single line response that we received and is difficult to read:
+<img src="./images/XML8.png" alt="XML8" /></p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;response&gt;&lt;result&gt;&lt;number&gt;INC0000060&lt;/number&gt;&lt;short_description&gt;Unable to connect to email&lt;/short_description&gt;&lt;caller_id&gt;&lt;link&gt;https://dev124645.service-now.com/api/now/table/sys_user/681ccaf9c0a8016400b98a06818d57c7&lt;/link&gt;&lt;value&gt;681ccaf9c0a8016400b98a06818d57c7&lt;/value&gt;&lt;/caller_id&gt;&lt;/result&gt;&lt;/response&gt;
+</code></pre>
+<p>    Let us copy the response and paste it into online prettifier tools like <a href="https://jsonformatter.org/xml-pretty-print">JSON formatter</a> or <a href="https://codebeautify.org/xml-pretty-print">Code Beautify</a>, which will prettify our XML like below :</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;response&gt;
+	&lt;result&gt;
+		&lt;number&gt;INC0000060&lt;/number&gt;
+		&lt;short_description&gt;Unable to connect to email&lt;/short_description&gt;
+		&lt;caller_id&gt;
+			&lt;link&gt;https://dev124645.service-now.com/api/now/table/sys_user/681ccaf9c0a8016400b98a06818d57c7&lt;/link&gt;
+			&lt;value&gt;681ccaf9c0a8016400b98a06818d57c7&lt;/value&gt;
+		&lt;/caller_id&gt;
+	&lt;/result&gt;
+&lt;/response&gt;
+</code></pre>
+<p><img src="./images/XML9.png" alt="XML9" />
+<img src="./images/XML10.png" alt="XML10" /></p>
+<p>    Here, The document starts with a <code>&lt;response&gt;</code> tag, followed by a <code>&lt;result&gt;</code> element that gives the information about the incident i.e Number, Short Description and Caller. Also, The tags are closed in a sequence; <code>&lt;response&gt;</code> tag is closed after the <code>&lt;result&gt;</code> tag with the use of <code>/</code> character.</p>
+<p>    However, notice the very first line of our example, which is also known as <strong>XML prolog</strong>:</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+</code></pre>
+<p>    The above line of code is not a tag. It is used just for the transmission of the meta-data of a document i.e. version &amp; character encoding used in the document. The XML prolog is optional. If it exists, it must come first in the document.</p>
+<p>    <strong>XML documents form a tree structure that starts at &quot;the root&quot; and branches to &quot;the leaves&quot;.</strong> The XML above is quite self-descriptive:</p>
+<ul>
+<li>It has a information about Incident Number i.e. <code>INC0000060</code> specified in the <code>number</code> tag.</li>
+<li>It has a information about incident Short Description i.e. <code>Unable to connect to email</code> specified in the <code>short_description</code> tag.</li>
+<li>It has a a information about incident Caller specified in the <code>caller_id</code> tag. Element <code>caller_id</code> has the two child elements:
+<ul>
+<li><code>link</code> tag provides the API endpoint, which can be used to fetch information about the Incident caller i.e. <code>https://dev124645.service-now.com/api/now/table/sys_user/681ccaf9c0a8016400b98a06818d57c7</code></li>
+<li><code>value</code> tag provides the SysID of the Incident caller i.e. <code>681ccaf9c0a8016400b98a06818d57c7</code></li>
+</ul>
+</li>
+</ul>
+<p>    The tags in the example above (like <code>&lt;number&gt;</code> and <code>&lt;link&gt;</code>) are not defined in any XML standard. These tags are &quot;invented&quot; by the author of the XML document.</p>
+<p>    The first line after the prolog defines the <strong>root element</strong> of the document:</p>
+<pre><code class="language-xml">&lt;response&gt;
+</code></pre>
+<p>    The next line starts a <code>&lt;result&gt;</code> element, which is a child element of response:</p>
+<pre><code class="language-xml">&lt;result&gt;
+</code></pre>
+<p>    The <code>&lt;result&gt;</code> element have 3 child elements: <code>&lt;number&gt;</code>, <code>&lt;short_description&gt;</code> &amp; <code>&lt;caller_id&gt;</code>. Similarly, <code>&lt;caller_id&gt;</code> have 2 child elements: <code>&lt;link&gt;</code> and <code>&lt;value&gt;</code>.</p>
+<p>    One of the important point to remember here is, <strong>XML stores data in plain text format</strong>. This provides a software- and hardware-independent way of storing, transporting, and sharing data.</p>
+<h2 id="the-xml-tree-structure"><a class="header" href="#the-xml-tree-structure">The XML Tree Structure</a></h2>
+<p>    <strong>An XML tree starts at a root element and branches from the root to child elements and all elements can have sub elements (child elements).</strong></p>
+<ul>
+<li>The terms parent, child, and sibling are used to describe the relationships between elements.</li>
+<li>Parents have children.</li>
+<li>Children have parents.</li>
+<li>Siblings are children on the same level (brothers and sisters).</li>
+<li>All elements can have text content and attributes.</li>
+</ul>
+<pre><code class="language-xml">&lt;root&gt;
+  &lt;child&gt;
+    &lt;subchild&gt;.....&lt;/subchild&gt;
+  &lt;/child&gt;
+&lt;/root&gt;
+</code></pre>
+<p>    Consider the below image, copied from <a href="https://www.w3schools.com/xml/xml_tree.asp">w3schools.com</a>:</p>
+<p><img src="./images/nodetree.gif" alt="nodetree" /></p>
+<p>    The image above represents books in this XML:</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;bookstore&gt;
+  &lt;book category=&quot;cooking&quot;&gt;
+    &lt;title lang=&quot;en&quot;&gt;Everyday Italian&lt;/title&gt;
+    &lt;author&gt;Giada De Laurentiis&lt;/author&gt;
+    &lt;year&gt;2005&lt;/year&gt;
+    &lt;price&gt;30.00&lt;/price&gt;
+  &lt;/book&gt;
+  &lt;book category=&quot;children&quot;&gt;
+    &lt;title lang=&quot;en&quot;&gt;Harry Potter&lt;/title&gt;
+    &lt;author&gt;J K. Rowling&lt;/author&gt;
+    &lt;year&gt;2005&lt;/year&gt;
+    &lt;price&gt;29.99&lt;/price&gt;
+  &lt;/book&gt;
+  &lt;book category=&quot;web&quot;&gt;
+    &lt;title lang=&quot;en&quot;&gt;Learning XML&lt;/title&gt;
+    &lt;author&gt;Erik T. Ray&lt;/author&gt;
+    &lt;year&gt;2003&lt;/year&gt;
+    &lt;price&gt;39.95&lt;/price&gt;
+  &lt;/book&gt;
+&lt;/bookstore&gt;
+</code></pre>
+<p>    <strong>An XML element is everything from (including) the element's start tag to (including) the element's end tag</strong> and an element can contain:</p>
+<ul>
+<li>text</li>
+<li>attributes</li>
+<li>other elements</li>
+<li>a mix of the above</li>
+</ul>
+<p>    In the example above:</p>
+<ul>
+<li><code>&lt;title&gt;</code>, <code>&lt;author&gt;</code>, <code>&lt;year&gt;</code>, and <code>&lt;price&gt;</code> have text content because they contain text (like 29.99).</li>
+<li><code>&lt;bookstore&gt;</code> and <code>&lt;book&gt;</code> have element contents, because they contain elements.</li>
+<li><code>&lt;book&gt;</code> has an attribute (<code>category=&quot;children&quot;</code>).</li>
+</ul>
+<p>    An element with no content is said to be empty. In XML, you can indicate an empty element like this:</p>
+<pre><code class="language-xml">&lt;business_service&gt;&lt;/business_service&gt;
+</code></pre>
+<p>OR you can also use a so called self-closing tag:</p>
+<pre><code class="language-xml">&lt;business_service/&gt;
+</code></pre>
+<p>    <strong>XML elements can have attributes, designed to contain data related to a specific element.</strong> Attribute values must always be quoted. Either single or double quotes can be used. E.g. a display_value attribute is used in this example:</p>
+<pre><code class="language-xml">&lt;xml&gt;
+    &lt;incident&gt;
+        &lt;active&gt;true&lt;/active&gt;
+        &lt;caller_id  display_value=&quot;Joe Employee&quot;&gt;681ccaf9c0a8016400b98a06818d57c7&lt;/caller_id&gt;
+        &lt;category&gt;network&lt;/category&gt;
+        &lt;short_description&gt;Wireless access is down in my area&lt;/short_description&gt;
+    &lt;/incident&gt;
+&lt;/xml&gt;
+</code></pre>
+<p>    <strong>The metadata (data about data) should be stored as attributes, and the data itself should be stored as elements.</strong> E.g. The id attributes below are for identifying the different notes. It is not a part of the note itself.</p>
+<pre><code class="language-xml">&lt;messages&gt;
+  &lt;note id=&quot;501&quot;&gt;
+    &lt;to&gt;Tove&lt;/to&gt;
+    &lt;from&gt;Jani&lt;/from&gt;
+    &lt;heading&gt;Reminder&lt;/heading&gt;
+    &lt;body&gt;Don't forget me this weekend!&lt;/body&gt;
+  &lt;/note&gt;
+  &lt;note id=&quot;502&quot;&gt;
+    &lt;to&gt;Jani&lt;/to&gt;
+    &lt;from&gt;Tove&lt;/from&gt;
+    &lt;heading&gt;Re: Reminder&lt;/heading&gt;
+    &lt;body&gt;I will not&lt;/body&gt;
+  &lt;/note&gt;
+&lt;/messages&gt;
+</code></pre>
+<h2 id="xml-design-rules"><a class="header" href="#xml-design-rules">XML design rules</a></h2>
+<p>    XML document must be well-formed. XML documents that conform to the syntax rules below are said to be &quot;Well Formed&quot; XML documents:</p>
+<ul>
+<li>XML documents must contain one root element that is the parent of all other elements:</li>
+</ul>
+<pre><code class="language-xml">&lt;root&gt;
+  &lt;child&gt;
+    &lt;subchild&gt;.....&lt;/subchild&gt;
+  &lt;/child&gt;
+&lt;/root&gt;
+</code></pre>
+<p>    In this example <code>&lt;response&gt;</code> is the root element:</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;response&gt;
+	&lt;result&gt;
+		&lt;number&gt;INC0000060&lt;/number&gt;
+		&lt;short_description&gt;Unable to connect to email&lt;/short_description&gt;
+		&lt;caller_id&gt;
+			&lt;link&gt;https://dev124645.service-now.com/api/now/table/sys_user/681ccaf9c0a8016400b98a06818d57c7&lt;/link&gt;
+			&lt;value&gt;681ccaf9c0a8016400b98a06818d57c7&lt;/value&gt;
+		&lt;/caller_id&gt;
+	&lt;/result&gt;
+&lt;/response&gt;
+</code></pre>
+<ul>
+<li>
+<p>Element names must start with a letter or underscore.</p>
+</li>
+<li>
+<p>Element names cannot start with the letters xml (or XML, or Xml, etc).</p>
+</li>
+<li>
+<p>Element names can contain letters, digits, hyphens, underscores, and periods.</p>
+</li>
+<li>
+<p>Element names cannot contain spaces.</p>
+</li>
+<li>
+<p>In XML, it is illegal to omit the closing tag. All elements must have a closing tag:</p>
+</li>
+</ul>
+<pre><code class="language-xml">&lt;actions_taken/&gt;
+&lt;active&gt;true&lt;/active&gt;
+</code></pre>
+<ul>
+<li>XML tags are case sensitive. The tag <code>&lt;Active&gt;</code> is different from the tag <code>&lt;active&gt;</code>. Opening and closing tags must be written with the same case:</li>
+</ul>
+<pre><code class="language-xml">&lt;short_description&gt;Wireless access is down in my area&lt;/short_description&gt;
+</code></pre>
+<ul>
+<li>In XML, all elements must be properly nested within each other. E.g. In the example below, &quot;Properly nested&quot; simply means that since the <code>&lt;active&gt;</code> element is opened inside the <code>&lt;incident&gt;</code> element, it must be closed inside the <code>&lt;incident&gt;</code> element:</li>
+</ul>
+<pre><code class="language-xml">&lt;incident&gt;
+  &lt;active&gt;true&lt;/active&gt;
+&lt;/incident&gt;
+</code></pre>
+<ul>
+<li>XML elements can have attributes in name/value pairs just like in HTML. In XML, the attribute values must always be quoted:</li>
+</ul>
+<pre><code class="language-xml">&lt;assignment_group display_value=&quot;Incident Management&quot; name=&quot;Incident Management&quot;&gt;12a586cd0bb23200ecfd818393673a30&lt;/assignment_group&gt;
+</code></pre>
+<ul>
+<li>Some characters have a special meaning in XML, they should be replaced with an entity reference. E.g. If you place a character like &quot;&lt;&quot; inside an XML element, it will generate an error because the parser interprets it as the start of a new element and it should be replaced with an entity reference <code>&amp;lt;</code>:</li>
+</ul>
+<pre><code class="language-xml">&lt;message&gt;salary &amp;lt; 1000&lt;/message&gt;
+</code></pre>
+<ul>
+<li>
+<p>XML stores a new line as LF.</p>
+</li>
+<li>
+<p>Avoid &quot;-&quot;. If you name something &quot;first-name&quot;, some software may think you want to subtract &quot;name&quot; from &quot;first&quot;.</p>
+</li>
+<li>
+<p>Avoid &quot;.&quot;. If you name something &quot;first.name&quot;, some software may think that &quot;name&quot; is a property of the object &quot;first&quot;.</p>
+</li>
+<li>
+<p>Avoid &quot;:&quot;. Colons are reserved for namespaces.</p>
+</li>
+</ul>
+<h2 id="xml-dom"><a class="header" href="#xml-dom">XML DOM</a></h2>
+<p>    The <strong>XML DOM defines a standard way for accessing and manipulating XML documents.</strong> It presents an XML document as a tree-structure. The XML DOM is a standard for how to get, change, add, and delete XML elements. All XML elements can be accessed through the XML DOM. Understanding the DOM is a must for anyone working with XML. You can use online tools such <a href="https://www.xmlviewer.org/">XML Viewer</a> to visualize a tree structure of our XML document:
+<img src="./images/XMLTreeView.png" alt="XMLTreeView" /></p>
+<h2 id="xml-parser--xmldocument2"><a class="header" href="#xml-parser--xmldocument2">XML Parser &amp; XMLDocument2</a></h2>
+<p>    XML parser can convert text into an XML DOM object. ServiceNow provides a JavaScript Object wrapper for parsing and extracting XML data from an XML string known as <strong>XMLDocument2</strong>. An XML string has a tree structure, and the parts of the structure are called nodes. An XMLDocument2 object deals with two node types: element, and document element (root node of the XML tree).</p>
+<p>    Let us generate the snippet for the GET method that we did use earlier to receive Incident information:</p>
+<ul>
+<li>To create the code sample, Navigate back to REST API Explorer window and click the link for the language of your choice in the REST API Explorer. For the sake of this example, we will select <strong>&quot;ServiceNow Script&quot;</strong>.
+<img src="./images/XML11.png" alt="XML11" /></li>
+<li>To highlight the code sample for copying, click the <strong>Select Snippet</strong> button.
+<img src="./images/XML12.png" alt="XML12" /></li>
+<li>After highlighting the code sample, <strong>copy the code sample to the clipboard</strong> by using ctrl+c.
+<img src="./images/XML13.png" alt="XML13" /></li>
+</ul>
+<p>    If you did everything correctly you should have the code which look similar to the following copied to your clipboard:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=1&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;admin&quot;
+var password = &quot;admin&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+gs.log(response.getBody())
+</code></pre>
+<p>    It is time to visit our old good friend. Use the Application Navigator to open <strong>System Definition &gt; Scripts - Background</strong> and Paste the snippet that we did copy from last step into the Run Script field.
+<img src="./images/XML14.png" alt="XML14" />
+    Let us modify our code to change the fake credentials by your admin credentials, and re-execute the script and Click the <strong>Run script</strong> button to view the results of the script:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=1&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+gs.log(response.getBody())
+</code></pre>
+<p><img src="./images/XML15.png" alt="XML15" />
+<img src="./images/XML16.png" alt="XML16" /></p>
+<p>    Well, we received the XML response back from our API, but just like JSON responses, it is a XML string. Let us add <strong>typeof</strong> to the logger function to get the type of our response and re-execute the script:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=1&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+gs.log(typeof response.getBody())
+</code></pre>
+<p><img src="./images/XML17.png" alt="XML17" />
+<img src="./images/XML18.png" alt="XML18" /></p>
+<h3 id="xmldocument2--parsexml"><a class="header" href="#xmldocument2--parsexml">XMLDocument2 &amp; parseXML</a></h3>
+<p>    <strong>XMLDocument2() Creates an XMLDocument2 object.</strong> we can use JavaScript class &quot;XMLDocument2&quot; to create an object from an XML string. <strong>parseXML</strong> method parses the XML string and loads it into the XMLDocument2 object. Lets modify our code and re-execute the script:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=1&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+gs.log(typeof xmlDoc)
+gs.log(xmlDoc)
+</code></pre>
+<p><img src="./images/XML19.png" alt="XML19" /></p>
+<p>    As we can see from the output, we have converted our string representation of XML into XMLDocument2 object.</p>
+<p><img src="./images/XML20.png" alt="XML20" /></p>
+<h3 id="getdocumentelement"><a class="header" href="#getdocumentelement">getDocumentElement</a></h3>
+<p>    <strong>getDocumentElement</strong> gets the document element node of the XMLdocument2 object. The document element node is the root node. Lets modify our code and re-execute the script:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=1&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+//returns the root node of the document tree.
+var rootNode = xmlDoc.getDocumentElement()
+gs.info(rootNode)
+</code></pre>
+<p><img src="./images/XML21.png" alt="XML21" />
+<img src="./images/XML22.png" alt="XML22" /></p>
+<h3 id="xpath"><a class="header" href="#xpath">XPath</a></h3>
+<p>    XPath stands for XML Path Language. <strong>XPath can be used to navigate through elements and attributes in an XML document.</strong> It uses path expressions to navigate in XML documents. These path expressions look very much like the expressions you see when you work with a traditional computer file system.</p>
+<p><img src="./images/xpathwin.png" alt="img_xpath_folders" /></p>
+<p>    XML documents are treated as trees of nodes. In XPath, there are seven kinds of nodes: element, attribute, text, namespace, processing-instruction, comment, and document nodes. The topmost element of the tree is called the root element. Look at the following XML document:</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+
+&lt;bookstore&gt;
+
+&lt;book category=&quot;cooking&quot;&gt;
+  &lt;title lang=&quot;en&quot;&gt;Everyday Italian&lt;/title&gt;
+  &lt;author&gt;Giada De Laurentiis&lt;/author&gt;
+  &lt;year&gt;2005&lt;/year&gt;
+  &lt;price&gt;30.00&lt;/price&gt;
+&lt;/book&gt;
+
+&lt;book category=&quot;children&quot;&gt;
+  &lt;title lang=&quot;en&quot;&gt;Harry Potter&lt;/title&gt;
+  &lt;author&gt;J K. Rowling&lt;/author&gt;
+  &lt;year&gt;2005&lt;/year&gt;
+  &lt;price&gt;29.99&lt;/price&gt;
+&lt;/book&gt;
+
+&lt;book category=&quot;web&quot;&gt;
+  &lt;title lang=&quot;en&quot;&gt;XQuery Kick Start&lt;/title&gt;
+  &lt;author&gt;James McGovern&lt;/author&gt;
+  &lt;author&gt;Per Bothner&lt;/author&gt;
+  &lt;author&gt;Kurt Cagle&lt;/author&gt;
+  &lt;author&gt;James Linn&lt;/author&gt;
+  &lt;author&gt;Vaidyanathan Nagarajan&lt;/author&gt;
+  &lt;year&gt;2003&lt;/year&gt;
+  &lt;price&gt;49.99&lt;/price&gt;
+&lt;/book&gt;
+
+&lt;book category=&quot;web&quot;&gt;
+  &lt;title lang=&quot;en&quot;&gt;Learning XML&lt;/title&gt;
+  &lt;author&gt;Erik T. Ray&lt;/author&gt;
+  &lt;year&gt;2003&lt;/year&gt;
+  &lt;price&gt;39.95&lt;/price&gt;
+&lt;/book&gt;
+
+&lt;/bookstore&gt;
+</code></pre>
+<p>    Example of nodes in the XML document above:</p>
+<pre><code class="language-xml">&lt;bookstore&gt; (root element node)
+
+&lt;author&gt;J K. Rowling&lt;/author&gt; (element node)
+
+lang=&quot;en&quot; (attribute node)
+</code></pre>
+<h3 id="selecting-nodes"><a class="header" href="#selecting-nodes">Selecting Nodes</a></h3>
+<p>    XPath uses path expressions to select nodes in an XML document. The node is selected by following a path or steps. The most useful path expressions are listed below:</p>
+<div class="table-wrapper"><table><thead><tr><th>Expression</th><th>Description</th><th>Example</th><th>Result</th></tr></thead><tbody>
+<tr><td>nodename</td><td>Selects all nodes with the name &quot;nodename&quot;</td><td>bookstore</td><td>Selects all nodes with the name &quot;bookstore&quot;</td></tr>
+<tr><td>/</td><td>Selects from the root node</td><td>/bookstore</td><td>Selects the root element bookstore</td></tr>
+<tr><td></td><td></td><td>bookstore/book</td><td>Selects all book elements that are children of bookstore</td></tr>
+<tr><td>//</td><td>Selects nodes in the document from the current node that match the selection no matter where they are</td><td>//book</td><td>Selects all book elements no matter where they are in the document</td></tr>
+<tr><td></td><td></td><td>bookstore//book</td><td>Selects all book elements that are descendant of the bookstore element, no matter where they are under the bookstore element</td></tr>
+<tr><td>.</td><td>Selects the current node</td><td></td><td></td></tr>
+<tr><td>..</td><td>Selects the parent of the current node</td><td></td><td></td></tr>
+<tr><td>@</td><td>Selects attributes</td><td>//@</td><td>lang Selects all attributes that are named lang</td></tr>
+</tbody></table>
+</div>
+<h3 id="predicates"><a class="header" href="#predicates">Predicates</a></h3>
+<p>    Predicates are used to find a specific node or a node that contains a specific value. Predicates are always embedded in square brackets. In the table below we have listed some path expressions with predicates and the result of the expressions:</p>
+<div class="table-wrapper"><table><thead><tr><th>Path Expression</th><th>Result</th></tr></thead><tbody>
+<tr><td>/bookstore/book[1]</td><td>Selects the first book element that is the child of the bookstore element.</td></tr>
+<tr><td>/bookstore/book[last()]</td><td>Selects the last book element that is the child of the bookstore element</td></tr>
+<tr><td>/bookstore/book[last()-1]</td><td>Selects the last but one book element that is the child of the bookstore element</td></tr>
+<tr><td>/bookstore/book[position()&lt;3]</td><td>Selects the first two book elements that are children of the bookstore element</td></tr>
+<tr><td>//title[@lang]</td><td>Selects all the title elements that have an attribute named lang</td></tr>
+<tr><td>//title[@lang='en']</td><td>Selects all the title elements that have a &quot;lang&quot; attribute with a value of &quot;en&quot;</td></tr>
+<tr><td>/bookstore/book[price&gt;35.00]</td><td>Selects all the book elements of the bookstore element that have a price element with a value greater than 35.00</td></tr>
+<tr><td>/bookstore/book[price&gt;35.00]/title</td><td>Selects all the title elements of the book elements of the bookstore element that have a price element with a value greater than 35.00</td></tr>
+</tbody></table>
+</div>
+<h3 id="selecting-unknown-nodes"><a class="header" href="#selecting-unknown-nodes">Selecting Unknown Nodes</a></h3>
+<p>    XPath wildcards can be used to select unknown XML nodes. In the table below we have listed some path expressions and the result of the expressions:</p>
+<div class="table-wrapper"><table><thead><tr><th>Wildcard</th><th>Description</th><th>Path Expression</th><th>Result</th></tr></thead><tbody>
+<tr><td>*</td><td>Matches any element node</td><td>/bookstore/*</td><td>Selects all the child element nodes of the bookstore element</td></tr>
+<tr><td></td><td></td><td>//*</td><td>Selects all elements in the document</td></tr>
+<tr><td>@*</td><td>Matches any attribute node</td><td>//title[@*]</td><td>Selects all title elements which have at least one attribute of any kind</td></tr>
+<tr><td>node()</td><td>Matches any node of any kind</td><td></td><td></td></tr>
+</tbody></table>
+</div>
+<h3 id="selecting-several-paths"><a class="header" href="#selecting-several-paths">Selecting Several Paths</a></h3>
+<p>    By using the <code>|</code> operator in an XPath expression you can select several paths. In the table below we have listed some path expressions and the result of the expressions:</p>
+<div class="table-wrapper"><table><thead><tr><th>Path Expression</th><th>Result</th></tr></thead><tbody>
+<tr><td>//book/title | //book/price</td><td>Selects all the title AND price elements of all book elements</td></tr>
+<tr><td>//title | //price</td><td>Selects all the title AND price elements in the document</td></tr>
+<tr><td>/bookstore/book/title | //price</td><td>Selects all the title elements of the book element of the bookstore element AND all the price elements in the document</td></tr>
+</tbody></table>
+</div>
+<h3 id="xpath-axes"><a class="header" href="#xpath-axes">XPath Axes</a></h3>
+<p>    An axis represents a relationship to the context (current) node, and is used to locate nodes relative to that node on the tree.</p>
+<div class="table-wrapper"><table><thead><tr><th>AxisName</th><th>Result</th></tr></thead><tbody>
+<tr><td>ancestor</td><td>Selects all ancestors (parent, grandparent, etc.) of the current node</td></tr>
+<tr><td>ancestor-or-self</td><td>Selects all ancestors (parent, grandparent, etc.) of the current node and the current node itself</td></tr>
+<tr><td>attribute</td><td>Selects all attributes of the current node</td></tr>
+<tr><td>child</td><td>Selects all children of the current node</td></tr>
+<tr><td>descendant</td><td>Selects all descendants (children, grandchildren, etc.) of the current node</td></tr>
+<tr><td>descendant-or-self</td><td>Selects all descendants (children, grandchildren, etc.) of the current node and the current node itself</td></tr>
+<tr><td>following</td><td>Selects everything in the document after the closing tag of the current node</td></tr>
+<tr><td>following-sibling</td><td>Selects all siblings after the current node</td></tr>
+<tr><td>namespace</td><td>Selects all namespace nodes of the current node</td></tr>
+<tr><td>parent</td><td>Selects the parent of the current node</td></tr>
+<tr><td>preceding</td><td>Selects all nodes that appear before the current node in the document, except ancestors, attribute nodes and namespace nodes</td></tr>
+<tr><td>preceding-sibling</td><td>Selects all siblings before the current node</td></tr>
+<tr><td>self</td><td>Selects the current node</td></tr>
+</tbody></table>
+</div>
+<h3 id="location-path-expression"><a class="header" href="#location-path-expression">Location Path Expression</a></h3>
+<p>    A location path can be absolute or relative. An absolute location path starts with a slash ( / ) and a relative location path does not. In both cases the location path consists of one or more steps, each separated by a slash:</p>
+<pre><code class="language-xml">An absolute location path:
+
+/step/step/...
+
+A relative location path:
+
+step/step/...
+</code></pre>
+<p>    The syntax for a location step is:</p>
+<pre><code class="language-xml">axisname::nodetest[predicate]
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>Example</th><th>Result</th></tr></thead><tbody>
+<tr><td>child::book</td><td>Selects all book nodes that are children of the current node</td></tr>
+<tr><td>attribute::lang</td><td>Selects the lang attribute of the current node</td></tr>
+<tr><td>child::*</td><td>Selects all element children of the current node</td></tr>
+<tr><td>attribute::*</td><td>Selects all attributes of the current node</td></tr>
+<tr><td>child::text()</td><td>Selects all text node children of the current node</td></tr>
+<tr><td>child::node()</td><td>Selects all children of the current node</td></tr>
+<tr><td>descendant::book</td><td>Selects all book descendants of the current node</td></tr>
+<tr><td>ancestor::book</td><td>Selects all book ancestors of the current node</td></tr>
+<tr><td>ancestor-or-self::book</td><td>Selects all book ancestors of the current node - and the current as well if it is a book node</td></tr>
+<tr><td>child::*/child::price</td><td>Selects all price grandchildren of the current node</td></tr>
+</tbody></table>
+</div>
+<h3 id="getnode--getnodetext"><a class="header" href="#getnode--getnodetext">getNode &amp; getNodeText</a></h3>
+<p>    <strong>getNode</strong> gets the node specified in the xPath. <strong>getNodeText</strong> gets all the text child nodes from the node referenced in the specified XPath. Let us modify our code to fetch the <code>number</code> element from our response and re-execute the script:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=1&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var node = xmlDoc.getNode(&quot;/response/result/number&quot;)
+gs.info(node)
+</code></pre>
+<p><img src="./images/XML26.png" alt="XML26" />
+    Your output should look something like this:</p>
+<pre><code class="language-xml">&lt;number&gt;INC0000060&lt;/number&gt;
+</code></pre>
+<p>    If you are wondering how the result of the background script is displayed on the same page, that is probabaly because you are unaware of an awesome extension <a href="https://www.arnoudkooi.com/">SN Utils</a> by Arnoud Kooi. I strongly encourage you to have this extension installed on your personal computer to learn the amazing capabilities of this extension and increase your productivity.</p>
+<p>    Now, lets modify the script one more time to get the incident number from number element:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=1&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var nodeText = xmlDoc.getNodeText(&quot;/response/result/number&quot;)
+gs.info(nodeText)
+</code></pre>
+<p>    After executing the script, your output should look something similar to the following:</p>
+<pre><code class="language-js">INC0000060
+</code></pre>
+<p><img src="./images/XML27.png" alt="XML27" /></p>
+<h3 id="getfirstnode--getnextnode"><a class="header" href="#getfirstnode--getnextnode">getFirstNode &amp; getNextNode</a></h3>
+<p>    <strong>getFirstNode</strong> gets the first node in the specified xPath. <strong>getNextNode</strong> gets the node after the specified node. Let us assume the following document from <a href="https://developer.servicenow.com/dev.do#!/reference/api/sandiego/server/no-namespace/c_XMLDocument2ScopedAPI">ServiceNow API documentation</a>:</p>
+<pre><code class="language-xml">&lt;store&gt;
+    &lt;resources company=&quot;ABC Inc&quot;&gt;
+        &lt;resources type=&quot;servers&quot; /&gt;
+    &lt;/resources&gt;
+    &lt;resources company=&quot;XYZ Inc&quot;&gt;
+        &lt;resource type=&quot;bookstore&quot;&gt;
+            &lt;book&gt;
+                &lt;title&gt;Windows&lt;/title&gt;
+                &lt;price&gt;10&lt;/price&gt;
+            &lt;/book&gt;
+            &lt;book year=&quot;2009&quot;&gt;
+                &lt;title&gt;Harry Potter&lt;/title&gt;
+                &lt;price&gt;50&lt;/price&gt;
+            &lt;/book&gt;
+            &lt;book year=&quot;1999&quot;&gt;
+                &lt;title&gt;Learning XML&lt;/title&gt;
+                &lt;price&gt;120&lt;/price&gt;
+            &lt;/book&gt;
+            &lt;book year=&quot;2019&quot;&gt;
+                &lt;title&gt;Learning Java&lt;/title&gt;
+                &lt;price&gt;99&lt;/price&gt;
+            &lt;/book&gt;
+        &lt;/resource&gt;
+    &lt;/resources&gt;
+&lt;/store&gt;
+</code></pre>
+<p>    The getFirstNode methods supports the following xPath expressions with predicates:</p>
+<p><code>/store/resources/resource[@type='bookstore']/book[@year='1999']</code>
+<code>/store/resources/resource[@type='bookstore']/book[@year]</code>
+<code>/store/resources/resource[@type='bookstore']/book[price &gt; 100]</code></p>
+<p>    However, it does not support the following xPath expressions with predicates:</p>
+<p><code>/store/resources/resource[@type='bookstore']/book[2]</code>
+<code>/store/resources/resource[@type='bookstore']/book[last()]</code>
+<code>/store/resources/resource[@type='bookstore']/book[position()&gt;2]</code></p>
+<p>    To work around this, use xPath without predicates, such as <code>/store/resources/resource[@type='bookstore']/book</code> and then filter the nodes in the script using the getFirstNode() and getNextNode() methods.</p>
+<p>    Let us modify our code to fetch information about 3 incidents, by setting the <strong>sysparm_limit</strong> query parameter to 3 :</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=3&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+//returns the root node of the document tree.
+var rootNode = xmlDoc.getDocumentElement()
+gs.info(rootNode)
+</code></pre>
+<p>    The above script will log the document element tree structure, which should look something like this :</p>
+<pre><code class="language-xml">&lt;response&gt;
+	&lt;result&gt;
+		&lt;number&gt;INC0000060&lt;/number&gt;
+		&lt;short_description&gt;Unable to connect to email&lt;/short_description&gt;
+		&lt;caller_id&gt;
+			&lt;link&gt;https://dev124645.service-now.com/api/now/table/sys_user/681ccaf9c0a8016400b98a06818d57c7&lt;/link&gt;
+			&lt;value&gt;681ccaf9c0a8016400b98a06818d57c7&lt;/value&gt;
+		&lt;/caller_id&gt;
+	&lt;/result&gt;
+	&lt;result&gt;
+		&lt;number&gt;INC0009002&lt;/number&gt;
+		&lt;short_description&gt;My computer is not detecting the headphone device&lt;/short_description&gt;
+		&lt;caller_id&gt;
+			&lt;link&gt;https://dev124645.service-now.com/api/now/table/sys_user/77ad8176731313005754660c4cf6a7de&lt;/link&gt;
+			&lt;value&gt;77ad8176731313005754660c4cf6a7de&lt;/value&gt;
+		&lt;/caller_id&gt;
+	&lt;/result&gt;
+	&lt;result&gt;
+		&lt;number&gt;INC0000009&lt;/number&gt;
+		&lt;short_description&gt;Reset my password&lt;/short_description&gt;
+		&lt;caller_id&gt;
+			&lt;link&gt;https://dev124645.service-now.com/api/now/table/sys_user/5137153cc611227c000bbd1bd8cd2006&lt;/link&gt;
+			&lt;value&gt;5137153cc611227c000bbd1bd8cd2006&lt;/value&gt;
+		&lt;/caller_id&gt;
+	&lt;/result&gt;
+&lt;/response&gt;
+</code></pre>
+<p><img src="./images/XML23.png" alt="XML23" /></p>
+<p>    Now, let us observe our output. we have several <code>result</code> nodes in our <code>response</code> element. To see getFirstNode in action, modify the script as below and re-execute:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=3&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var firstIncResult = xmlDoc.getFirstNode(&quot;/response/result&quot;)
+gs.info(firstIncResult)
+</code></pre>
+<p><img src="./images/XML24.png" alt="XML24" /></p>
+<p>    You should receive the output displaying the information about first result node, which looks something like this:</p>
+<pre><code class="language-xml">&lt;result&gt;
+	&lt;number&gt;INC0000060&lt;/number&gt;
+	&lt;short_description&gt;Unable to connect to email&lt;/short_description&gt;
+	&lt;caller_id&gt;
+		&lt;link&gt;https://dev124645.service-now.com/api/now/table/sys_user/681ccaf9c0a8016400b98a06818d57c7&lt;/link&gt;
+		&lt;value&gt;681ccaf9c0a8016400b98a06818d57c7&lt;/value&gt;
+	&lt;/caller_id&gt;
+&lt;/result&gt;
+</code></pre>
+<p>    Now, let us modify the script again to see getNextNode in action as below and re-execute:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=3&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var firstIncResult = xmlDoc.getFirstNode(&quot;/response/result&quot;)
+
+var secondIncResult = xmlDoc.getNextNode(firstIncResult)
+gs.info(secondIncResult)
+</code></pre>
+<p><img src="./images/XML25.png" alt="XML25" /></p>
+<p>    You should receive the output displaying the information about second result node, which looks something like this:</p>
+<pre><code class="language-xml">&lt;result&gt;
+	&lt;number&gt;INC0009002&lt;/number&gt;
+	&lt;short_description&gt;My computer is not detecting the headphone device&lt;/short_description&gt;
+	&lt;caller_id&gt;
+		&lt;link&gt;https://dev124645.service-now.com/api/now/table/sys_user/77ad8176731313005754660c4cf6a7de&lt;/link&gt;
+		&lt;value&gt;77ad8176731313005754660c4cf6a7de&lt;/value&gt;
+	&lt;/caller_id&gt;
+&lt;/result&gt;
+</code></pre>
+<p>    The most important thing to notice here is that the parameter (The current node) passed to the getNextNode method. In our example we passed the first result node <strong>firstIncResult</strong> as a parameter to the getNextNode method in order to retrieve the next result node.</p>
+<h3 id="createelement--createelementwithtextvalue"><a class="header" href="#createelement--createelementwithtextvalue">createElement &amp; createElementWithTextValue</a></h3>
+<p>    <strong>createElement</strong> creates and adds an element node to the current node. The element name is the string passed in as a parameter. The new element has no text child nodes. <strong>createElementWithTextValue</strong> creates and adds an element node with a text child node to the current node. It accepts two string parameters: name of the element to add &amp; element's text value. Lets modify our script to see these two methods in action:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=1&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+xmlDoc.createElement(&quot;new_element_without_text&quot;)
+xmlDoc.createElementWithTextValue(
+  &quot;new_element_with_text&quot;,
+  &quot;New Element With Text&quot;
+)
+
+gs.info(xmlDoc)
+</code></pre>
+<p>    After execution your output should be similar to the following:</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;response&gt;
+	&lt;new_element_without_text/&gt;
+	&lt;new_element_with_text&gt;New Element With Text&lt;/new_element_with_text&gt;
+	&lt;result&gt;
+		&lt;number&gt;INC0000060&lt;/number&gt;
+		&lt;short_description&gt;Unable to connect to email&lt;/short_description&gt;
+		&lt;caller_id&gt;
+			&lt;link&gt;https://dev124645.service-now.com/api/now/table/sys_user/681ccaf9c0a8016400b98a06818d57c7&lt;/link&gt;
+			&lt;value&gt;681ccaf9c0a8016400b98a06818d57c7&lt;/value&gt;
+		&lt;/caller_id&gt;
+	&lt;/result&gt;
+&lt;/response&gt;
+</code></pre>
+<p><img src="./images/XML28.png" alt="XML28" /></p>
+<p>    As you can clearly notice, We have two additional nodes added to our document : <code>new_element_without_text</code> and <code>new_element_with_text</code>.</p>
+<h2 id="xmltojson"><a class="header" href="#xmltojson">xmlToJSON</a></h2>
+<p><img src="./images/xmltojson.jpg" alt="xmltojson" /></p>
+<p>    Though parsing the xml with help of XMLDocument2 is very convinient, We can leverage xmlToJSON method of GlideSystem to convert the xml to JSON object which is easier to work with. <strong>xmlToJSON Takes an XML string and returns a JSON object.</strong> Let us modify the script to understand how this works :</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=1&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlObj = gs.xmlToJSON(xmlString)
+
+gs.info(JSON.stringify(xmlObj, null, 4))
+</code></pre>
+<p>    After executing the script, our <strong>xmlObj</strong> contains the JSON object, the last logger function in our script pretty prints the JSON object:</p>
+<p><img src="./images/XML29.png" alt="XML29" /></p>
+<p>    Though, the script worked totally fine, It is important that you pre-process the XML input before passing to xmlToJSON. You can read more about this in the Support article <a href="https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0784264">KB0784264</a>. The modified script looks similar to this:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=1&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var rootNode = xmlDoc.getDocumentElement()
+
+var xmlObj = gs.xmlToJSON(rootNode)
+
+gs.info(JSON.stringify(xmlObj, null, 4))
+</code></pre>
+<p><img src="./images/XML30.png" alt="XML30" /></p>
+<h2 id="xmlnode"><a class="header" href="#xmlnode">XMLNode</a></h2>
+<p>    <strong>The scoped XMLNode API allows you to query values from XML nodes.</strong> XMLNodes are extracted from XMLDocument2 objects, which contain XML strings. There are no constructors for creating a stand alone instance of an XMLNode object. Instead, use the createElement() method of XMLDocument2, which adds a node to an existing document.</p>
+<h3 id="getattribute--getattributes"><a class="header" href="#getattribute--getattributes">getAttribute &amp; getAttributes</a></h3>
+<p>    <strong>getAttribute</strong> gets the value of the attribute. <strong>getAttributes</strong> Returns an object containing the node's attributes as properties with values. Let us consider the below sample XML document:</p>
+<pre><code class="language-xml">&lt;xml&gt;
+	&lt;incident&gt;
+		&lt;active&gt;true&lt;/active&gt;
+		&lt;assignment_group display_value=&quot;Software&quot; name=&quot;Software&quot;&gt;8a4dde73c6112278017a6a4baf547aa7&lt;/assignment_group&gt;
+		&lt;caller_id display_value=&quot;Bud Richman&quot;&gt;46c6f9efa9fe198101ddf5eed9adf6e7&lt;/caller_id&gt;
+		&lt;category&gt;software&lt;/category&gt;
+		&lt;cmdb_ci display_value=&quot;Sales Force Automation&quot;&gt;a9c0c8d2c6112276018f7705562f9cb0&lt;/cmdb_ci&gt;
+		&lt;description&gt;Unable to login to SFA even though login credentials are correct.&lt;/description&gt;
+		&lt;location display_value=&quot;324 South State Street, Salt Lake City,UT&quot;&gt;105cf7f3c611227501e75e08b14a38ba&lt;/location&gt;
+		&lt;short_description&gt;Can't access SFA software&lt;/short_description&gt;
+		&lt;sys_class_name&gt;incident&lt;/sys_class_name&gt;
+		&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;
+		&lt;sys_created_on&gt;2021-11-07 22:05:30&lt;/sys_created_on&gt;
+		&lt;sys_id&gt;a9e30c7dc61122760116894de7bcc7bd&lt;/sys_id&gt;
+		&lt;urgency&gt;3&lt;/urgency&gt;
+	&lt;/incident&gt;
+&lt;/xml&gt;
+</code></pre>
+<p>    Now, Let us modify the script to convert above XML string to XMLDocument2 Object and fetch the attribute <code>display_value</code> of element <code>location</code> i.e. <code>324 South State Street, Salt Lake City,UT</code>:</p>
+<pre><code class="language-js">var xmlString =
+  '&lt;xml&gt;&lt;incident&gt;&lt;active&gt;true&lt;/active&gt;&lt;assignment_group display_value=&quot;Software&quot; name=&quot;Software&quot;&gt;8a4dde73c6112278017a6a4baf547aa7&lt;/assignment_group&gt;&lt;caller_id display_value=&quot;Bud Richman&quot;&gt;46c6f9efa9fe198101ddf5eed9adf6e7&lt;/caller_id&gt;&lt;category&gt;software&lt;/category&gt;&lt;cmdb_ci display_value=&quot;Sales Force Automation&quot;&gt;a9c0c8d2c6112276018f7705562f9cb0&lt;/cmdb_ci&gt;&lt;description&gt;Unable to login to SFA even though login credentials are correct.&lt;/description&gt;&lt;location display_value=&quot;324 South State Street, Salt Lake City,UT&quot;&gt;105cf7f3c611227501e75e08b14a38ba&lt;/location&gt;&lt;short_description&gt;Cant access SFA software&lt;/short_description&gt;&lt;sys_class_name&gt;incident&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2021-11-07 22:05:30&lt;/sys_created_on&gt;&lt;sys_id&gt;a9e30c7dc61122760116894de7bcc7bd&lt;/sys_id&gt;&lt;urgency&gt;3&lt;/urgency&gt;&lt;/incident&gt;&lt;/xml&gt;'
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var node = xmlDoc.getNode(&quot;//location&quot;)
+gs.info(node.getAttribute(&quot;display_value&quot;))
+</code></pre>
+<p><img src="./images/XML31.png" alt="XML31" /></p>
+<p>    Now, Let us modify the script one more time to retrieve all attributes of element <code>assignment_group</code> as an object:</p>
+<pre><code class="language-js">var xmlString =
+  '&lt;xml&gt;&lt;incident&gt;&lt;active&gt;true&lt;/active&gt;&lt;assignment_group display_value=&quot;Software&quot; name=&quot;Software&quot;&gt;8a4dde73c6112278017a6a4baf547aa7&lt;/assignment_group&gt;&lt;caller_id display_value=&quot;Bud Richman&quot;&gt;46c6f9efa9fe198101ddf5eed9adf6e7&lt;/caller_id&gt;&lt;category&gt;software&lt;/category&gt;&lt;cmdb_ci display_value=&quot;Sales Force Automation&quot;&gt;a9c0c8d2c6112276018f7705562f9cb0&lt;/cmdb_ci&gt;&lt;description&gt;Unable to login to SFA even though login credentials are correct.&lt;/description&gt;&lt;location display_value=&quot;324 South State Street, Salt Lake City,UT&quot;&gt;105cf7f3c611227501e75e08b14a38ba&lt;/location&gt;&lt;short_description&gt;Cant access SFA software&lt;/short_description&gt;&lt;sys_class_name&gt;incident&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2021-11-07 22:05:30&lt;/sys_created_on&gt;&lt;sys_id&gt;a9e30c7dc61122760116894de7bcc7bd&lt;/sys_id&gt;&lt;urgency&gt;3&lt;/urgency&gt;&lt;/incident&gt;&lt;/xml&gt;'
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var node = xmlDoc.getNode(&quot;//assignment_group&quot;)
+gs.info(node.getAttributes())
+</code></pre>
+<p>    After executing the script, you should get an object logged to the output screen with all the attributes of <code>assignment_group</code> as properties with values.</p>
+<p><img src="./images/XML32.png" alt="XML32" /></p>
+<h3 id="getfirstchild--getlastchild"><a class="header" href="#getfirstchild--getlastchild">getFirstChild &amp; getLastChild</a></h3>
+<p>    <strong>getFirstChild</strong> gets the node's first child node. <strong>getLastChild</strong> gets the node's last child node. Let us modify our script to see this in action:</p>
+<pre><code class="language-js">var xmlString =
+  '&lt;xml&gt;&lt;incident&gt;&lt;active&gt;true&lt;/active&gt;&lt;assignment_group display_value=&quot;Software&quot; name=&quot;Software&quot;&gt;8a4dde73c6112278017a6a4baf547aa7&lt;/assignment_group&gt;&lt;caller_id display_value=&quot;Bud Richman&quot;&gt;46c6f9efa9fe198101ddf5eed9adf6e7&lt;/caller_id&gt;&lt;category&gt;software&lt;/category&gt;&lt;cmdb_ci display_value=&quot;Sales Force Automation&quot;&gt;a9c0c8d2c6112276018f7705562f9cb0&lt;/cmdb_ci&gt;&lt;description&gt;Unable to login to SFA even though login credentials are correct.&lt;/description&gt;&lt;location display_value=&quot;324 South State Street, Salt Lake City,UT&quot;&gt;105cf7f3c611227501e75e08b14a38ba&lt;/location&gt;&lt;short_description&gt;Cant access SFA software&lt;/short_description&gt;&lt;sys_class_name&gt;incident&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2021-11-07 22:05:30&lt;/sys_created_on&gt;&lt;sys_id&gt;a9e30c7dc61122760116894de7bcc7bd&lt;/sys_id&gt;&lt;urgency&gt;3&lt;/urgency&gt;&lt;/incident&gt;&lt;/xml&gt;'
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var node = xmlDoc.getNode(&quot;//incident&quot;)
+
+gs.info(node.getFirstChild())
+
+gs.info(node.getLastChild())
+</code></pre>
+<p>    Once the script is executed you should see the output as below, indicating first child element and last child element of node <code>incident</code> :</p>
+<pre><code class="language-xml">&lt;active&gt;true&lt;/active&gt;
+&lt;urgency&gt;3&lt;/urgency&gt;
+</code></pre>
+<p><img src="./images/XML33.png" alt="XML33" /></p>
+<h3 id="gettextcontent"><a class="header" href="#gettextcontent">getTextContent</a></h3>
+<p>    <strong>getTextContent</strong> gets the text content of the current node. <strong>The text content of a node consists of all the node's child text nodes.</strong></p>
+<p>    Let us modify our script to understand these better :</p>
+<pre><code class="language-js">var xmlString =
+  '&lt;xml&gt;&lt;incident&gt;&lt;active&gt;true&lt;/active&gt;&lt;assignment_group display_value=&quot;Software&quot; name=&quot;Software&quot;&gt;8a4dde73c6112278017a6a4baf547aa7&lt;/assignment_group&gt;&lt;caller_id display_value=&quot;Bud Richman&quot;&gt;46c6f9efa9fe198101ddf5eed9adf6e7&lt;/caller_id&gt;&lt;category&gt;software&lt;/category&gt;&lt;cmdb_ci display_value=&quot;Sales Force Automation&quot;&gt;a9c0c8d2c6112276018f7705562f9cb0&lt;/cmdb_ci&gt;&lt;description&gt;Unable to login to SFA even though login credentials are correct.&lt;/description&gt;&lt;location display_value=&quot;324 South State Street, Salt Lake City,UT&quot;&gt;105cf7f3c611227501e75e08b14a38ba&lt;/location&gt;&lt;short_description&gt;Cant access SFA software&lt;/short_description&gt;&lt;sys_class_name&gt;incident&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2021-11-07 22:05:30&lt;/sys_created_on&gt;&lt;sys_id&gt;a9e30c7dc61122760116894de7bcc7bd&lt;/sys_id&gt;&lt;urgency&gt;3&lt;/urgency&gt;&lt;/incident&gt;&lt;/xml&gt;'
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var rootNode = xmlDoc.getDocumentElement()
+
+var firstNode = rootNode.getFirstChild()
+
+gs.info(firstNode.getTextContent())
+
+var shortDescription = xmlDoc.getNode(&quot;//short_description&quot;)
+gs.info(shortDescription.getTextContent())
+</code></pre>
+<p>    You should be receiving the output as following :
+<img src="./images/XML34.png" alt="XML34" /></p>
+<h3 id="hasattribute"><a class="header" href="#hasattribute">hasAttribute</a></h3>
+<p>    <strong>hasAttribute</strong> determines if the node has the specified attribute. Let us modify the script to see this method in action :</p>
+<pre><code class="language-js">var xmlString =
+  '&lt;xml&gt;&lt;incident&gt;&lt;active&gt;true&lt;/active&gt;&lt;assignment_group display_value=&quot;Software&quot; name=&quot;Software&quot;&gt;8a4dde73c6112278017a6a4baf547aa7&lt;/assignment_group&gt;&lt;caller_id display_value=&quot;Bud Richman&quot;&gt;46c6f9efa9fe198101ddf5eed9adf6e7&lt;/caller_id&gt;&lt;category&gt;software&lt;/category&gt;&lt;cmdb_ci display_value=&quot;Sales Force Automation&quot;&gt;a9c0c8d2c6112276018f7705562f9cb0&lt;/cmdb_ci&gt;&lt;description&gt;Unable to login to SFA even though login credentials are correct.&lt;/description&gt;&lt;location display_value=&quot;324 South State Street, Salt Lake City,UT&quot;&gt;105cf7f3c611227501e75e08b14a38ba&lt;/location&gt;&lt;short_description&gt;Cant access SFA software&lt;/short_description&gt;&lt;sys_class_name&gt;incident&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2021-11-07 22:05:30&lt;/sys_created_on&gt;&lt;sys_id&gt;a9e30c7dc61122760116894de7bcc7bd&lt;/sys_id&gt;&lt;urgency&gt;3&lt;/urgency&gt;&lt;/incident&gt;&lt;/xml&gt;'
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var locationNode = xmlDoc.getNode(&quot;//location&quot;)
+
+gs.info(locationNode.hasAttribute(&quot;display_value&quot;))
+
+gs.info(locationNode.hasAttribute(&quot;display_name&quot;))
+</code></pre>
+<p>    After the excution of the script you should be able to see the output as follows:
+<img src="./images/XML35.png" alt="XML35" /></p>
+<h3 id="setattribute"><a class="header" href="#setattribute">setAttribute</a></h3>
+<pre><code class="language-js">var xmlString =
+  '&lt;xml&gt;&lt;incident&gt;&lt;active&gt;true&lt;/active&gt;&lt;assignment_group display_value=&quot;Software&quot; name=&quot;Software&quot;&gt;8a4dde73c6112278017a6a4baf547aa7&lt;/assignment_group&gt;&lt;caller_id display_value=&quot;Bud Richman&quot;&gt;46c6f9efa9fe198101ddf5eed9adf6e7&lt;/caller_id&gt;&lt;category&gt;software&lt;/category&gt;&lt;cmdb_ci display_value=&quot;Sales Force Automation&quot;&gt;a9c0c8d2c6112276018f7705562f9cb0&lt;/cmdb_ci&gt;&lt;description&gt;Unable to login to SFA even though login credentials are correct.&lt;/description&gt;&lt;location display_value=&quot;324 South State Street, Salt Lake City,UT&quot;&gt;105cf7f3c611227501e75e08b14a38ba&lt;/location&gt;&lt;short_description&gt;Cant access SFA software&lt;/short_description&gt;&lt;sys_class_name&gt;incident&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2021-11-07 22:05:30&lt;/sys_created_on&gt;&lt;sys_id&gt;a9e30c7dc61122760116894de7bcc7bd&lt;/sys_id&gt;&lt;urgency&gt;3&lt;/urgency&gt;&lt;/incident&gt;&lt;/xml&gt;'
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var activeNode = xmlDoc.getNode(&quot;//active&quot;)
+gs.info(activeNode.hasAttribute(&quot;state&quot;))
+
+activeNode.setAttribute(&quot;state&quot;, &quot;open&quot;)
+
+gs.info(activeNode.hasAttribute(&quot;state&quot;))
+gs.info(activeNode.getAttribute(&quot;state&quot;))
+gs.info(activeNode)
+</code></pre>
+<p>    After executing above script you should receive the output as below, indicating a new attribute <code>state</code> has been added to the <code>active</code> node with the value of <code>open</code>:
+<img src="./images/XMLSetAttr.png" alt="XMLSetAttr" /></p>
+<h3 id="getchildnodeiterator--xmlnodeiterator"><a class="header" href="#getchildnodeiterator--xmlnodeiterator">getChildNodeIterator &amp; XMLNodeIterator</a></h3>
+<p>    <strong>getChildNodeIterator</strong> gets a XMLNodeIterator object that can be used to walk through the list of child nodes. <strong>The scoped XMLNodeIterator class allows you to iterate through a node of a XML document.</strong> There are no constructors for creating a stand alone instance of a XMLNodeIterator object. To create a XMLNodeIterator object use the getChildNodeIterator() method of the XMLNode object. Let us assume the below example:</p>
+<pre><code class="language-js">var xmlString =
+  '&lt;xml&gt;&lt;incident&gt;&lt;active&gt;true&lt;/active&gt;&lt;assignment_group display_value=&quot;Software&quot; name=&quot;Software&quot;&gt;8a4dde73c6112278017a6a4baf547aa7&lt;/assignment_group&gt;&lt;caller_id display_value=&quot;Bud Richman&quot;&gt;46c6f9efa9fe198101ddf5eed9adf6e7&lt;/caller_id&gt;&lt;category&gt;software&lt;/category&gt;&lt;cmdb_ci display_value=&quot;Sales Force Automation&quot;&gt;a9c0c8d2c6112276018f7705562f9cb0&lt;/cmdb_ci&gt;&lt;description&gt;Unable to login to SFA even though login credentials are correct.&lt;/description&gt;&lt;location display_value=&quot;324 South State Street, Salt Lake City,UT&quot;&gt;105cf7f3c611227501e75e08b14a38ba&lt;/location&gt;&lt;short_description&gt;Cant access SFA software&lt;/short_description&gt;&lt;sys_class_name&gt;incident&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2021-11-07 22:05:30&lt;/sys_created_on&gt;&lt;sys_id&gt;a9e30c7dc61122760116894de7bcc7bd&lt;/sys_id&gt;&lt;urgency&gt;3&lt;/urgency&gt;&lt;/incident&gt;&lt;/xml&gt;'
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var node = xmlDoc.getNode(&quot;//incident&quot;)
+var iter = node.getChildNodeIterator()
+while (iter.hasNext()) {
+  var currentNode = iter.next()
+  gs.info(currentNode)
+}
+</code></pre>
+<p>    The ouput of these script logs all the nodes within the <code>incident</code> element :
+<img src="./images/XMLNodeIter.png" alt="XMLNodeIter" /></p>
+<p>    The <strong>hasNext()</strong> method in the above code returns true if the iteration has more elements. Similarly, <strong>next()</strong> method gets the next element in the iteration.</p>
+<h3 id="getnodename--getnodevalue"><a class="header" href="#getnodename--getnodevalue">getNodeName &amp; getNodeValue</a></h3>
+<p>    <strong>getNodeName</strong> gets the node's name. A node's name is determined by the node type. <strong>A document-element node's name is #document. A text node's name is #text. An element node's name is the element's name.</strong> <strong>getNodeValue</strong> gets the node's value. A node's value is also determined by the node type. <strong>Element and document-element nodes return null.</strong> Let us consider the below example from <a href="https://developer.servicenow.com/dev.do#!/reference/api/sandiego/server/no-namespace/c_XMLNodeScopedAPI">ServiceNow API documentation</a>:</p>
+<pre><code class="language-js">var xmlString =
+  &quot;&lt;test&gt;&quot; +
+  &quot;  &lt;one&gt;&quot; +
+  '    &lt;two att=&quot;xxx&quot;&gt;abcd1234&lt;/two&gt;' +
+  '    &lt;three boo=&quot;yah&quot; att=&quot;yyy&quot;&gt;1234abcd&lt;/three&gt;' +
+  &quot;    &lt;two&gt;another&lt;/two&gt;&quot; +
+  &quot;  &lt;/one&gt;&quot; +
+  &quot;  &lt;number&gt;1234&lt;/number&gt;&quot; +
+  &quot;&lt;/test&gt;&quot;
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+var node = xmlDoc.getNode(&quot;//one&quot;)
+var iter = node.getChildNodeIterator()
+while (iter.hasNext()) {
+  var n = iter.next()
+  gs.info(&quot;Node name: &quot; + n.getNodeName())
+  gs.info(&quot;Node value: &quot; + n.getNodeValue())
+}
+</code></pre>
+<p>    The above script should display the output as below:
+<img src="./images/XMLNodeProp.png" alt="XMLNodeProp" /></p>
+<hr />
+<h2 id="where-can-you-dig-more"><a class="header" href="#where-can-you-dig-more">Where can you dig more?</a></h2>
+<p>    There is a lot of useful information about XML present on the internet. But some of the interesting resources which you should definitely visit are given below:</p>
+<ul>
+<li><a href="https://www.w3schools.com/xml/">XML Tutorial</a> by w3schools.com</li>
+<li><a href="https://alistapart.com/article/usingxml/">Using XML</a> by J. David Eisenberg</li>
+<li><a href="https://www.xml.com/axml/axml.html">Introduction to the Annotated XML Specification</a> by Tim Bray</li>
+</ul>
+<hr />
+<h2 id="whats-next"><a class="header" href="#whats-next">What's next?</a></h2>
+<p>    Originally this chapter was very long but I splitted it into three chapters. After all it was not the best place to introduce you with all of that concepts right away. We will visit them as and when required. In the next chapter we will modify our script using REST Message, which is more better than coding everything in a script. See you in the next chapter.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="FinishingTouches.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="FinishingTouches.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

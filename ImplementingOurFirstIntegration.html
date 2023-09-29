@@ -1,0 +1,632 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Implementing Our First Integration - IntegrateNow</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="cover.html">IntegrateNow</a></li><li class="chapter-item expanded affix "><li class="part-title">Index</li><li class="chapter-item expanded "><a href="ConceptualAsides.html"><strong aria-hidden="true">1.</strong> Conceptual Asides</a></li><li class="chapter-item expanded "><a href="WhatYouNeedToKnowAboutJSONAndObjects.html"><strong aria-hidden="true">2.</strong> What You Need To Know About JSON And Objects</a></li><li class="chapter-item expanded "><a href="RESTAPIExplorer.html"><strong aria-hidden="true">3.</strong> REST API Explorer</a></li><li class="chapter-item expanded "><a href="ImplementingOurFirstIntegration.html" class="active"><strong aria-hidden="true">4.</strong> Implementing Our First Integration</a></li><li class="chapter-item expanded "><a href="FinishingTouches.html"><strong aria-hidden="true">5.</strong> Finishing Touches</a></li><li class="chapter-item expanded "><a href="WorkingWithXMLs.html"><strong aria-hidden="true">6.</strong> Working With XMLs</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">IntegrateNow</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="chapter-4"><a class="header" href="#chapter-4">Chapter 4</a></h2>
+<h1 id="implementing-our-first-integration"><a class="header" href="#implementing-our-first-integration">Implementing Our First Integration</a></h1>
+<h2 id="a-clearer-picture"><a class="header" href="#a-clearer-picture">A clearer picture</a></h2>
+<p>    Till this point, we have seen what Inbound integration is in the context of ServiceNow, got familier with REST API explorer and got a faded picture of what we will be implementing in our first integration. I feel this is a perfect time to make that picture more clear. Please refer the following image:</p>
+<p><img src="./images/drawio1.png" alt="drawio1" /></p>
+<p>    The above image specifies that whenever an incident is created on Vendor (Company A) instance with a specific Service and assigned to Specific group (both of them should be predefined by business), The copy of incident is created on Customer (Company B) instance and assigned to specific assignment group (also predefined by business).</p>
+<p>    So straightforward right? Well, no! When you will work on real life implementations you will notice that there is always a tweak, if not you are just lucky. Please refer the following image:</p>
+<p><img src="./images/drawio2.png" alt="drawio2" /></p>
+<p>    As we can notice from the above image,our Vendor (Company A) instance has an additional On hold reason choice &quot;Awaiting Company A Validation&quot; (for some internal validation). Whereas our Customer (Company B) instance has all Out of the box (OOTB) choices. So our first tweak is we need to map our custom choice &quot;Awaiting Company A Validation&quot; from the Vendor instance to the &quot;Awaiting Vendor&quot; on the Customer i.e. Company B instance.</p>
+<p>    Those who are unaware about what these OOTB choices mean, you should read the answer to the community question by Mark Stanger, which can be found <a href="https://community.servicenow.com/community?id=community_question&amp;sys_id=23e90220dbc0eb805129a851ca9619f2">here</a>. For ease i will replicate the original response here :</p>
+<ul>
+<li><strong>Awaiting Caller:</strong> Waiting on a response back from the caller after the technician has requested additional information.</li>
+<li><strong>Awaiting Problem:</strong> Problem record has been opened from (or associated to) the incident and you're waiting for more information from the problem management process before continuing on.</li>
+<li><strong>Awaiting Change:</strong> Change record has been opened from (or associated to) the incident and you're waiting for more information from the change management process before continuing on.</li>
+<li><strong>Awaiting Vendor:</strong> Waiting on information from a vendor assisting with resolution of the incident.</li>
+</ul>
+<p>    Now, it is time for another tweak. Please refer the following images:</p>
+<p><img src="./images/drawio3.png" alt="drawio3" /></p>
+<p>    As you can notice from the above image, We have an additional Contact type &quot;API&quot; on Customer instance and no matter through which channel the incident is created on Vendor instance, the target incident on Customer instance should have the Contact type set as &quot;API&quot;.</p>
+<p>    We also have the requirement to always map the incident to the &quot;Inquiry / Help&quot; category on Customer instance:</p>
+<p><img src="./images/drawio4.png" alt="drawio4" /></p>
+<p>    And finally, we need to map the Service, Service Offering and the Description to the Description field (the justification could be that the CMDB is not implemented properly yet on Customer instance):</p>
+<p><img src="./images/drawio5.png" alt="drawio5" /></p>
+<p>    For other fields that are shown below it is straightforward, we will map them as is:</p>
+<p><img src="./images/drawio6.png" alt="drawio6" /></p>
+<p>    Okay, we can include many other things but for now we already have much complex requirement for our first integration and we are good to go.</p>
+<h2 id="create-the-code-sample"><a class="header" href="#create-the-code-sample">Create the code sample</a></h2>
+<p>    The REST API Explorer creates the code samples for integrating with the ServiceNow APIs in several commonly used languages in addition to <strong>ServiceNow Script</strong> snippet, These are:</p>
+<ul>
+<li>cURL</li>
+<li>Python</li>
+<li>Ruby</li>
+<li>JavaScript</li>
+<li>Perl</li>
+<li>Powershell</li>
+</ul>
+<p>    For our purpose, we are going to use the REST API Explorer to create the snippet to create an incident. You can refer <a href="/Chapter3_RESTAPIExplorer.html">Chapter 3: REST API Explorer</a> for more detailed explaination:</p>
+<ul>
+<li>
+<p>Navigate to <strong>System Web Services &gt; REST &gt; REST API Explorer</strong>.
+<img src="./images/drawio13.png" alt="drawio13" /></p>
+</li>
+<li>
+<p>In the top-left of the REST API Explorer, click <strong>Create a record (POST)</strong>.
+<img src="./images/drawio7.png" alt="drawio7" /></p>
+</li>
+<li>
+<p>In the Path Parameters section, select the <strong>Incident (incident)</strong> table.
+<img src="./images/drawio8.png" alt="drawio8" /></p>
+</li>
+<li>
+<p>In the Request Body section, click <strong>Add a field</strong>.
+<img src="./images/drawio9.png" alt="drawio9" /></p>
+</li>
+<li>
+<p>Select a field and specify a value for the field <strong>&quot;Short description&quot;</strong> as &quot;Test SD&quot; or whatever you may like:
+<img src="./images/drawio14.png" alt="drawio14" /></p>
+</li>
+<li>
+<p>Click the plus sign <strong>(+)</strong> and specify additional fields:</p>
+<ul>
+<li><strong>Description</strong>: Test Desc</li>
+<li><strong>Assignment group</strong>: 0a52d3dcd7011200f2d224837e6103f2</li>
+<li><strong>Impact</strong>: 2</li>
+<li><strong>Urgency</strong>: 1</li>
+<li><strong>State</strong>: 3</li>
+<li><strong>On hold reason</strong>: 4</li>
+<li><strong>Category</strong>: inquiry</li>
+<li><strong>Contact type</strong>: email</li>
+</ul>
+</li>
+</ul>
+<p><img src="./images/drawio10.png" alt="drawio10" /></p>
+<ul>
+<li>The request body updates automatically based on your entries (shown in the above image), such as:</li>
+</ul>
+<pre><code class="language-json">{
+  &quot;short_description&quot;: &quot;Test SD&quot;,
+  &quot;description&quot;: &quot;Test Desc&quot;,
+  &quot;assignment_group&quot;: &quot;0a52d3dcd7011200f2d224837e6103f2&quot;,
+  &quot;impact&quot;: &quot;2&quot;,
+  &quot;urgency&quot;: &quot;1&quot;,
+  &quot;state&quot;: &quot;3&quot;,
+  &quot;hold_reason&quot;: &quot;4&quot;,
+  &quot;category&quot;: &quot;inquiry&quot;,
+  &quot;contact_type&quot;: &quot;email&quot;
+}
+</code></pre>
+<ul>
+<li>We did use all the test values here, as we do not have our instances ready yet for our use case discussed, but we are good to go. After constructing the request, click <strong>Send</strong>. For pop-up, select <strong>OK</strong>.
+<img src="./images/drawio11.png" alt="drawio11" />
+<img src="./images/drawio12.png" alt="drawio12" /></li>
+</ul>
+<p>    The response includes a Location header that specifies where the incident was created and how to retrieve the incident. The response also indicates the Status code and Execution time (in milliseconds) of the request.
+<img src="./images/drawio15.png" alt="drawio15" />
+<img src="./images/drawio16.png" alt="drawio16" /></p>
+<p>    Now, let us verify if the incident really is created.</p>
+<ul>
+<li>Note down the <strong>number</strong> property from the respose body.
+<img src="./images/drawio17.png" alt="drawio17" /></li>
+<li>Navigate to <strong>Incident &gt; Open</strong> in a new tab, verify that the incident is created with the provided information:
+<img src="./images/drawio18.png" alt="drawio18" />
+<img src="./images/drawio19.png" alt="drawio19" /></li>
+</ul>
+<p>    Once you are satified with the testing, It is now time to generate the snippet and move to the next step:</p>
+<ul>
+<li>To create the code sample, Navigate back to REST API Explorer window and click the link for the language of your choice in the REST API Explorer. For the sake of this example, we will select <strong>&quot;ServiceNow Script&quot;</strong>.
+<img src="./images/drawio20.png" alt="drawio20" /></li>
+<li>To highlight the code sample for copying, click the <strong>Select Snippet</strong> button.
+<img src="./images/drawio21.png" alt="drawio21" /></li>
+<li>After highlighting the code sample, <strong>copy the code sample to the clipboard</strong> by using ctrl+c.
+<img src="./images/drawio22.png" alt="drawio22" /></li>
+</ul>
+<p>    If you did everything correctly you should have the code which look similar to the following copied to your clipboard:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(&quot;https://dev124645.service-now.com/api/now/table/incident&quot;)
+request.setHttpMethod(&quot;POST&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;admin&quot;
+var password = &quot;admin&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+request.setRequestHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+request.setRequestBody(
+  '{&quot;short_description&quot;:&quot;Test SD&quot;,&quot;description&quot;:&quot;Test Desc&quot;,&quot;assignment_group&quot;:&quot;0a52d3dcd7011200f2d224837e6103f2&quot;,&quot;impact&quot;:&quot;2&quot;,&quot;urgency&quot;:&quot;1&quot;,&quot;state&quot;:&quot;3&quot;,&quot;hold_reason&quot;:&quot;4&quot;,&quot;category&quot;:&quot;inquiry&quot;,&quot;contact_type&quot;:&quot;email&quot;}'
+)
+var response = request.execute()
+gs.log(response.getBody())
+</code></pre>
+<h2 id="setting-up-the-stage"><a class="header" href="#setting-up-the-stage">Setting up the stage</a></h2>
+<p>    Once we have our code sample copied, we can use it any server side code such as Business rules, Script includes, Workflows etc. But this code is of no use yet unless we make a very small adjustment to it:</p>
+<ul>
+<li>
+<p>It is time to visit our old good friend. Use the Application Navigator to open <strong>System Definition &gt; Scripts - Background</strong>.
+<img src="./images/drawio23.png" alt="drawio23" /></p>
+</li>
+<li>
+<p>Paste the snippet that we did copy from last section into the Run Script field And Click the <strong>Run script</strong> button to view the results of the script.
+<img src="./images/drawio24.png" alt="drawio24" />
+<img src="./images/drawio25.png" alt="drawio25" /></p>
+<p>    Oops, You should receive the <strong>User Not Authenticated</strong> error and I am sure that you did not expect that. All the code samples generated through the REST API Explorer uses fake credentials. Before using the script in the application to integrate with ServiceNow, we need to update the code to use valid credentials.</p>
+<p>    Let us modify our code to change the fake credentials by your admin credentials, and re-execute the script:</p>
+</li>
+</ul>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(&quot;https://dev124645.service-now.com/api/now/table/incident&quot;)
+request.setHttpMethod(&quot;POST&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+request.setRequestHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+request.setRequestBody(
+  '{&quot;short_description&quot;:&quot;Test SD&quot;,&quot;description&quot;:&quot;Test Desc&quot;,&quot;assignment_group&quot;:&quot;0a52d3dcd7011200f2d224837e6103f2&quot;,&quot;impact&quot;:&quot;2&quot;,&quot;urgency&quot;:&quot;1&quot;,&quot;state&quot;:&quot;3&quot;,&quot;hold_reason&quot;:&quot;4&quot;,&quot;category&quot;:&quot;inquiry&quot;,&quot;contact_type&quot;:&quot;email&quot;}'
+)
+var response = request.execute()
+gs.log(response.getBody())
+</code></pre>
+<p><img src="./images/drawio26.png" alt="drawio26" />
+<img src="./images/drawio27.png" alt="drawio27" /></p>
+<p>    The above output indicates that our API successfully created the incident. But you surely do not want to expose your admin credentials (and give full control of your instance) to others. And for this purpose and for every integration you will find a Service Account created on the target tool, Let us create one on our Customer instance.</p>
+<h3 id="service-account"><a class="header" href="#service-account">Service Account</a></h3>
+<p>    <strong>A service account is a special type of ServiceNow user account intended to represent a non-human user that needs to authenticate and be authorized to access data in ServiceNow APIs.</strong> When an external system makes a web service call to your ServiceNow instance, it must provide login credentials. Rather than using a normal user account to log in, it's best to use a service account specifically set up for that particular integration. Service accounts should be carefully managed, controlled, and audited. In most cases, they can also be associated back to an identity as an owner. However, service accounts should not have the same characteristics as a person logging on to a system. They should not have interactive user interface privileges, nor the capability to operate as a normal account or user.</p>
+<p>    Dawn Jurek has written a very good community blog which can be found <a href="https://community.servicenow.com/community?id=community_blog&amp;sys_id=b4fca2a5dbd0dbc01dcaf3231f961900">here</a> and which explains why you should use service accounts instead of personal user accounts for web service activities.
+For the ease I would like to put them here as is:</p>
+<ul>
+<li>Restrict the account activities to application program interface (API) connections, such as JavaScript Object Notation (JSON), Simple Object Access Protocol (SOAP), and Web Service Definition Language (WSDL). Accounts flagged as Web service access only cannot log into the ServiceNow user interface to perform other actions.</li>
+<li>Increase security by conforming to the principle of least privilege.</li>
+<li>Facilitate management, troubleshooting, and debugging of your integration. If a personal user account is used for integrations, you can't easily distinguish the integration transactions of that user from other activities the user performs in the system. On the other hand, if a service account is used for each integration, you can easily tell which integration did what in the system. The service account name is identified under Created by or Updated by in the transaction log and also appears on the records that the integration touches.</li>
+<li>Ensure that everything done by a particular integration service account was related to that specific integration.</li>
+<li>Improve auditability. All transactions can easily be traced to specific service accounts in the system, which facilitates examination and verification of records related to each integration.</li>
+</ul>
+<p>    Follow the steps below to set up a service account for our integration:</p>
+<ul>
+<li>
+<p>Navigate to <strong>User Administration &gt; Users</strong>.
+<img src="./images/sa1.png" alt="sa1" /></p>
+</li>
+<li>
+<p>Click <strong>New</strong> and enter the following information:</p>
+<ul>
+<li><strong>User ID:</strong> FirstIntegrationUser</li>
+<li><strong>Password:</strong> FirstIntegrationUserPassword</li>
+<li><strong>First name:</strong> First</li>
+<li><strong>Last name:</strong> IntegrationUser</li>
+</ul>
+<p><img src="./images/sa2.png" alt="sa2" /></p>
+</li>
+<li>
+<p>Select this check box for <strong>Web service access only</strong> to designate this user as a non-interactive user &amp; Click <strong>Submit</strong>.</p>
+<p><img src="./images/sa3.png" alt="sa3" /></p>
+</li>
+<li>
+<p>Now we need to give the service account user any roles necessary to perform the actions that will be carried out by the integration. Navigate to <strong>User Administration &gt; Users</strong> and then open our recently created Service Account user record <strong>&quot;FirstIntegrationUser&quot;</strong>.
+<img src="./images/sa6.png" alt="sa6" />
+<img src="./images/sa7.png" alt="sa7" /></p>
+</li>
+<li>
+<p>In the Roles related list, click <strong>Edit</strong>.
+<img src="./images/sa8.png" alt="sa8" /></p>
+</li>
+<li>
+<p>In the Collection list, select the desired roles (for our purpose we will use <strong>itil</strong> role), and then click <strong>Add</strong>.
+<img src="./images/sa9.png" alt="sa9" /></p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.
+<img src="./images/sa10.png" alt="sa10" /></p>
+</li>
+</ul>
+<p>    Now let us modify our script to have Service account's credentials :</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(&quot;https://dev124645.service-now.com/api/now/table/incident&quot;)
+request.setHttpMethod(&quot;POST&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;FirstIntegrationUser&quot;
+var password = &quot;FirstIntegrationUserPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+request.setRequestHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+request.setRequestBody(
+  '{&quot;short_description&quot;:&quot;Test SD&quot;,&quot;description&quot;:&quot;Test Desc&quot;,&quot;assignment_group&quot;:&quot;0a52d3dcd7011200f2d224837e6103f2&quot;,&quot;impact&quot;:&quot;2&quot;,&quot;urgency&quot;:&quot;1&quot;,&quot;state&quot;:&quot;3&quot;,&quot;hold_reason&quot;:&quot;4&quot;,&quot;category&quot;:&quot;inquiry&quot;,&quot;contact_type&quot;:&quot;email&quot;}'
+)
+var response = request.execute()
+gs.log(response.getBody())
+</code></pre>
+<p>    And if we re-execute the script in <strong>System Definition &gt; Scripts - Background</strong> with new credentials, you will get the output as below, which indicates that our snippet still works:</p>
+<p><img src="./images/sa4.png" alt="sa4" />
+<img src="./images/sa5.png" alt="sa5" /></p>
+<p>    Here, we did not see in detail about creating a user or assigning a role to a user. But if you want to dig deep, ServiceNow documentation is the best place to start with and has all that you need, right <a href="https://docs.servicenow.com/bundle/sandiego-platform-administration/page/administer/users-and-groups/task/t_CreateAUser.html">here</a> and <a href="https://docs.servicenow.com/bundle/sandiego-platform-administration/page/administer/users-and-groups/task/t_AssignARoleToAUser.html">here</a>. Also OOTB any one of itil, sn_incident_write or admin role is required to create an incident. You can read more about incident creation <a href="https://docs.servicenow.com/bundle/sandiego-it-service-management/page/product/incident-management/task/create-an-incident.html">here</a></p>
+<h3 id="additional-contact-type--api"><a class="header" href="#additional-contact-type--api">Additional Contact Type : API</a></h3>
+<p>    OOTB, we do not have the contact type as &quot;API&quot; on our Personal Developer Instance (PDI), Let us create one:
+<img src="./images/caict.png" alt="caict" /></p>
+<ul>
+<li>
+<p>Navigate to <strong>Incident &gt; Open</strong> in a new tab, Click any incident number to open the incident form:
+<img src="./images/inc1.png" alt="inc1" />
+<img src="./images/inc2.png" alt="inc2" /></p>
+</li>
+<li>
+<p>Right-click the <strong>Contact type</strong> field label and select <strong>Configure Choices</strong>. The Configuring State Choices slushbucket will open.
+<img src="./images/inc3.png" alt="inc3" />
+<img src="./images/inc4.png" alt="inc4" /></p>
+</li>
+<li>
+<p>In <strong>Enter new item:</strong> field type <strong>API</strong> and click <strong>Add</strong>.
+<img src="./images/inc5.png" alt="inc5" /></p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.
+<img src="./images/inc6.png" alt="inc6" /></p>
+</li>
+</ul>
+<p>    If we did everything correctly, we should have and additional contact type now named &quot;API&quot;:
+<img src="./images/inc7.png" alt="inc7" /></p>
+<h3 id="assignment-group"><a class="header" href="#assignment-group">Assignment group</a></h3>
+<p>    Finally, let us create one assignment group to be assigned to the incident created by means of our integration:</p>
+<ul>
+<li>
+<p>Navigate to <strong>User Administration &gt; Groups</strong> and click <strong>New</strong> button:
+<img src="./images/inc8.png" alt="inc8" /></p>
+</li>
+<li>
+<p>Create a group with Name as &quot;FirstIntegrationGroup&quot;, Type as &quot;itil&quot; &amp; Parent as &quot;Incident Management&quot; and click <strong>Submit</strong> button:
+<img src="./images/inc9.png" alt="inc9" /></p>
+</li>
+</ul>
+<h2 id="setting-up-the-vendor-instance"><a class="header" href="#setting-up-the-vendor-instance">Setting up the Vendor Instance</a></h2>
+<p>    We have everything that we need from our customer instance set up, but we still need to set our Vendor instance. I have borrowed another PDI from one of my friend to use as Vendor instance, and we are ready fix the prerequisites. However, The San Diego Release of ServiceNow comes with a brand new interface known as the Next Experience UI, or also internally known as Polaris, So you might experience a different look and feel on our Vendor instance. In a way it is good for us as we will be able to easily identify which is our Customer instance (UI16) or Vendor instance (Plaris).</p>
+<h3 id="assignment-group-1"><a class="header" href="#assignment-group-1">Assignment group</a></h3>
+<p>    Like our customer instance we need an assignment group to be created on Vendor instance to be used as a trigger to the APIs, Let us create one:</p>
+<ul>
+<li>
+<p>Navigate to <strong>User Administration &gt; Groups</strong> and click <strong>New</strong> button:
+<img src="./images/vnd1.png" alt="vnd1" />
+<img src="./images/vnd1_1.png" alt="vnd1_1" /></p>
+</li>
+<li>
+<p>Create a group with Name as &quot;VendorAssignmentGroup&quot;, Type as &quot;itil&quot; &amp; Parent as &quot;Incident Management&quot; and click <strong>Submit</strong> button:
+<img src="./images/vnd2.png" alt="vnd2" /></p>
+</li>
+</ul>
+<h3 id="additional-on-hold-reason--awaiting-company-a-validation"><a class="header" href="#additional-on-hold-reason--awaiting-company-a-validation">Additional On hold reason : Awaiting Company A Validation</a></h3>
+<p>    OOTB, we do not have the On hold reason choice as &quot;Awaiting Company A Validation&quot; on our Vendor PDI, Let us create one:
+<img src="./images/vnd3.png" alt="vnd3" /></p>
+<ul>
+<li>
+<p>Navigate to <strong>Incident &gt; Open</strong> in a new tab, Click any incident number to open the incident form:
+<img src="./images/vnd4.png" alt="vnd4" />
+<img src="./images/vnd5.png" alt="vnd5" />
+<img src="./images/vnd5_1.png" alt="vnd5_1" /></p>
+</li>
+<li>
+<p>Right-click the <strong>On hold reason</strong> field label and select <strong>Configure Choices</strong>. The Configuring State Choices slushbucket will open.
+<img src="./images/vnd6.png" alt="vnd6" />
+<img src="./images/vnd7.png" alt="vnd7" /></p>
+</li>
+<li>
+<p>In <strong>Enter new item:</strong> field type <strong>Awaiting Company A Validation</strong> and click <strong>Add</strong>.
+<img src="./images/vnd8.png" alt="vnd8" /></p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.
+<img src="./images/vnd9.png" alt="vnd9" /></p>
+</li>
+</ul>
+<p>    If we did everything correctly, we should have and additional On hold reason choice as &quot;Awaiting Company A Validation&quot;:
+<img src="./images/vnd10.png" alt="vnd10" /></p>
+<h3 id="service--service-offering"><a class="header" href="#service--service-offering">Service &amp; Service Offering</a></h3>
+<p>    Like assignment group, we also need an Service created on Vendor instance to be used as a trigger to the APIs. In addition we also need a Service offering of which information we will map to the description:</p>
+<ul>
+<li>
+<p>Navigate to <strong>All &gt; Service Portfolio Management &gt; Business Services</strong> and click the <strong>New</strong> button:
+<img src="./images/ser1.png" alt="ser1" />
+<img src="./images/ser2.png" alt="ser2" /></p>
+</li>
+<li>
+<p>Set the <strong>Name</strong> as <strong>&quot;IntegrateNow&quot;</strong> and click the <strong>Submit</strong> button:
+<img src="./images/ser3.png" alt="ser3" /></p>
+</li>
+<li>
+<p>A new Service named <strong>&quot;IntegrateNow&quot;</strong> should be created. Click on the name to open the record:
+<img src="./images/ser4.png" alt="ser4" /></p>
+</li>
+<li>
+<p>Scroll to the bottom of the form to find the related list <strong>Offering</strong> , then click <strong>New</strong> to create a new service offering:
+<img src="./images/ser5.png" alt="ser5" /></p>
+</li>
+<li>
+<p>Set the <strong>Name</strong> as <strong>&quot;IntegrateNow Support&quot;</strong> and click the <strong>Submit</strong> button:
+<img src="./images/ser6.png" alt="ser6" /></p>
+</li>
+<li>
+<p>A new Service offering named <strong>&quot;IntegrateNow Support&quot;</strong> should be created:
+<img src="./images/ser7.png" alt="ser7" /></p>
+</li>
+</ul>
+<h2 id="integration-time"><a class="header" href="#integration-time">Integration time</a></h2>
+<p>    Till this point, we have all the pre-requisites fulfilled for our integration, and now we are ready to implement our integration. There are different ways of achieving this use case, but we are going to start with the most traditional approach of script. In coming chapters we will enhance our approach to be more efficient. So without furthur due, let us start with the last section of this chapter.</p>
+<h3 id="business-rule"><a class="header" href="#business-rule">Business Rule</a></h3>
+<p>    Here, we will create a business rule on our Vendor instance that will trigger the API if our condition matches and creates the incident on customer instance.</p>
+<ul>
+<li>Navigate to <strong>All &gt; System Definition &gt; Business Rules</strong>.
+<img src="./images/ibr1.png" alt="ibr1" /></li>
+<li>Click <strong>New</strong>.
+<img src="./images/ibr2.png" alt="ibr2" /></li>
+<li>Enter any <strong>Name</strong> for the business rule.
+<img src="./images/ibr3.png" alt="ibr3" /></li>
+<li>Select the <strong>Table</strong> that the business rule runs on i.e. <strong>Incident [incident]</strong>.
+<img src="./images/ibr4.png" alt="ibr4" /></li>
+<li>Select the <strong>Advanced</strong> check box to see the advanced version of the form.
+<img src="./images/ibr5.png" alt="ibr5" /></li>
+<li>For <strong>When</strong> field select <strong>after</strong>.
+<img src="./images/ibr6.png" alt="ibr6" /></li>
+<li>Select the <strong>Insert</strong> check box to execute the business rule when a record is inserted into the database.
+<img src="./images/ibr7.png" alt="ibr7" /></li>
+<li>Now, copy and paste our modified code sample into the <strong>Script</strong> field &amp; click <strong>Submit</strong>.
+<img src="./images/ibr8.png" alt="ibr8" />
+<img src="./images/ibr9.png" alt="ibr9" /></li>
+</ul>
+<p>    The final script in the business rule script field should look something like this :</p>
+<pre><code class="language-js">;(function executeRule(current, previous /*null when async*/) {
+  // Add your code here
+  var request = new sn_ws.RESTMessageV2()
+  request.setEndpoint(
+    &quot;https://dev124645.service-now.com/api/now/table/incident&quot;
+  )
+  request.setHttpMethod(&quot;POST&quot;)
+
+  //Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+  var user = &quot;FirstIntegrationUser&quot;
+  var password = &quot;FirstIntegrationUserPassword&quot;
+
+  request.setBasicAuth(user, password)
+  request.setRequestHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+  request.setRequestHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+  request.setRequestBody(
+    '{&quot;short_description&quot;:&quot;Test SD&quot;,&quot;description&quot;:&quot;Test Desc&quot;,&quot;assignment_group&quot;:&quot;0a52d3dcd7011200f2d224837e6103f2&quot;,&quot;impact&quot;:&quot;2&quot;,&quot;urgency&quot;:&quot;1&quot;,&quot;state&quot;:&quot;3&quot;,&quot;hold_reason&quot;:&quot;4&quot;,&quot;category&quot;:&quot;inquiry&quot;,&quot;contact_type&quot;:&quot;email&quot;}'
+  )
+  var response = request.execute()
+  gs.log(response.getBody())
+})(current, previous)
+</code></pre>
+<ul>
+<li>Finally, set the <strong>Filter Conditions</strong> as shown in below image &amp; click <strong>Update</strong>:
+<img src="./images/ibr10.png" alt="ibr10" /></li>
+</ul>
+<p>    Believe it or not, we can even test our integration now. Though our values are still static. If you are curious why did we set the fields the way we do, please refer the ServiceNow documentation <a href="https://docs.servicenow.com/bundle/sandiego-application-development/page/script/business-rules/reference/r_HowBusinessRulesWork.html">here</a>.</p>
+<ul>
+<li>On Vendor instance, Navigate to <strong>All &gt; Incident &gt; Create New</strong>:
+<img src="./images/ibr11.png" alt="ibr11" /></li>
+<li>Set the Service as <strong>IntegrateNow</strong> &amp; Assignment group as <strong>VendorAssignmentGroup</strong>:
+<img src="./images/ibr12.png" alt="ibr12" /></li>
+<li>Fill all other mandatory fields with the values you may like &amp; click <strong>Submit</strong>:
+<img src="./images/ibr13.png" alt="ibr13" /></li>
+<li>We can notice from the recent system logs, that our API has successfully been triggered:
+<img src="./images/ibr14.png" alt="ibr14" /></li>
+<li>On Customer instance, we can validate that new incident has been created:
+<img src="./images/ibr15.png" alt="ibr15" /></li>
+</ul>
+<h2 id="we-are-not-done-yet"><a class="header" href="#we-are-not-done-yet">We are not done yet</a></h2>
+<p>    To be honest, I did not expect this chapter to be this long. We did lot of stuff and I would like to give yourself some time to digest all of these. In the next chapter, we will resume from where we stopped today and will complete our first integration.</p>
+<hr />
+<h2 id="whats-next"><a class="header" href="#whats-next">What's next?</a></h2>
+<p>     In the next chapter, we will resume from where we stopped today and will complete our first integration.We will point out some of the concerns with this traditional approach and start the quest for better solutions.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="RESTAPIExplorer.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="FinishingTouches.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="RESTAPIExplorer.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="FinishingTouches.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

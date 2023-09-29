@@ -1,0 +1,311 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Conceptual Asides - IntegrateNow</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="cover.html">IntegrateNow</a></li><li class="chapter-item expanded affix "><li class="part-title">Index</li><li class="chapter-item expanded "><a href="ConceptualAsides.html" class="active"><strong aria-hidden="true">1.</strong> Conceptual Asides</a></li><li class="chapter-item expanded "><a href="WhatYouNeedToKnowAboutJSONAndObjects.html"><strong aria-hidden="true">2.</strong> What You Need To Know About JSON And Objects</a></li><li class="chapter-item expanded "><a href="RESTAPIExplorer.html"><strong aria-hidden="true">3.</strong> REST API Explorer</a></li><li class="chapter-item expanded "><a href="ImplementingOurFirstIntegration.html"><strong aria-hidden="true">4.</strong> Implementing Our First Integration</a></li><li class="chapter-item expanded "><a href="FinishingTouches.html"><strong aria-hidden="true">5.</strong> Finishing Touches</a></li><li class="chapter-item expanded "><a href="WorkingWithXMLs.html"><strong aria-hidden="true">6.</strong> Working With XMLs</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">IntegrateNow</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="chapter-1"><a class="header" href="#chapter-1">Chapter 1</a></h2>
+<h1 id="conceptual-asides"><a class="header" href="#conceptual-asides">Conceptual Asides</a></h1>
+<p>    For a long time, I kept myself away from the adventurous and thrilling world of Integrations. However, integration is actually a very simple concept and it is so much fun to do. And ServiceNow is a great tool when it comes to integrating with other tools.</p>
+<p>    ServiceNow community have many great people around the globe, who not only did lot of crazy stuff but also helped many many others like me to understand these concepts. Also ServiceNow itself has a great amount of resources, learning paths, courses and well-structured documentation that you can take advantage of. But sometimes it can be difficult to read and understand all this tech terms of official documentations, And it can be very easy if they are consolidated at one place with practical use cases. Which is exactly the journey I will be taking you all on. Whatever you are going to learn in this journey is not something I came up with, It is already there! But what we will be doing is connecting the dots, going step by step through each concept building on previous ones. In other words, I am going to teach you &quot;How to read the docs&quot;, but I promise by end of all these chapters, you will be able to build almost any integration in the world; though I'm going to restrict myself to ServiceNow platform, when explaining all those stuff.</p>
+<p>    Well, That's a big committement! and in order to make it true, we need to think of some concepts that are essential to understand before we actually dig deeper. Don't worry, we'll go pretty quick through them in this chapter and touch them back once we actually do the tech part.</p>
+<h2 id="what-is-api"><a class="header" href="#what-is-api">What is API</a></h2>
+<p>    When you chat with a friend, you need a mobile (or in other words, a communication device) to do that. Or in order to open a door you need a handle. Application Programming Interface or API is a similar concept, and it helps two programs to communicate &amp; enable exchange of information with each other.</p>
+<p>    Let us try to understand this another way. Think that you are hungry and want to eat a pizza. You go to the nearest restaurant, check the menu and make the order to the waiter. Waiter in turn takes the order to the kitchen, brings the pizza from the kitchen and deliver the pizza to your table. The waiter plays the similar part as of the API.</p>
+<p>     In IT world, Client application requests information from a server. A server processes the request and returns a status code and a response body. When the response body is returned, the Client extracts information from the response body and takes action on the extracted data. API is a mid layer that handles this communication. Scripted REST Services allow developers to create their own APIs on the ServiceNow Platform.</p>
+<p><img src="/images/Chapter1_1.png" alt="What is API" /></p>
+<h2 id="what-is-rest-api"><a class="header" href="#what-is-rest-api">What is REST API</a></h2>
+<p>    Representational state transfer or REST is the most popular approach of building APIs. When a request for data is sent to a REST API, it’s usually done through hypertext transfer protocol (HTTP). Once a request is received, APIs designed for REST can return messages in a variety of formats: HTML, XML, plain text, and JSON.</p>
+<h4 id="a-request-is-made-up-of-four-things"><a class="header" href="#a-request-is-made-up-of-four-things">A request is made up of four things:</a></h4>
+<ul>
+<li>The Endpoint</li>
+<li>The method</li>
+<li>The headers</li>
+<li>The body</li>
+</ul>
+<h2 id="the-endpoint"><a class="header" href="#the-endpoint">The Endpoint</a></h2>
+<p>    The endpoint is the url you request for. It generally consists of base path and resource path. E.g.</p>
+<pre><code class="language-js">https://dev124645.service-now.com/api/now/table/incident
+</code></pre>
+<p>    Every web service provider will have the API documentation and that needs to be referenced in order to configure the HTTP method endpoint.</p>
+<h2 id="the-method"><a class="header" href="#the-method">The method</a></h2>
+<p>    HTTP methods define the action to take for a resource, such as retrieving information or updating a record. The available HTTP Methods are:</p>
+<h4 id="post-create"><a class="header" href="#post-create">POST: Create</a></h4>
+<p>    POST method is used to submit the information to the server.</p>
+<h4 id="get-read"><a class="header" href="#get-read">GET: Read</a></h4>
+<p>    GET method is the most common of all the request methods. It is used to fetch the desired resource from the server.</p>
+<h4 id="putpatch-update"><a class="header" href="#putpatch-update">PUT/PATCH: Update</a></h4>
+<p>    Both PUT &amp; PATCH are used to modify the resources on the server with a slight difference. PUT is a method of modifying resource where the client sends data that updates the entire resource. PATCH is a method of modifying resources where the client sends partial data that is to be updated without modifying the entire data.</p>
+<h4 id="delete-delete"><a class="header" href="#delete-delete">DELETE: Delete</a></h4>
+<p>    POST method is used to delete the resource identified by the request url.</p>
+<h2 id="http-headers"><a class="header" href="#http-headers">HTTP Headers</a></h2>
+<p>    Client and Server can pass the extra bit of information with the request and response using HTTP headers. The Server determines which headers are supported or required.</p>
+<p>    The most widely used HTTP Headers are:</p>
+<ul>
+<li>Accept</li>
+<li>Content-Type</li>
+<li>Authorization</li>
+<li>Access-Control-Allow-Origin</li>
+<li>Access-Control-Allow-Methods</li>
+</ul>
+<h4 id="accept"><a class="header" href="#accept">Accept</a></h4>
+<p>    Type of data client can understand.</p>
+<h4 id="content-type"><a class="header" href="#content-type">Content-Type</a></h4>
+<p>    Specifies the media type of the resource.</p>
+<h4 id="authorization"><a class="header" href="#authorization">Authorization</a></h4>
+<p>    Used to pass credentials so that server can authenticate. Different web service providers may require different types of authentication.</p>
+<h4 id="access-control-allow-origin"><a class="header" href="#access-control-allow-origin">Access-Control-Allow-Origin</a></h4>
+<p>    Specifies which origin is allowed to access the resources.</p>
+<h4 id="access-control-allow-methods"><a class="header" href="#access-control-allow-methods">Access-Control-Allow-Methods</a></h4>
+<p>    Specifies which methods are allowed to access the resources.</p>
+<h2 id="accept-vs-content-type"><a class="header" href="#accept-vs-content-type">Accept vs. Content-Type</a></h2>
+<p>    As we have discussed above, Accept is the type of data client can understand, whereas Content-Type specifies the media type of the resource.</p>
+<p>    What this actually means is that The Accept header is used to inform the server by the client that which content type is understandable by the client expressed as MIME-types. By using the Content-negotiation the server selects a proposal of the content type and informs the client of its choice with the Content-type response header.</p>
+<p>    I assume, almost all of you have worked in the Operations team. And you might have receieved an incident or an request from the user, who understand only french or german, while you can only speak english. Lets say, in such instances you might use some kind of translator to convert your response in user-specific language to respond to the user. Let us consider, user does the same and convert his response into english that you understand. Now if you are asking user for an input by this means, The language in which you did respond to the user (french/german) will be an Accept and the language in which you did receieve the response (i.e. english) will be a Content-Type.</p>
+<p>    Both this headers are expressed by as MIME-types. E.g.</p>
+<pre><code class="language-js">Content-Type:application/json;
+</code></pre>
+<p><img src="/images/Headers.png" alt="Accept vs Content-Type" /></p>
+<h2 id="http-status-codes"><a class="header" href="#http-status-codes">HTTP Status Codes</a></h2>
+<p>    I'm sure you have came across the scenerio, when you tried to access a webpage and recieved an 404 (Page not found) or 403 (Access Forbidden) error? This are status codes.</p>
+<p>    Server always returns the HTTP status code with the response. The HTTP status codes refer to the interaction with the REST service provider. The status codes do not tell anything about the requested data. ServiceNow APIs return standard HTTP status codes.:</p>
+<ul>
+<li>1xx: Informational</li>
+<li>2xx: Success</li>
+<li>3xx: Redirection</li>
+<li>4xx: Client Error</li>
+<li>5xx: Server Error</li>
+</ul>
+<p><img src="/images/statuscode2.png" alt="Status Code" /></p>
+<h2 id="http-query-parameters"><a class="header" href="#http-query-parameters">HTTP Query Parameters</a></h2>
+<p>    HTTP Query Parameters are appended to the endpoint url after '?'. The query parameters are specific to the selected API method and control what information developers using the API can pass in the API request URL.</p>
+<pre><code class="language-js">https://dev124645.service-now.com/api/now/table/incident?sysparm_query=active%3Dtrue&amp;sysparm_limit=10
+
+</code></pre>
+<h2 id="path-parameters"><a class="header" href="#path-parameters">Path Parameters</a></h2>
+<p>    Path parameters are enclosed in curly braces in the endpoint URL. The values set in the path parameter field are substituted into the endpoint URL when a request is sent. This makes the endpoint dynamic and more useful.</p>
+<pre><code class="language-js">https://dev124645.service-now.com/api/now/table/{tableName}
+
+</code></pre>
+<h2 id="outbound-vs-inbound-rest-integrations"><a class="header" href="#outbound-vs-inbound-rest-integrations">Outbound vs. Inbound REST Integrations</a></h2>
+<p>    When ServiceNow consumes a web services from third party providers and other ServiceNow instances, It is considered as a Outbound REST Integration. Whereas, In an inbound request, a third-party application requests an action through a ServiceNow API.</p>
+<h4 id="outbound-rest-integration"><a class="header" href="#outbound-rest-integration">Outbound REST Integration</a></h4>
+<p><img src="/images/app_store_learnv2_rest_sandiego_outbound_images_outbound_genericrequest.png" alt="Outbound" /></p>
+<h4 id="inbound-rest-integration"><a class="header" href="#inbound-rest-integration">Inbound REST Integration</a></h4>
+<p><img src="/images/app_store_learnv2_rest_sandiego_inbound_images_inbound_genericrequest.png" alt="Inbound" /></p>
+<h2 id="whats-next"><a class="header" href="#whats-next">What's next?</a></h2>
+<p>     In next chapter, we will see some of the concepts &amp; methods related to javascript JSON and Objects, before diving into actual ServiceNow integration jungle. Knowing this simple concepts will be extermely helpful and will make us confident about the code that we are going to write. Believe me, you are going to use hell lot of JSON.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="cover.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="WhatYouNeedToKnowAboutJSONAndObjects.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="cover.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="WhatYouNeedToKnowAboutJSONAndObjects.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

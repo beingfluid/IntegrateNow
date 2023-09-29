@@ -1,0 +1,586 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Finishing Touches - IntegrateNow</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="cover.html">IntegrateNow</a></li><li class="chapter-item expanded affix "><li class="part-title">Index</li><li class="chapter-item expanded "><a href="ConceptualAsides.html"><strong aria-hidden="true">1.</strong> Conceptual Asides</a></li><li class="chapter-item expanded "><a href="WhatYouNeedToKnowAboutJSONAndObjects.html"><strong aria-hidden="true">2.</strong> What You Need To Know About JSON And Objects</a></li><li class="chapter-item expanded "><a href="RESTAPIExplorer.html"><strong aria-hidden="true">3.</strong> REST API Explorer</a></li><li class="chapter-item expanded "><a href="ImplementingOurFirstIntegration.html"><strong aria-hidden="true">4.</strong> Implementing Our First Integration</a></li><li class="chapter-item expanded "><a href="FinishingTouches.html" class="active"><strong aria-hidden="true">5.</strong> Finishing Touches</a></li><li class="chapter-item expanded "><a href="WorkingWithXMLs.html"><strong aria-hidden="true">6.</strong> Working With XMLs</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">IntegrateNow</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="chapter-5"><a class="header" href="#chapter-5">Chapter 5</a></h2>
+<h1 id="finishing-touches"><a class="header" href="#finishing-touches">Finishing Touches</a></h1>
+<h2 id="where-did-we-stop"><a class="header" href="#where-did-we-stop">Where did we stop</a></h2>
+<p>    Last time, we did set up both of our Customer and Vendor instances to make them ready for our use case; We did leverage the REST API Explorer to generate a sample script with some dummy data and used it in Business Rule to create an incident on our Customer instance from a Vendor instance. This is a unique use case where we actually did leverage outbound (triggering the API from Vendor instance) and inbound (providing the inbound API and responding to API request by creating an incident on Customer instance). This difference will be more clear as we proceed with our series and implement some of the awesome use cases. For now let us start from where we did leave last time and finish our first integration.</p>
+<p>    The final script that we did put in our business rule script field should look something like this :</p>
+<pre><code class="language-js">;(function executeRule(current, previous /*null when async*/) {
+  // Add your code here
+  var request = new sn_ws.RESTMessageV2()
+  request.setEndpoint(
+    &quot;https://dev124645.service-now.com/api/now/table/incident&quot;
+  )
+  request.setHttpMethod(&quot;POST&quot;)
+
+  //Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+  var user = &quot;FirstIntegrationUser&quot;
+  var password = &quot;FirstIntegrationUserPassword&quot;
+
+  request.setBasicAuth(user, password)
+  request.setRequestHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+  request.setRequestHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+  request.setRequestBody(
+    '{&quot;short_description&quot;:&quot;Test SD&quot;,&quot;description&quot;:&quot;Test Desc&quot;,&quot;assignment_group&quot;:&quot;0a52d3dcd7011200f2d224837e6103f2&quot;,&quot;impact&quot;:&quot;2&quot;,&quot;urgency&quot;:&quot;1&quot;,&quot;state&quot;:&quot;3&quot;,&quot;hold_reason&quot;:&quot;4&quot;,&quot;category&quot;:&quot;inquiry&quot;,&quot;contact_type&quot;:&quot;email&quot;}'
+  )
+  var response = request.execute()
+  gs.log(response.getBody())
+})(current, previous)
+</code></pre>
+<p><img src="./images/ibr9.png" alt="ibr9" /></p>
+<p>    As we did test last time, the script works as is but it has some issues that needs to be tackeled. Let us point them out and fix one by one.</p>
+<h2 id="what-is-not-right"><a class="header" href="#what-is-not-right">What is not right</a></h2>
+<h3 id="statics-request-body"><a class="header" href="#statics-request-body">Statics request body</a></h3>
+<p>    The very first thing that we should fix is the request body or data that we will pass to the server. It is static meaning it will always create an incident with same information. We want it to be dynamic and it should fetch the information from the incident for which the Business Rule is triggered. Notice the following line from the above script :</p>
+<pre><code class="language-js">request.setRequestBody(
+  '{&quot;short_description&quot;:&quot;Test SD&quot;,&quot;description&quot;:&quot;Test Desc&quot;,&quot;assignment_group&quot;:&quot;0a52d3dcd7011200f2d224837e6103f2&quot;,&quot;impact&quot;:&quot;2&quot;,&quot;urgency&quot;:&quot;1&quot;,&quot;state&quot;:&quot;3&quot;,&quot;hold_reason&quot;:&quot;4&quot;,&quot;category&quot;:&quot;inquiry&quot;,&quot;contact_type&quot;:&quot;email&quot;}'
+)
+</code></pre>
+<p>     <strong>setRequestBody()</strong> method accepts one string parameter as the body content to send to the web service provider when using PUT or POST HTTP methods. In above example, we are passing a static json string as a parameter value. Which means we can rewrite above line of code as below:</p>
+<pre><code class="language-js">var reqBody = {
+  short_description: &quot;Test SD&quot;,
+  description: &quot;Test Desc&quot;,
+  assignment_group: &quot;0a52d3dcd7011200f2d224837e6103f2&quot;,
+  impact: &quot;2&quot;,
+  urgency: &quot;1&quot;,
+  state: &quot;3&quot;,
+  hold_reason: &quot;4&quot;,
+  category: &quot;inquiry&quot;,
+  contact_type: &quot;email&quot;,
+}
+request.setRequestBody(JSON.stringify(reqBody))
+</code></pre>
+<p>     What we did here is storing the content of our request body as an json object and then convert it to string right before passing it to the server. If you are not aware of how this works, you have probably skipped <a href="/Chapter2_WhatYouNeedToKnowAboutJSONAndObjects.html">Chapter 2</a>, where we did talk a lot about json and I encourage you to go back and get familier with it. Now let us use the current argument of Business rule to fetch the values from current incident dynamically:</p>
+<pre><code class="language-js">var reqBody = {
+  short_description: current.getDisplayValue(&quot;short_description&quot;),
+  impact: current.getValue(&quot;impact&quot;),
+  urgency: current.getValue(&quot;urgency&quot;),
+  state: current.getValue(&quot;state&quot;),
+}
+request.setRequestBody(JSON.stringify(reqBody))
+</code></pre>
+<p>     Here, I have removed the other properties from the object on purpose. We will add them back to the object after we perform some manipulation on the information. Why? Remember the tweaks that we need to consider; it is necessary to write a clean code to not make it unnecessarily un-readable. Let us tackle each of this tweaks:</p>
+<h4 id="tweak-1-"><a class="header" href="#tweak-1-">Tweak 1 :</a></h4>
+<p>    Our Vendor (Company A) instance has an additional On hold reason choice &quot;Awaiting Company A Validation&quot; (for some internal validation). Whereas our Customer (Company B) instance has all Out of the box (OOTB) choices. So, we need to map our custom choice &quot;Awaiting Company A Validation&quot; from the Vendor instance to the &quot;Awaiting Vendor&quot; on the Customer i.e. Company B instance.</p>
+<p><img src="./images/drawio2.png" alt="drawio2" /></p>
+<p>    To implement this, We could rewrite our line of code as below :</p>
+<pre><code class="language-js">var reqBody = {
+  short_description: current.getDisplayValue(&quot;short_description&quot;),
+  impact: current.getValue(&quot;impact&quot;),
+  urgency: current.getValue(&quot;urgency&quot;),
+  state: current.getValue(&quot;state&quot;),
+}
+if (current.getValue(&quot;state&quot;) == &quot;3&quot;) {
+  //if State is On Hold
+  var onHoldReason = current.getValue(&quot;hold_reason&quot;)
+  if (onHoldReason == &quot;6&quot;) {
+    //if Awaiting Company A Validation
+    onHoldReason = &quot;4&quot; //set to Awaiting Vendor
+  }
+  reqBody[&quot;hold_reason&quot;] = onHoldReason //add the property to object reqBody
+}
+request.setRequestBody(JSON.stringify(reqBody))
+</code></pre>
+<h4 id="tweak-2-"><a class="header" href="#tweak-2-">Tweak 2 :</a></h4>
+<p>    We have an additional Contact type &quot;API&quot; on Customer instance and no matter through which channel the incident is created on Vendor instance, the target incident on Customer instance should have the Contact type set as &quot;API&quot;.</p>
+<p><img src="./images/drawio3.png" alt="drawio3" /></p>
+<p>    We also have the requirement to always map the incident to the &quot;Inquiry / Help&quot; category on Customer instance:</p>
+<p><img src="./images/drawio4.png" alt="drawio4" /></p>
+<p>    Since, we always need the static values for contact type and category values, we can leverage the system properties to modify our code as below :</p>
+<pre><code class="language-js">var reqBody = {
+  short_description: current.getDisplayValue(&quot;short_description&quot;),
+  impact: current.getValue(&quot;impact&quot;),
+  urgency: current.getValue(&quot;urgency&quot;),
+  state: current.getValue(&quot;state&quot;),
+}
+if (current.getValue(&quot;state&quot;) == &quot;3&quot;) {
+  //if State is On Hold
+  var onHoldReason = current.getValue(&quot;hold_reason&quot;)
+  if (onHoldReason == &quot;6&quot;) {
+    //if Awaiting Company A Validation
+    onHoldReason = &quot;4&quot; //set to Awaiting Vendor
+  }
+  reqBody[&quot;hold_reason&quot;] = onHoldReason //add the property to object reqBody
+}
+reqBody[&quot;contact_type&quot;] = gs.getProperty(&quot;integratenow.customer.contact_type&quot;) //set Contact Type as API
+reqBody[&quot;category&quot;] = gs.getProperty(&quot;integratenow.customer.category&quot;) //set Category as Inquiry / Help
+reqBody[&quot;assignment_group&quot;] = gs.getProperty(
+  &quot;integratenow.customer.assignment_group&quot;
+) //set target/customer Assignment group (FirstIntegrationGroup)
+request.setRequestBody(JSON.stringify(reqBody))
+</code></pre>
+<p>    Here, I've also set the target assignment group which is predefined by business. But none of these system properties are defined yet, so we need to create them :</p>
+<ul>
+<li>In the Navigation filter, type <strong>sys_properties.list</strong> and click enter
+<img src="./images/ch5_1.png" alt="ch5_1" /></li>
+<li>Click <strong>New</strong>
+<img src="./images/ch5_2.png" alt="ch5_2" /></li>
+<li>Name the property as <strong>integratenow.customer.contact_type</strong>
+<img src="./images/ch5_3.png" alt="ch5_3" /></li>
+<li>Set the desired string value for field Value as <strong>API</strong> &amp; click submit.
+<img src="./images/ch5_4.png" alt="ch5_4" /></li>
+<li>Create two more properties as below:
+<ul>
+<li>Name : <strong>integratenow.customer.category</strong>, Value : <strong>inquiry</strong></li>
+<li>Name : <strong>integratenow.customer.assignment_group</strong>, Value : <strong>a12fc27d87da491028720d47dabb35d9</strong>
+<img src="./images/ch5_5.png" alt="ch5_5" />
+<img src="./images/ch5_6.png" alt="ch5_6" />
+<img src="./images/ch5_7.png" alt="ch5_7" /></li>
+</ul>
+</li>
+</ul>
+<p>    A point to remember here (and going forward), all the custom values for the records that we did create, including group sys_id might be different for you. So be cautious!</p>
+<h4 id="tweak-3-"><a class="header" href="#tweak-3-">Tweak 3 :</a></h4>
+<p>    And the last tweak that we need to tackle is that the Service, Service Offering and the Description needs to be mapped with to Description field:</p>
+<p><img src="./images/drawio5.png" alt="drawio5" /></p>
+<p>    Let us rewrite our line of code to accomodate this requirement:</p>
+<pre><code class="language-js">var reqBody = {
+  short_description: current.getDisplayValue(&quot;short_description&quot;),
+  impact: current.getValue(&quot;impact&quot;),
+  urgency: current.getValue(&quot;urgency&quot;),
+  state: current.getValue(&quot;state&quot;),
+}
+if (current.getValue(&quot;state&quot;) == &quot;3&quot;) {
+  //if State is On Hold
+  var onHoldReason = current.getValue(&quot;hold_reason&quot;)
+  if (onHoldReason == &quot;6&quot;) {
+    //if Awaiting Company A Validation
+    onHoldReason = &quot;4&quot; //set to Awaiting Vendor
+  }
+  reqBody[&quot;hold_reason&quot;] = onHoldReason //add the property to object reqBody
+}
+reqBody[&quot;contact_type&quot;] = gs.getProperty(&quot;integratenow.customer.contact_type&quot;) //set Contact Type as API
+reqBody[&quot;category&quot;] = gs.getProperty(&quot;integratenow.customer.category&quot;) //set Category as Inquiry / Help
+reqBody[&quot;assignment_group&quot;] = gs.getProperty(
+  &quot;integratenow.customer.assignment_group&quot;
+) //set target/customer Assignment group (FirstIntegrationGroup)
+var newDescription =
+  &quot;Service: &quot; +
+  current.getDisplayValue(&quot;business_service&quot;) +
+  &quot;\n&quot; +
+  &quot;Service Offering: &quot; +
+  current.getDisplayValue(&quot;service_offering&quot;) +
+  &quot;\n&quot; +
+  &quot;Description: &quot; +
+  current.getDisplayValue(&quot;description&quot;)
+reqBody[&quot;description&quot;] = newDescription.toString()
+request.setRequestBody(JSON.stringify(reqBody))
+</code></pre>
+<p>    Here, we did assume that All the fields will have some value, but you are free to modify and make it more fail safe.</p>
+<h3 id="exposed-credentials"><a class="header" href="#exposed-credentials">Exposed credentials</a></h3>
+<p>    As you can notice from the following lines from the our script, we are exposing our username and password directly in the script. This is not a best practice and there are better way of implementing the integration that we will see later in this series. For now we are just going to ignore it to save some time, but you could probably write additional system properties to store them.</p>
+<pre><code class="language-js">var user = &quot;FirstIntegrationUser&quot;
+var password = &quot;FirstIntegrationUserPassword&quot;
+</code></pre>
+<h3 id="static-endpoints"><a class="header" href="#static-endpoints">Static endpoints</a></h3>
+<p>    Observe the below line of code :</p>
+<pre><code class="language-js">request.setEndpoint(&quot;https://dev124645.service-now.com/api/now/table/incident&quot;)
+</code></pre>
+<p>    <strong>setEndpoint()</strong> method sets the endpoint for the REST message. It accepts one parameter which is the URL of the REST provider you want to interface with, or in other words, endpoint. E.g. in our code we set the endpoint to <code>https://dev124645.service-now.com/api/now/table/incident</code>. The problem with this approach is our endpoint is now static and for any reason if the endpoint changes, we need to change it in every possible script it is used. Again, we are not going to fix it right away. You can utilize the system properties to tackle this problem as well, but this can be handled in a better way that we will see in later chapters.</p>
+<p>    Our modified Business Rule script should now look something like this :</p>
+<pre><code class="language-js">;(function executeRule(current, previous /*null when async*/) {
+  // Add your code here
+  var request = new sn_ws.RESTMessageV2()
+  request.setEndpoint(
+    &quot;https://dev124645.service-now.com/api/now/table/incident&quot;
+  )
+  request.setHttpMethod(&quot;POST&quot;)
+
+  //Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+  var user = &quot;FirstIntegrationUser&quot;
+  var password = &quot;FirstIntegrationUserPassword&quot;
+
+  request.setBasicAuth(user, password)
+  request.setRequestHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+  request.setRequestHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+  var reqBody = {
+    short_description: current.getDisplayValue(&quot;short_description&quot;),
+    impact: current.getValue(&quot;impact&quot;),
+    urgency: current.getValue(&quot;urgency&quot;),
+    state: current.getValue(&quot;state&quot;),
+  }
+
+  if (current.getValue(&quot;state&quot;) == &quot;3&quot;) {
+    //if State is On Hold
+    var onHoldReason = current.getValue(&quot;hold_reason&quot;)
+    if (onHoldReason == &quot;6&quot;) {
+      //if Awaiting Company A Validation
+      onHoldReason = &quot;4&quot; //set to Awaiting Vendor
+    }
+    reqBody[&quot;hold_reason&quot;] = onHoldReason //add the property to object reqBody
+  }
+
+  reqBody[&quot;contact_type&quot;] = gs.getProperty(&quot;integratenow.customer.contact_type&quot;) //set Contact Type as API
+  reqBody[&quot;category&quot;] = gs.getProperty(&quot;integratenow.customer.category&quot;) //set Category as Inquiry / Help
+  reqBody[&quot;assignment_group&quot;] = gs.getProperty(
+    &quot;integratenow.customer.assignment_group&quot;
+  ) //set target/customer Assignment group (FirstIntegrationGroup)
+
+  var newDescription =
+    &quot;Service: &quot; +
+    current.getDisplayValue(&quot;business_service&quot;) +
+    &quot;\n&quot; +
+    &quot;Service Offering: &quot; +
+    current.getDisplayValue(&quot;service_offering&quot;) +
+    &quot;\n&quot; +
+    &quot;Description: &quot; +
+    current.getDisplayValue(&quot;description&quot;)
+  reqBody[&quot;description&quot;] = newDescription.toString()
+
+  request.setRequestBody(JSON.stringify(reqBody))
+  var response = request.execute()
+  gs.log(response.getBody())
+})(current, previous)
+</code></pre>
+<p>    We have almost completed our first integration and we can perform a test before we do furthur modifications.</p>
+<ul>
+<li>On Vendor instance, Navigate to <strong>All &gt; Incident &gt; Create New</strong>:
+<img src="./images/ibr11.png" alt="ibr11" /></li>
+<li>Set the Service as <strong>IntegrateNow</strong> &amp; Assignment group as <strong>VendorAssignmentGroup</strong>:
+<img src="./images/ch5_test1.png" alt="ch5_test1" /></li>
+<li>Fill all other desired fields with the values you may like &amp; click <strong>Submit</strong>:
+<img src="./images/ch5_test2.png" alt="ch5_test2" /></li>
+<li>We can notice from the recent system logs, that our API has successfully been triggered:
+<img src="./images/ch5_test3.png" alt="ch5_test3" /></li>
+<li>On Customer instance, we can validate that new incident has been created:
+<img src="./images/ch5_test4.png" alt="ch5_test4" />
+<img src="./images/ch5_test5.png" alt="ch5_test5" /></li>
+</ul>
+<h2 id="correlation"><a class="header" href="#correlation">Correlation</a></h2>
+<p>    Okay, technically we did implement our first use case, but it is not enough. What do I mean? Think of the functional side, How would you know on Customer end that the incident exists in their table corresponds to which incident on Vendor instance? If there are multiple other tools that are generating the incidents using same Service Account then how would you know it corresponds to which tool? Most importantly, If we want to update an incident whenever the incident is updated on either end, how would you know which incident to update? In worst case you might create multiple duplicate incidents for one vendor incident and you need something to prevent that behavior. Seems like a big issue, well how would you tackle this problem? The answer is <strong>Correlation</strong>.</p>
+<p>    <strong>A correlation establishes a synchronization relationship between records that reside on separate instances.</strong> The <strong>Correlation ID</strong> identifies the remote record whose data values should be used to update the local record. For example, suppose incident record INC100001 correlates to problem record PRB123456 on a remote instance. Whenever changes are made to fields in remote problem PRB123456, the system uses the Correlation ID to identify that local incident INC100001 receives the same field updates.</p>
+<p><img src="./images/correlation-classic-example.png" alt="correlation-classic-example.png" /></p>
+<p>    If you have wondered what Correlation ID and Correlation Display fields are for or if you need better explaination, Please do read an post on <strong>SN Guru Blog</strong>, which can be found <a href="https://servicenowguru.com/integration/correlation-id-display-fields/">here</a>. But, I would also like to quote a shorter answer from <strong>john andersen</strong> to the community post which can be found <a href="https://community.servicenow.com/community?id=community_question&amp;sys_id=d44d4ba9db9cdbc01dcaf3231f9619fe">here</a> as is :</p>
+<blockquote>
+<p>These fields are typically used for Integration purposes. You will often store a corresponding third party record ID in the correlation ID field. The correlation Display field can contain a free-form descriptive label of what third party system is replicating or tied to this record.<br />
+For example, if you are tying incident records to a third party ticketing system when they are created within ServiceNow, the corresponding ticket ID from the third party would be stored in the correlation ID field. You could also set the correlation display field to be &quot;JIRA&quot;, or &quot;REMEDY&quot;, or whatever you want to indicate the third party system using this ticket.</p>
+</blockquote>
+<p>    ServiceNow documentaion article on Correlation is also a good read which can be found <a href="https://docs.servicenow.com/bundle/rome-servicenow-platform/page/administer/integrationhub/concept/correlation.html">here</a>.</p>
+<h2 id="filling-the-gaps"><a class="header" href="#filling-the-gaps">Filling the gaps</a></h2>
+<p>    In our script we are using the following line as our last line of code, which just logs the returned response to the log table :</p>
+<pre><code class="language-js">gs.log(response.getBody())
+</code></pre>
+<p>    <strong>getBody()</strong> method gets the content of the REST response body as text. E.g. In our case, we did recieve the response back as json string. We can replace this line by following code which converts the json string to json object and then gets the required fields from the json object to be used to store in Correlation fields :</p>
+<pre><code class="language-js">var resBody = JSON.parse(response.getBody())
+current.setValue(&quot;correlation_id&quot;, resBody[&quot;result&quot;][&quot;number&quot;])
+current.setValue(&quot;correlation_display&quot;, &quot;CustomerIncNumber&quot;)
+current.work_notes = JSON.stringify(resBody)
+</code></pre>
+<p>    Here, It is important to notice that we are not using setter method for worknotes, as the setValue() method is not supported for journal fields and documented <a href="https://docs.servicenow.com/bundle/sandiego-platform-administration/page/administer/field-administration/concept/c_JournalFields.html">here</a>. Many times I did use the getValue() or setValue() method to with additional comments or work notes and found myself spend a lot of time debugging it. It is very well expained by <strong>Tim Woodruff</strong> in his <strong>ServiceNow Development Handbook - Third Edition</strong> book, which is a must read if you want some awesome pro tips and thank yourself later.</p>
+<p>    As long as our code is concerned, we are parsing the Incident &quot;Number&quot; of Incident created on customer instance by our API and storing it in a field &quot;Correlation ID&quot;. We also did store the Correlation Display as a static string &quot;CustomerIncNumber&quot; to indicate it represents the Incident number of the customer instance. In the last line I'm just adding the whole response from the API to the activity streams, You would not do it in real time unless there is a use case.</p>
+<p>    Similar to the above, we also need to store the Correlation ID and Correlation Display fields on customer instance with the current incident number and some identifier text. Let us modify our code one last time to include the following lines to it :</p>
+<pre><code class="language-js">reqBody[&quot;correlation_id&quot;] = current.getDisplayValue(&quot;number&quot;)
+reqBody[&quot;correlation_display&quot;] = &quot;VendorIncNumber&quot;
+</code></pre>
+<p>    Our final Business Rule script should look something like this now:</p>
+<pre><code class="language-js">;(function executeRule(current, previous /*null when async*/) {
+  // Add your code here
+  var request = new sn_ws.RESTMessageV2()
+  request.setEndpoint(
+    &quot;https://dev124645.service-now.com/api/now/table/incident&quot;
+  )
+  request.setHttpMethod(&quot;POST&quot;)
+
+  //Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+  var user = &quot;FirstIntegrationUser&quot;
+  var password = &quot;FirstIntegrationUserPassword&quot;
+
+  request.setBasicAuth(user, password)
+  request.setRequestHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+  request.setRequestHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+  var reqBody = {
+    short_description: current.getDisplayValue(&quot;short_description&quot;),
+    impact: current.getValue(&quot;impact&quot;),
+    urgency: current.getValue(&quot;urgency&quot;),
+    state: current.getValue(&quot;state&quot;),
+  }
+
+  if (current.getValue(&quot;state&quot;) == &quot;3&quot;) {
+    //if State is On Hold
+    var onHoldReason = current.getValue(&quot;hold_reason&quot;)
+    if (onHoldReason == &quot;6&quot;) {
+      //if Awaiting Company A Validation
+      onHoldReason = &quot;4&quot; //set to Awaiting Vendor
+    }
+    reqBody[&quot;hold_reason&quot;] = onHoldReason //add the property to object reqBody
+  }
+
+  reqBody[&quot;contact_type&quot;] = gs.getProperty(&quot;integratenow.customer.contact_type&quot;) //set Contact Type as API
+  reqBody[&quot;category&quot;] = gs.getProperty(&quot;integratenow.customer.category&quot;) //set Category as Inquiry / Help
+  reqBody[&quot;assignment_group&quot;] = gs.getProperty(
+    &quot;integratenow.customer.assignment_group&quot;
+  ) //set target/customer Assignment group (FirstIntegrationGroup)
+
+  var newDescription =
+    &quot;Service: &quot; +
+    current.getDisplayValue(&quot;business_service&quot;) +
+    &quot;\n&quot; +
+    &quot;Service Offering: &quot; +
+    current.getDisplayValue(&quot;service_offering&quot;) +
+    &quot;\n&quot; +
+    &quot;Description: &quot; +
+    current.getDisplayValue(&quot;description&quot;)
+  reqBody[&quot;description&quot;] = newDescription.toString()
+
+  reqBody[&quot;correlation_id&quot;] = current.getDisplayValue(&quot;number&quot;)
+  reqBody[&quot;correlation_display&quot;] = &quot;VendorIncNumber&quot;
+  request.setRequestBody(JSON.stringify(reqBody))
+  var response = request.execute()
+  var resBody = JSON.parse(response.getBody())
+  current.setValue(&quot;correlation_id&quot;, resBody[&quot;result&quot;][&quot;number&quot;])
+  current.setValue(&quot;correlation_display&quot;, &quot;CustomerIncNumber&quot;)
+  current.work_notes = JSON.stringify(resBody)
+})(current, previous)
+</code></pre>
+<p>     Finally, Since we should not use current.update() in our script, let us change the Business Rule trigger condition as below:</p>
+<ul>
+<li>When : <strong>before</strong></li>
+<li>Insert : <strong>Checked</strong></li>
+<li>Update : <strong>Checked</strong></li>
+<li>Filter Conditions :
+<ul>
+<li>Service is IntegrateNow</li>
+<li>Assignment group is VendorAssignmentGroup</li>
+<li>Correlation ID is empty</li>
+<li>Correlation Display is empty</li>
+</ul>
+</li>
+</ul>
+<p><img src="./images/ch5_br_cond.png" alt="BR Final Conditions" /></p>
+<h2 id="final-testing"><a class="header" href="#final-testing">Final testing</a></h2>
+<p>    So, we have finally arrived at the point for which we did wait so long. We did complete our first integration and it is time to test it.</p>
+<ul>
+<li>On Vendor instance, Navigate to <strong>All &gt; Incident &gt; Create New</strong>:
+<img src="./images/ibr11.png" alt="ibr11" /></li>
+<li>Set the Service as <strong>IntegrateNow</strong> &amp; Assignment group as <strong>VendorAssignmentGroup</strong>; fill all other desired fields with the values you may like &amp; click <strong>Submit</strong>:
+<img src="./images/final_test1.png" alt="final_test1" /></li>
+<li>We can notice from the worknotes, that our API has successfully been triggered and returned the response back:
+<img src="./images/final_test2.png" alt="final_test2" /></li>
+<li>we can validate the implementation by personalizing incident list view and bringing both the Correlation fields to list :
+<img src="./images/final_test3.png" alt="final_test3" /></li>
+<li>Similarly, on customer instance, we can personalize incident list view by bringing both the Correlation fields to list view :
+<img src="./images/final_test4.png" alt="final_test4" /></li>
+</ul>
+<h2 id="your-assignment"><a class="header" href="#your-assignment">Your assignment</a></h2>
+<p>    If you have noticed closely, we are still not passing the incident caller to our API and Hence, caller_id field is empty on our customer instance. Assuming their can be duplicate users with same name and email id but unique user name or user id, modify our script accordingly to set the caller.</p>
+<hr />
+<h2 id="whats-next"><a class="header" href="#whats-next">What's next?</a></h2>
+<p>     In the next chapter, we will visit another conceptual aside section to learn everything we need to work with XML responses. This is going to be extermely useful for us to work with the integration systems that handles only XML responses.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ImplementingOurFirstIntegration.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="WorkingWithXMLs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ImplementingOurFirstIntegration.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="WorkingWithXMLs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

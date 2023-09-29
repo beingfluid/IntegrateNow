@@ -1,0 +1,435 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>REST API Explorer - IntegrateNow</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="cover.html">IntegrateNow</a></li><li class="chapter-item expanded affix "><li class="part-title">Index</li><li class="chapter-item expanded "><a href="ConceptualAsides.html"><strong aria-hidden="true">1.</strong> Conceptual Asides</a></li><li class="chapter-item expanded "><a href="WhatYouNeedToKnowAboutJSONAndObjects.html"><strong aria-hidden="true">2.</strong> What You Need To Know About JSON And Objects</a></li><li class="chapter-item expanded "><a href="RESTAPIExplorer.html" class="active"><strong aria-hidden="true">3.</strong> REST API Explorer</a></li><li class="chapter-item expanded "><a href="ImplementingOurFirstIntegration.html"><strong aria-hidden="true">4.</strong> Implementing Our First Integration</a></li><li class="chapter-item expanded "><a href="FinishingTouches.html"><strong aria-hidden="true">5.</strong> Finishing Touches</a></li><li class="chapter-item expanded "><a href="WorkingWithXMLs.html"><strong aria-hidden="true">6.</strong> Working With XMLs</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">IntegrateNow</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="chapter-3"><a class="header" href="#chapter-3">Chapter 3</a></h2>
+<h1 id="rest-api-explorer"><a class="header" href="#rest-api-explorer">REST API Explorer</a></h1>
+<h2 id="a-good-api-documentation"><a class="header" href="#a-good-api-documentation">A good API Documentation</a></h2>
+<p>    Somehow, I cant resist myself from quoting the famous quote from Dick Brandon :</p>
+<blockquote>
+<p>Documentation is like sex; when it's good, it's very, very good, and when it's bad, it's better than nothing.</p>
+</blockquote>
+<p>    The most important feature of API is it's documentation. Rather you can say, an API is only as good as it's documentation. If you are one of those, who did work or atleast tried to read API references for some tool and have struggled badly understanding it, you probably know it already. A bad documentation makes it hard to understand the artifacts and makes it unnecessarily difficult for you. While in other case, A good documentation explains how to effectively use the API, saves time and efforts, and enhances your development experience.</p>
+<h3 id="what-is-api-documentation"><a class="header" href="#what-is-api-documentation">What is API documentation?</a></h3>
+<p>    API documentation is a reference document that outlines how to use the API. It’s a technical manual that contains information about the services the API offers, how to use its various endpoints and parameters, and other implementation instructions. With good API documentation, developers can understand the usage of an API and incorporate it into their use cases without experiencing programming obstacles.</p>
+<h3 id="api-documentation-best-practices"><a class="header" href="#api-documentation-best-practices">API Documentation Best Practices</a></h3>
+<p>    Sometimes, you can see the documentions where the APIs are fully documented, but it is still terribly confusing. I would like to name few best practices that makes API documentation great :</p>
+<ul>
+<li>A good documentation is consistent with universally accepted naming conventions and terminologies.</li>
+<li>It uses a language that is simple and easily understandable by users.</li>
+<li>It offers useful, human-readable information about the possible error messages a user may encounter when interacting with your API—besides just correct error codes, to allow users to learn and integrate your technology easily.It also includes explanations on how the errors can be resolved.</li>
+<li>It allows you to test what you read in the documentation and see how it works.</li>
+<li>It includes interactive sample codes in the most popular programming languages to reduce the friction in implementing your API.</li>
+<li>It is constantly updated and remains accurate.</li>
+</ul>
+<p>    Another important feature that makes a documentation more better is it's user interface, If you don't have a visible user interface and you can't know how to use an API just by looking at it.</p>
+<h2 id="servicenow-rest-api-explorer"><a class="header" href="#servicenow-rest-api-explorer">ServiceNow REST API Explorer</a></h2>
+<p>    Though many documentations are crap, ServiceNow did a great job to maintain the documentation and following all the best practices. The REST API Explorer allows you to discover ServiceNow REST APIs, quickly construct and execute requests, and view responses from ServiceNow REST APIs within your browser.</p>
+<p><img src="/images/stop-documentation-madness.webp" alt="Good Documentation" /></p>
+<p>    Before we step forward, let us step back a little and recall what is &quot;Inbound REST Integration&quot;? In an inbound request, a third-party application requests an action through a ServiceNow API. ServiceNow processes the request and returns a status code and a response body. When the response body is returned, the Client application can extracts information from the response body and take action on the extracted data. The REST API Explorer helps us to test Inbound requests. In fact, you need to always refer the documentation of destination ServiceNow instance/3rd party application or server.</p>
+<p><img src="/images/app_store_learnv2_rest_sandiego_inbound_images_inbound_genericrequest.png" alt="Inbound" /></p>
+<p>    To open REST API Explorer, Navigate to <strong>System Web Services &gt; REST &gt; REST API Explorer</strong>. It displays all available APIs, API versions, and methods for each API. We can use the REST API Explorer to find an end point URL, method and variables that will get us the results that we need.</p>
+<p><img src="/images/RESTAPIExplorer1.png" alt="RESTAPIExplorer1" /></p>
+<p>    The REST API Explorer consists of:</p>
+<ul>
+<li>
+<p>A pane to select the Namespace, API Name, API Version, and REST method</p>
+</li>
+<li>
+<p>A listpane to view and configure the endpoint</p>
+</li>
+<li>
+<p>A menu to access documentation for the selected API and an API analytics dashboard</p>
+</li>
+<li>
+<p>A section to test the endpoint</p>
+<p><img src="/images/app_store_learnv2_rest_sandiego_inbound_images_inbound_apiexploreranatomy.png" alt="REST API Explorer 2" /></p>
+</li>
+</ul>
+<h3 id="understanding-how-to-use-the-rest-api-explorer"><a class="header" href="#understanding-how-to-use-the-rest-api-explorer">Understanding how to use the REST API Explorer</a></h3>
+<p>    There is no better way of learning something new than trying it, so let us try some simple use cases :</p>
+<h4 id="get-request"><a class="header" href="#get-request">GET request</a></h4>
+<p>Lets say, we want to retrieve all of the active incidents from the server instance, but we will only need a couple of the fields back in our response. We can test it within REST API Explorer :</p>
+<ul>
+<li>Navigate to <strong>System Web Services &gt; REST &gt; REST API Explorer</strong>.</li>
+</ul>
+<p><img src="/images/RESTAPIExplorer1.png" alt="RESTAPIExplorer2" /></p>
+<ul>
+<li>
+<p>In the top-left of the REST API Explorer, select Namespace as <strong>now</strong>, API Name as <strong>Table API</strong> &amp; API Version as <strong>latest</strong>.</p>
+<ul>
+<li>
+<p>Namespace specifies the scope of the web service :</p>
+<ul>
+<li>global indicates Globally scoped APIs</li>
+<li>now indicates REST APIs that are provided by ServiceNow</li>
+<li>private_scope_name indicates APIs (scripted web services) in privately-scoped applications</li>
+</ul>
+<p><img src="/images/namespace.png" alt="RESTAPIExplorer3" /></p>
+</li>
+<li>
+<p>API Name specifies API to configure and test in the REST API Explorer.</p>
+<ul>
+<li>The Table API provides endpoints that allow you to perform create, read, update, and delete (CRUD) operations on existing tables.</li>
+</ul>
+<p><img src="/images/apiname.png" alt="RESTAPIExplorer4" /></p>
+</li>
+<li>
+<p>API Version allows you to select a specific API version or use latest version.</p>
+<ul>
+<li>Depending on the version, endpoint returns different results on a valid query.</li>
+</ul>
+<p><img src="/images/apiversion.png" alt="RESTAPIExplorer5" /></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Click <strong>Retrieve records from a table (GET)</strong></p>
+<ul>
+<li>&quot;Retrieve records from a table&quot; is a HTTP GET method that retrieves multiple records from the specified table.</li>
+</ul>
+<p><img src="/images/restmethod.png" alt="RESTAPIExplorer6" /></p>
+</li>
+</ul>
+<p>    <strong>The fields in the Prepare request section of the REST API Explorer form are determined by which Namespace, API Name, API Version, and REST method is selected.</strong></p>
+<p>    Request Parameters consist of:</p>
+<pre><code>- Path parameters
+- Query parameters
+- Request headers
+</code></pre>
+<ul>
+<li>In the Path Parameters section, select the <strong>Incident (incident)</strong> table.
+<img src="/images/pathparam.png" alt="pathparam1" />
+<ul>
+<li>The list of path parameters depends on the endpoint URL.</li>
+<li>Path parameters are enclosed in curly braces in the endpoint URL.</li>
+<li>The values set in the path parameter field are substituted into the endpoint URL when a request is sent.</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/app_store_learnv2_rest_sandiego_inbound_images_inbound_pathparms.png" alt="pathparam2" /></p>
+<ul>
+<li>
+<p>Scroll to the bottom of the page and click <strong>Send</strong>.</p>
+<ul>
+<li>After configuring the REST method, one can click the Send button to send the request to the API.</li>
+<li>The REST API Explorer constructs the request to send to the ServiceNow API using the settings configured by the developer.</li>
+</ul>
+<p><img src="/images/sendget.png" alt="sendget" /></p>
+</li>
+<li>
+<p>Observe the request that is sent and recieved response.
+<img src="/images/getres1.png" alt="sendget" />
+<img src="/images/getres2.png" alt="sendget" /></p>
+<ul>
+<li>
+<p>The response includes incident records from the instance.</p>
+</li>
+<li>
+<p>The response also indicates the Status code and Execution time (in milliseconds) of the request.</p>
+</li>
+<li>
+<p>The Request section displays the HTTP Method / URI to send to the ServiceNow web service. The method is from the selected API.</p>
+</li>
+<li>
+<p>The path parameter values are set when configuring the request.</p>
+<p><img src="/images/path_app_store_learnv2_rest_sandiego_inbound_images_inbound_requestpopulated.png" alt="sendget" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>    The REST API Explorer limits queries to 10 records at a time. Only the first 10 incident records appear. However, you can also limit the maximum number of records returned in response when implementing a REST API using &quot;Query parameters&quot;, sysparm_limit. Let us change it to return only one record and click send to observe new response.</p>
+<p><img src="/images/restlimit.png" alt="sendget" /></p>
+<p>    As you have noticed, we have only one incident information returned in the response.</p>
+<p><img src="/images/restlimit2.png" alt="sendget" /></p>
+<p>    Lets set our sysparm_limit Query parameters back to 10, click send again and again we should get information about 10 incidents. The response by default will return all the incident fields, but we will only need a couple of the fields back in our response, We can specify those in the sysparm_fields parameter.</p>
+<p><img src="/images/queryparam1.png" alt="q1" />
+<img src="/images/queryparam2.png" alt="q2" /></p>
+<p>    Also, we want to return only active incidents. we can fetch the filtered records based on specified encoded query for parameter sysparm_query.
+<img src="/images/query2.png" alt="q3" /></p>
+<p>    Click send, the new request response should have only active incidents and specified four fields information returned :
+<img src="/images/query9.png" alt="q3" /></p>
+<p>    Qury parameters are added to the endpoint URL by the REST API Explorer when the request is sent. The query parameters are specific to the selected API method. A default set of query parameters are displayed for the API. The query parameters are added to the URI in the Request after '?'.</p>
+<p><img src="/images/query_app_store_learnv2_rest_sandiego_inbound_images_inbound_queryparmsuri.png" alt="q4" /></p>
+<p>    REST headers are the meta-data associated with an API request and response E.g. format of the Request and Response.</p>
+<p><img src="/images/rh2_app_store_learnv2_rest_sandiego_inbound_images_inbound_requestheaders.png" alt="q6" /></p>
+<p>    The Request Header settings appear in the request.</p>
+<p><img src="/images/rh3_app_store_learnv2_rest_sandiego_inbound_images_inbound_requestheadersrequest.png" alt="q5" /></p>
+<p>    As you have noticed from the screenshot above, The request format corresponds to Accept header and similarly, the response format corresponds to the Content-Type header. If you can recall from first chapter, Accept or request format is the format in which client sends the data to the server or to be precise, the format in which server is expecting the data. Similarly, Content-Type or request format is the format in which server returns the data. Both the headers are expressed as the MIME Types e.g. application/json. You can read more about the MIME types <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types">here</a>.</p>
+<p>    Let us do one more test, by changing the Reesponse format to application/xml and observe the response by clicking send :</p>
+<p><img src="/images/xmlres.png" alt="xml1" />
+<img src="/images/xmlres2.png" alt="xml2" /></p>
+<h4 id="post-request"><a class="header" href="#post-request">POST request</a></h4>
+<h5 id="requirements-gathering"><a class="header" href="#requirements-gathering">Requirements gathering</a></h5>
+<p>    Now, we have reached the point from where we can think of the complete business use case. But before technical implementation, we need to gather the information of what needs to be done from business based on their need. <strong>This process of understanding what you are trying to build and why you are building it is known as &quot;Requirements gathering&quot;.</strong> Requirements gathering is very very essential in any project. Don't worry, If you are just a developer you do not need to do all that stuff. Let me tell you what is the requirement. Just for the desclaimer, The actual use case is bi-directional and involves some complex logic, So I am going to explain just a part of it here to not complicate things right away.</p>
+<h5 id="business-use-case"><a class="header" href="#business-use-case">Business use case</a></h5>
+<p>    <strong>This use case is to integrate two servicenow instances, so that when the incident is created on one instance, the incident will automatically be created on another instance.</strong> Why so? Let us say, Instance 1 is a Customer instance for &quot;A&quot; company &amp; Instance 2 is a Vendor instance of company &quot;B&quot; that provides services to company &quot;A&quot;, And business want to have incident created on Vendor instance to be also replicated to customer instance. Now, using bi-directional integration, the incident can be handled by either side or can be updated on both the side, and as you can sense it can get complicated real fast. Though, later you will realise it was not so complicated as it seems now.</p>
+<h5 id="prapare-the-pre-requisites"><a class="header" href="#prapare-the-pre-requisites">Prapare the pre-requisites</a></h5>
+<p>    For above use case, we are going to use OOTB Table APIs again and REST API explorer to perform test.</p>
+<ul>
+<li>Navigate to <strong>System Web Services &gt; REST &gt; REST API Explorer</strong>.</li>
+</ul>
+<p><img src="/images/RESTAPIExplorer1.png" alt="RESTAPIExplorer2" /></p>
+<ul>
+<li>In the top-left of the REST API Explorer, select Namespace as <strong>now</strong>, API Name as <strong>Table API</strong> &amp; API Version as <strong>latest</strong>.</li>
+</ul>
+<p><img src="/images/namespace.png" alt="RESTAPIExplorer3" />
+<img src="/images/apiname.png" alt="RESTAPIExplorer4" />
+<img src="/images/apiversion.png" alt="RESTAPIExplorer5" /></p>
+<ul>
+<li>
+<p>Click <strong>Create a record (POST)</strong></p>
+<ul>
+<li>&quot;Create a record&quot; is a HTTP POST method that Inserts one record in the specified table.</li>
+</ul>
+<p><img src="/images/post1.png" alt="RESTAPIExplorer6" /></p>
+</li>
+<li>
+<p>In the Path Parameters section, set the &quot;tableName&quot; parameter as <strong>Incident (incident)</strong> table.</p>
+<p><img src="/images/post2.png" alt="RESTAPIExplorer6" /></p>
+</li>
+<li>
+<p>In the Request Body section, click <strong>Add a field</strong>.</p>
+<p><img src="/images/post3.png" alt="RESTAPIExplorer6" />
+<img src="/images/post32.png" alt="RESTAPIExplorer6" /></p>
+</li>
+<li>
+<p>Select a field and specify a value for that field. The request body updates automatically based on your entries.</p>
+<p><img src="/images/post4.png" alt="RESTAPIExplorer6" />
+<img src="/images/post42.png" alt="RESTAPIExplorer6" /></p>
+</li>
+<li>
+<p>Click the plus sign (+) and specify any additional field to assign a value to.</p>
+<p><img src="/images/post5.png" alt="RESTAPIExplorer6" /></p>
+</li>
+<li>
+<p>After constructing the request, click <strong>Send</strong> &amp; Select <strong>OK</strong> for the popup.</p>
+<p><img src="/images/post52.png" alt="RESTAPIExplorer6" /></p>
+</li>
+<li>
+<p>Observe the response from the server, It returnes the information of newely created incident.</p>
+<p><img src="/images/post6.png" alt="RESTAPIExplorer6" /></p>
+</li>
+</ul>
+<p>    Okay, we are not done yet with REST API explorer, But that's it for this chapter. I am going to let you guys experiment with REST API explorer for now and in next chapter we will look at the other missing pieces. ServiceNow documentation is still the best way to learn about REST API explorer. Two of the best resources can be found <a href="https://developer.servicenow.com/dev.do#!/learn/courses/sandiego/app_store_learnv2_rest_sandiego_rest_integrations/app_store_learnv2_rest_sandiego_inbound_rest_integrations/app_store_learnv2_rest_sandiego_introduction_to_the_rest_api_explorer">here</a> &amp; <a href="https://docs.servicenow.com/bundle/paris-application-development/page/integrate/inbound-rest/concept/use-REST-API-Explorer.html#use-REST-API-Explorer">here</a>.</p>
+<h6 id="what-about-other-web-services"><a class="header" href="#what-about-other-web-services">what about other web services?</a></h6>
+<p>    Some of you might be thinking, why we are only talking about REST and not SOAP or GraphQL? Remember, I did promise you to be able to do any kind of integrations! It is a foundation and we are starting with the most widely used and easiest web service. But bear with me, we will be there and be soon.</p>
+<hr />
+<h2 id="whats-next"><a class="header" href="#whats-next">What's next?</a></h2>
+<p>     In next chapter, we are going to build on top of information that we did gathered today, extract the useful information from the response, cover some of the missing pieces that we did not cover yet, and implement our first use case by old-school approach of script, point out some of the concerns, and start the quest for better solutions.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="WhatYouNeedToKnowAboutJSONAndObjects.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="ImplementingOurFirstIntegration.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="WhatYouNeedToKnowAboutJSONAndObjects.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="ImplementingOurFirstIntegration.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

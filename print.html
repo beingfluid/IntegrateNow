@@ -1,0 +1,2620 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>IntegrateNow</title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="cover.html">IntegrateNow</a></li><li class="chapter-item expanded affix "><li class="part-title">Index</li><li class="chapter-item expanded "><a href="ConceptualAsides.html"><strong aria-hidden="true">1.</strong> Conceptual Asides</a></li><li class="chapter-item expanded "><a href="WhatYouNeedToKnowAboutJSONAndObjects.html"><strong aria-hidden="true">2.</strong> What You Need To Know About JSON And Objects</a></li><li class="chapter-item expanded "><a href="RESTAPIExplorer.html"><strong aria-hidden="true">3.</strong> REST API Explorer</a></li><li class="chapter-item expanded "><a href="ImplementingOurFirstIntegration.html"><strong aria-hidden="true">4.</strong> Implementing Our First Integration</a></li><li class="chapter-item expanded "><a href="FinishingTouches.html"><strong aria-hidden="true">5.</strong> Finishing Touches</a></li><li class="chapter-item expanded "><a href="WorkingWithXMLs.html"><strong aria-hidden="true">6.</strong> Working With XMLs</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">IntegrateNow</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p><img src="/images/IntegrateNow.png" alt="IntegrateNow" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="chapter-1"><a class="header" href="#chapter-1">Chapter 1</a></h2>
+<h1 id="conceptual-asides"><a class="header" href="#conceptual-asides">Conceptual Asides</a></h1>
+<p>    For a long time, I kept myself away from the adventurous and thrilling world of Integrations. However, integration is actually a very simple concept and it is so much fun to do. And ServiceNow is a great tool when it comes to integrating with other tools.</p>
+<p>    ServiceNow community have many great people around the globe, who not only did lot of crazy stuff but also helped many many others like me to understand these concepts. Also ServiceNow itself has a great amount of resources, learning paths, courses and well-structured documentation that you can take advantage of. But sometimes it can be difficult to read and understand all this tech terms of official documentations, And it can be very easy if they are consolidated at one place with practical use cases. Which is exactly the journey I will be taking you all on. Whatever you are going to learn in this journey is not something I came up with, It is already there! But what we will be doing is connecting the dots, going step by step through each concept building on previous ones. In other words, I am going to teach you &quot;How to read the docs&quot;, but I promise by end of all these chapters, you will be able to build almost any integration in the world; though I'm going to restrict myself to ServiceNow platform, when explaining all those stuff.</p>
+<p>    Well, That's a big committement! and in order to make it true, we need to think of some concepts that are essential to understand before we actually dig deeper. Don't worry, we'll go pretty quick through them in this chapter and touch them back once we actually do the tech part.</p>
+<h2 id="what-is-api"><a class="header" href="#what-is-api">What is API</a></h2>
+<p>    When you chat with a friend, you need a mobile (or in other words, a communication device) to do that. Or in order to open a door you need a handle. Application Programming Interface or API is a similar concept, and it helps two programs to communicate &amp; enable exchange of information with each other.</p>
+<p>    Let us try to understand this another way. Think that you are hungry and want to eat a pizza. You go to the nearest restaurant, check the menu and make the order to the waiter. Waiter in turn takes the order to the kitchen, brings the pizza from the kitchen and deliver the pizza to your table. The waiter plays the similar part as of the API.</p>
+<p>     In IT world, Client application requests information from a server. A server processes the request and returns a status code and a response body. When the response body is returned, the Client extracts information from the response body and takes action on the extracted data. API is a mid layer that handles this communication. Scripted REST Services allow developers to create their own APIs on the ServiceNow Platform.</p>
+<p><img src="/images/Chapter1_1.png" alt="What is API" /></p>
+<h2 id="what-is-rest-api"><a class="header" href="#what-is-rest-api">What is REST API</a></h2>
+<p>    Representational state transfer or REST is the most popular approach of building APIs. When a request for data is sent to a REST API, it’s usually done through hypertext transfer protocol (HTTP). Once a request is received, APIs designed for REST can return messages in a variety of formats: HTML, XML, plain text, and JSON.</p>
+<h4 id="a-request-is-made-up-of-four-things"><a class="header" href="#a-request-is-made-up-of-four-things">A request is made up of four things:</a></h4>
+<ul>
+<li>The Endpoint</li>
+<li>The method</li>
+<li>The headers</li>
+<li>The body</li>
+</ul>
+<h2 id="the-endpoint"><a class="header" href="#the-endpoint">The Endpoint</a></h2>
+<p>    The endpoint is the url you request for. It generally consists of base path and resource path. E.g.</p>
+<pre><code class="language-js">https://dev124645.service-now.com/api/now/table/incident
+</code></pre>
+<p>    Every web service provider will have the API documentation and that needs to be referenced in order to configure the HTTP method endpoint.</p>
+<h2 id="the-method"><a class="header" href="#the-method">The method</a></h2>
+<p>    HTTP methods define the action to take for a resource, such as retrieving information or updating a record. The available HTTP Methods are:</p>
+<h4 id="post-create"><a class="header" href="#post-create">POST: Create</a></h4>
+<p>    POST method is used to submit the information to the server.</p>
+<h4 id="get-read"><a class="header" href="#get-read">GET: Read</a></h4>
+<p>    GET method is the most common of all the request methods. It is used to fetch the desired resource from the server.</p>
+<h4 id="putpatch-update"><a class="header" href="#putpatch-update">PUT/PATCH: Update</a></h4>
+<p>    Both PUT &amp; PATCH are used to modify the resources on the server with a slight difference. PUT is a method of modifying resource where the client sends data that updates the entire resource. PATCH is a method of modifying resources where the client sends partial data that is to be updated without modifying the entire data.</p>
+<h4 id="delete-delete"><a class="header" href="#delete-delete">DELETE: Delete</a></h4>
+<p>    POST method is used to delete the resource identified by the request url.</p>
+<h2 id="http-headers"><a class="header" href="#http-headers">HTTP Headers</a></h2>
+<p>    Client and Server can pass the extra bit of information with the request and response using HTTP headers. The Server determines which headers are supported or required.</p>
+<p>    The most widely used HTTP Headers are:</p>
+<ul>
+<li>Accept</li>
+<li>Content-Type</li>
+<li>Authorization</li>
+<li>Access-Control-Allow-Origin</li>
+<li>Access-Control-Allow-Methods</li>
+</ul>
+<h4 id="accept"><a class="header" href="#accept">Accept</a></h4>
+<p>    Type of data client can understand.</p>
+<h4 id="content-type"><a class="header" href="#content-type">Content-Type</a></h4>
+<p>    Specifies the media type of the resource.</p>
+<h4 id="authorization"><a class="header" href="#authorization">Authorization</a></h4>
+<p>    Used to pass credentials so that server can authenticate. Different web service providers may require different types of authentication.</p>
+<h4 id="access-control-allow-origin"><a class="header" href="#access-control-allow-origin">Access-Control-Allow-Origin</a></h4>
+<p>    Specifies which origin is allowed to access the resources.</p>
+<h4 id="access-control-allow-methods"><a class="header" href="#access-control-allow-methods">Access-Control-Allow-Methods</a></h4>
+<p>    Specifies which methods are allowed to access the resources.</p>
+<h2 id="accept-vs-content-type"><a class="header" href="#accept-vs-content-type">Accept vs. Content-Type</a></h2>
+<p>    As we have discussed above, Accept is the type of data client can understand, whereas Content-Type specifies the media type of the resource.</p>
+<p>    What this actually means is that The Accept header is used to inform the server by the client that which content type is understandable by the client expressed as MIME-types. By using the Content-negotiation the server selects a proposal of the content type and informs the client of its choice with the Content-type response header.</p>
+<p>    I assume, almost all of you have worked in the Operations team. And you might have receieved an incident or an request from the user, who understand only french or german, while you can only speak english. Lets say, in such instances you might use some kind of translator to convert your response in user-specific language to respond to the user. Let us consider, user does the same and convert his response into english that you understand. Now if you are asking user for an input by this means, The language in which you did respond to the user (french/german) will be an Accept and the language in which you did receieve the response (i.e. english) will be a Content-Type.</p>
+<p>    Both this headers are expressed by as MIME-types. E.g.</p>
+<pre><code class="language-js">Content-Type:application/json;
+</code></pre>
+<p><img src="/images/Headers.png" alt="Accept vs Content-Type" /></p>
+<h2 id="http-status-codes"><a class="header" href="#http-status-codes">HTTP Status Codes</a></h2>
+<p>    I'm sure you have came across the scenerio, when you tried to access a webpage and recieved an 404 (Page not found) or 403 (Access Forbidden) error? This are status codes.</p>
+<p>    Server always returns the HTTP status code with the response. The HTTP status codes refer to the interaction with the REST service provider. The status codes do not tell anything about the requested data. ServiceNow APIs return standard HTTP status codes.:</p>
+<ul>
+<li>1xx: Informational</li>
+<li>2xx: Success</li>
+<li>3xx: Redirection</li>
+<li>4xx: Client Error</li>
+<li>5xx: Server Error</li>
+</ul>
+<p><img src="/images/statuscode2.png" alt="Status Code" /></p>
+<h2 id="http-query-parameters"><a class="header" href="#http-query-parameters">HTTP Query Parameters</a></h2>
+<p>    HTTP Query Parameters are appended to the endpoint url after '?'. The query parameters are specific to the selected API method and control what information developers using the API can pass in the API request URL.</p>
+<pre><code class="language-js">https://dev124645.service-now.com/api/now/table/incident?sysparm_query=active%3Dtrue&amp;sysparm_limit=10
+
+</code></pre>
+<h2 id="path-parameters"><a class="header" href="#path-parameters">Path Parameters</a></h2>
+<p>    Path parameters are enclosed in curly braces in the endpoint URL. The values set in the path parameter field are substituted into the endpoint URL when a request is sent. This makes the endpoint dynamic and more useful.</p>
+<pre><code class="language-js">https://dev124645.service-now.com/api/now/table/{tableName}
+
+</code></pre>
+<h2 id="outbound-vs-inbound-rest-integrations"><a class="header" href="#outbound-vs-inbound-rest-integrations">Outbound vs. Inbound REST Integrations</a></h2>
+<p>    When ServiceNow consumes a web services from third party providers and other ServiceNow instances, It is considered as a Outbound REST Integration. Whereas, In an inbound request, a third-party application requests an action through a ServiceNow API.</p>
+<h4 id="outbound-rest-integration"><a class="header" href="#outbound-rest-integration">Outbound REST Integration</a></h4>
+<p><img src="/images/app_store_learnv2_rest_sandiego_outbound_images_outbound_genericrequest.png" alt="Outbound" /></p>
+<h4 id="inbound-rest-integration"><a class="header" href="#inbound-rest-integration">Inbound REST Integration</a></h4>
+<p><img src="/images/app_store_learnv2_rest_sandiego_inbound_images_inbound_genericrequest.png" alt="Inbound" /></p>
+<h2 id="whats-next"><a class="header" href="#whats-next">What's next?</a></h2>
+<p>     In next chapter, we will see some of the concepts &amp; methods related to javascript JSON and Objects, before diving into actual ServiceNow integration jungle. Knowing this simple concepts will be extermely helpful and will make us confident about the code that we are going to write. Believe me, you are going to use hell lot of JSON.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="chapter-2"><a class="header" href="#chapter-2">Chapter 2</a></h2>
+<h1 id="what-you-need-to-know-about-json-and-objects"><a class="header" href="#what-you-need-to-know-about-json-and-objects">What You Need To Know About JSON And Objects</a></h1>
+<p>    Many times, I have received a feedback from my peers that, I can do this crazy thing cause I know how to work with JSON and Objects. And it is surprising. JSON and Objects are one of the most important and very useful concepts in JavaScript. Though, you do not need to know everything about it.</p>
+<p>    Here, we will learn about some of the most commonly used concepts related to JSON and Objects, That are extermely useful not just when you are working with integrations but elsewhere as well.</p>
+<h2 id="what-is-json"><a class="header" href="#what-is-json">What is JSON</a></h2>
+<p>    The simplest introduction to JSON I've ever read was in the short presentation on instagram by <a href="https://www.instagram.com/codechips/?hl=en">codechips</a>. I think there is no better way of explaining it than this. I've tweaked the scenerio a bit to make it little familiar, but make sure to look for the original presentation <a href="https://www.instagram.com/p/CWTAVdbtKv0/?utm_source=ig_web_copy_link">here</a>.</p>
+<p>    Let's say, you are working on the integration between ServiceNow &amp; Google sheet. You want to fetch the information about all the incidents from ServiceNow and store it in google sheet for some reason. But in what format the data should be transferred? The plain text format, as you can notice below, is easy to read but not easy to interpret on client side. Also it is difficult to fetch the individual data from it :</p>
+<pre><code class="language-text">The first incident with number INC0000039 raised by &quot;Bud Richman&quot; have the short description &quot;Trouble getting to Oregon mail server&quot; and the second incident with number INC0000003 raised by &quot;Joe Employee&quot; have the short description &quot;Wireless access is down in my area&quot;.
+</code></pre>
+<p>    Then, the XML was introduced and used very widely, but the format was bulky and much overhead to web service :</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;response&gt;
+	&lt;result&gt;
+		&lt;number&gt;INC0000039&lt;/number&gt;
+		&lt;short_description&gt;Trouble getting to Oregon mail server&lt;/short_description&gt;
+		&lt;caller_id&gt;
+			&lt;display_value&gt;Bud Richman&lt;/display_value&gt;
+		&lt;/caller_id&gt;
+	&lt;/result&gt;
+	&lt;result&gt;
+		&lt;number&gt;INC0000003&lt;/number&gt;
+		&lt;short_description&gt;Wireless access is down in my area&lt;/short_description&gt;
+		&lt;caller_id&gt;
+			&lt;display_value&gt;Joe Employee&lt;/display_value&gt;
+		&lt;/caller_id&gt;
+	&lt;/result&gt;
+&lt;/response&gt;
+</code></pre>
+<p>    Then, Javascript Object Notation or JSON came into picture. It is faster and easy to read, undersatand &amp; work with:</p>
+<pre><code class="language-json">{
+  &quot;result&quot;: [
+    {
+      &quot;number&quot;: &quot;INC0000039&quot;,
+      &quot;short_description&quot;: &quot;Trouble getting to Oregon mail server&quot;,
+      &quot;caller_id&quot;: {
+        &quot;display_value&quot;: &quot;Bud Richman&quot;
+      }
+    },
+    {
+      &quot;number&quot;: &quot;INC0000003&quot;,
+      &quot;short_description&quot;: &quot;Wireless access is down in my area&quot;,
+      &quot;caller_id&quot;: {
+        &quot;display_value&quot;: &quot;Joe Employee&quot;
+      }
+    }
+  ]
+}
+</code></pre>
+<p>    So, if you could just use JSON and not XML that would be great.</p>
+<p><img src="/images/jlibgkfs8yf21.png" alt="XML vs JSON" /></p>
+<h2 id="working-with-json"><a class="header" href="#working-with-json">Working with JSON</a></h2>
+<p>    JSON is easy for humans to read and write &amp; for machines to parse and generate. It is supported by many programming languages and is especially useful for JavaScript-based apps, websites and browser extensions.</p>
+<h4 id="how-it-looks"><a class="header" href="#how-it-looks">How it looks</a></h4>
+<ul>
+<li>JSON represents numbers, booleans, strings, null, arrays, and objects made up of these values (or of other arrays and objects).</li>
+<li>The curly brackets holds objects.</li>
+<li>The square brackets holds arrays.</li>
+<li>Property names are double-quoted.</li>
+<li>Properties are separated by commas.</li>
+</ul>
+<p>    Here is an example of a JSON, You are free to play around it :</p>
+<pre><code class="language-json">{
+  &quot;first_property_name&quot;: &quot;First Property Value of type String&quot;,
+  &quot;property_name_is_aka_key&quot;: 2022,
+  &quot;boolean_property_true_or_false&quot;: true,
+  &quot;null_property&quot;: null,
+  &quot;array_type_property&quot;: [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;],
+  &quot;object_type_property&quot;: {
+    &quot;number_type_property&quot;: 2022
+  }
+}
+</code></pre>
+<h4 id="servicenow-scripts---background"><a class="header" href="#servicenow-scripts---background">ServiceNow Scripts - Background</a></h4>
+<p>    I would like to quote Ben Sweetser as is when it comes to Scripts - Background :</p>
+<blockquote>
+<p>Scripts - Background was this magical place in the platform where you could run any server-side script. It became my testing ground for any server-side method I wanted to learn about or new script I wanted to test because I did not need to configure When to run logic around it like a Business Rule. Running a script in Scripts - Background was as easy as putting a script in the field and clicking the Run script button.</p>
+</blockquote>
+<p>    You can read the article by Ben Sweetser <a href="https://developer.servicenow.com/blog.do?p=/post/training-scriptsbg/">here</a> if you need to learn more about it.</p>
+<p>    To open Scripts - Background, use the Application Navigator to open System Definition &gt; Scripts - Background. It is going to be our playground and a friend in our journey.</p>
+<p><img src="/images/sba.png" alt="Scripts Background" /></p>
+<h4 id="typeof--gsinfo"><a class="header" href="#typeof--gsinfo">typeof &amp; gs.info()</a></h4>
+<p>    The typeof operator returns a string indicating the type of the value provided, Whereas, gs.info method writes an info message to the system log. Combination of both of them are extremely useful when it comes to debugging but let us use them here for another purpose. You can read more about them typeof <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof">here</a> and info as well as other useful GlideSystem methods <a href="https://developer.servicenow.com/dev.do#!/reference/api/sandiego/server/no-namespace/c_GlideSystemScopedAPI#r_ScopedGlideSystemInf_String_Object_Object_Object_Object_Object">here</a>.</p>
+<p>    Copy the following code and paste it into the Scripts - Background.</p>
+<pre><code class="language-js">var jsonObj = {
+  Course: &quot;IntegrateNow&quot;,
+  Skills: [&quot;Integration&quot;, &quot;JSON&quot;, &quot;ServiceNow&quot;],
+  name: {
+    first_name: &quot;Vishal&quot;,
+    last_name: &quot;Ingle&quot;,
+  },
+}
+
+gs.info(jsonObj)
+gs.info(typeof jsonObj)
+</code></pre>
+<p><img src="/images/typeof1.png" alt="typeof 1" /></p>
+<p>    Now click the Run Script button to execute the script. You should see the following output :
+<img src="/images/typeof2.png" alt="typeof 2" /></p>
+<p>    The second line of the output indicates that jsonObj variable stores an object. Though, notice that the first line of the output does not display the content of jsonObj variable.</p>
+<h4 id="json-serialization--deserialization"><a class="header" href="#json-serialization--deserialization">JSON serialization &amp; deserialization</a></h4>
+<p>    JSON is a syntax for serializing objects, arrays, numbers, strings, booleans, and null. Serialization means to convert an object into that string, and deserialization is its inverse operation.</p>
+<h4 id="jsonstringifyvalue-replacer-space"><a class="header" href="#jsonstringifyvalue-replacer-space">JSON.stringify(value[, replacer[, space]])</a></h4>
+<p>    The JSON.stringify() method converts a JavaScript object or value to a JSON string, optionally replacing values if a replacer function is specified or optionally including only the specified properties if a replacer array is specified. Following are three variations of the method and we will go through each of them one by one :</p>
+<pre><code class="language-js">JSON.stringify(value)
+JSON.stringify(value, replacer)
+JSON.stringify(value, replacer, space)
+</code></pre>
+<h5 id="jsonstringifyvalue"><a class="header" href="#jsonstringifyvalue">JSON.stringify(value)</a></h5>
+<p>    Copy the following code and paste it into the Scripts - Background.</p>
+<pre><code class="language-js">var jsonObj = {
+  Course: &quot;IntegrateNow&quot;,
+  Skills: [&quot;Integration&quot;, &quot;JSON&quot;, &quot;ServiceNow&quot;],
+  name: {
+    first_name: &quot;Vishal&quot;,
+    last_name: &quot;Ingle&quot;,
+  },
+}
+
+gs.info(JSON.stringify(jsonObj))
+var jsonStr = JSON.stringify(jsonObj)
+gs.info(jsonStr)
+gs.info(typeof jsonStr)
+</code></pre>
+<p><img src="/images/json1.png" alt="json 1" /></p>
+<p>    Now click the Run Script button to execute the script. You should see the following output :
+<img src="/images/json2.png" alt="json 2" /></p>
+<p>    The first and second line of output displays the stringified version of JSON object and the third line indicates that it is of type string.</p>
+<h5 id="jsonstringifyvalue-replacer--jsonstringifyvalue-replacer-space"><a class="header" href="#jsonstringifyvalue-replacer--jsonstringifyvalue-replacer-space">JSON.stringify(value, replacer) &amp; JSON.stringify(value, replacer, space)</a></h5>
+<p>    Before we talk about the second parameter, replacer, I would like you to be familiar with the third parameter i.e. space. It can be a String or Number object that's used to insert white space (including indentation, line break characters, etc.) into the output JSON string for readability purposes.</p>
+<ul>
+<li>If this parameter is not provided (or is null), no white space is used.</li>
+<li>If this is a Number, it indicates the number of space characters to use as white space for indenting purposes; this number is capped at 10 (if it is greater, the value is just 10).</li>
+<li>Values less than 1 indicate that no space should be used.</li>
+<li>If this is a String, the string (or the first 10 characters of the string, if it's longer than that) is used as white space.</li>
+<li>If it is a number, successive levels in the stringification will each be indented by this many space characters (up to 10).</li>
+<li>If it is a string, successive levels will be indented by this string (or the first ten characters of it).</li>
+</ul>
+<p>    Copy the following code and paste it into the Scripts - Background.</p>
+<pre><code class="language-js">var jsonObj = {
+  Course: &quot;IntegrateNow&quot;,
+  Skills: [&quot;Integration&quot;, &quot;JSON&quot;, &quot;ServiceNow&quot;],
+  name: {
+    first_name: &quot;Vishal&quot;,
+    last_name: &quot;Ingle&quot;,
+  },
+}
+
+gs.info(JSON.stringify(jsonObj, null, 4))
+gs.info(JSON.stringify(jsonObj, null, &quot;\t&quot;))
+</code></pre>
+<p><img src="/images/json3.png" alt="json 1" /></p>
+<p>    Now click the Run Script button to execute the script. You should see the following output :
+<img src="/images/json4.png" alt="json 2" /></p>
+<p>    Both the outputs are now displayed in more readable format.</p>
+<p>    Finally, Let us talk about the second parameter, replacer. It can be a function that alters the behavior of the stringification process, or an array of String and Number that serve as an allowlist for selecting/filtering the properties of the value object to be included in the JSON string. If this value is null or not provided, all properties of the object are included in the resulting JSON string.</p>
+<p>    The replacer parameter can be either a function or an array.</p>
+<h6 id="replacer-as-an-array"><a class="header" href="#replacer-as-an-array">replacer, as an array</a></h6>
+<p>If replacer is an array, the array's values indicate the names of the properties in the object that should be included in the resulting JSON string.</p>
+<p>    Copy the following code and paste it into the Scripts - Background.</p>
+<pre><code class="language-js">var jsonObj = {
+  Course: &quot;IntegrateNow&quot;,
+  Skills: [&quot;Integration&quot;, &quot;JSON&quot;, &quot;ServiceNow&quot;],
+  name: {
+    first_name: &quot;Vishal&quot;,
+    last_name: &quot;Ingle&quot;,
+  },
+}
+
+gs.info(JSON.stringify(jsonObj, [&quot;Course&quot;, &quot;Skills&quot;], 4))
+gs.info(JSON.stringify(jsonObj, [&quot;Course&quot;, &quot;Skills&quot;]))
+</code></pre>
+<p><img src="/images/json5.png" alt="json 1" /></p>
+<p>    Now click the Run Script button to execute the script. You should see the following output :
+<img src="/images/json6.png" alt="json 2" /></p>
+<p>    As you might have noticed already, only course and skills are the properties that are added to the new JSON string.</p>
+<h6 id="replacer-as-a-function-"><a class="header" href="#replacer-as-a-function-">replacer, as a function :</a></h6>
+<ul>
+<li>As a function, it takes two parameters: the key and the value being stringified.</li>
+<li>The object in which the key was found is provided as the replacer's this parameter.</li>
+<li>Initially, the replacer function is called with an empty string as key representing the object being stringified.</li>
+<li>It is then called for each property on the object or array being stringified.</li>
+</ul>
+<p>It should return the value that should be added to the JSON string, as follows:</p>
+<ul>
+<li>If you return a Number, String, Boolean, or null, the stringified version of that value is used as the property's value.</li>
+<li>If you return a Function, Symbol, or undefined, the property is not included in the output.</li>
+<li>If you return any other object, the object is recursively stringified, calling the replacer function on each property.</li>
+</ul>
+<p>    Copy the following code and paste it into the Scripts - Background.</p>
+<pre><code class="language-js">var jsonObj = {
+  Course: &quot;IntegrateNow&quot;,
+  Skills: [&quot;Integration&quot;, &quot;JSON&quot;, &quot;ServiceNow&quot;],
+  name: {
+    first_name: &quot;Vishal&quot;,
+    last_name: &quot;Ingle&quot;,
+  },
+}
+
+gs.info(JSON.stringify(jsonObj, replacer))
+gs.info(JSON.stringify(jsonObj, replacer, 4))
+
+function replacer(key, value) {
+  if (typeof value == &quot;string&quot;) {
+    return &quot;test_&quot; + value
+  }
+  return value
+}
+</code></pre>
+<p><img src="/images/json7.png" alt="json 1" /></p>
+<p>    Now click the Run Script button to execute the script. You should see the following output :
+<img src="/images/json8.png" alt="json 2" /></p>
+<p>    We have modified every string value using our replacer function and appended by &quot;test_&quot;.</p>
+<p>    We have seen examples of JSON.stringify() and how it works. It converts a value to JSON notation representing it:</p>
+<ul>
+<li>Boolean, Number, and String objects are converted to the corresponding primitive values during stringification.</li>
+<li>undefined, Functions, and Symbols are not valid JSON values. If any such values are encountered during conversion they are either omitted (when found in an object) or changed to null (when found in an array). JSON.stringify() can return undefined when passing in &quot;pure&quot; values like JSON.</li>
+<li>The numbers Infinity and NaN, as well as the value null, are all considered null.</li>
+<li>If the value has a toJSON() method, it's responsible to define what data will be serialized.</li>
+</ul>
+<h4 id="jsonparsetext-reviver"><a class="header" href="#jsonparsetext-reviver">JSON.parse(text[, reviver])</a></h4>
+<p>    The JSON.parse() method parses a JSON string, constructing the JavaScript value or object described by the string. It parses the string text as JSON, optionally transform the produced value and its properties, and return the value. Following are three variations of the method and we will go through each of them one by one :</p>
+<pre><code class="language-js">JSON.parse(text)
+JSON.parse(text, reviver)
+</code></pre>
+<p>    Copy the following code and paste it into the Scripts - Background.</p>
+<pre><code class="language-js">var jsonObj = {
+  Course: &quot;test_IntegrateNow&quot;,
+  Skills: [&quot;test_Integration&quot;, &quot;test_JSON&quot;, &quot;test_ServiceNow&quot;],
+  name: {
+    first_name: &quot;test_Vishal&quot;,
+    last_name: &quot;test_Ingle&quot;,
+  },
+}
+
+var jsonStr = JSON.stringify(jsonObj)
+gs.info(jsonStr)
+gs.info(typeof jsonStr)
+
+gs.info(JSON.parse(jsonStr))
+var jsonObjFromString = JSON.parse(jsonStr)
+gs.info(jsonObjFromString)
+gs.info(typeof jsonObjFromString)
+</code></pre>
+<p><img src="/images/json9.png" alt="json 1" /></p>
+<p>    Now click the Run Script button to execute the script. You should see the following output :
+<img src="/images/json10.png" alt="json 2" /></p>
+<p>    After executing the code we are certain that jsonStr is a string and line two of output conveys that. JSON.parse() method converts this json string into an JSON object, last line of the output shows that jsonObjFromString is now an object.</p>
+<h5 id="using-the-reviver-parameter"><a class="header" href="#using-the-reviver-parameter">Using the reviver parameter</a></h5>
+<p>    An optional reviver function can be provided to perform a transformation on the resulting object before it is returned or in other words, If a reviver is specified, the value computed by parsing is transformed before being returned. It allows for interpreting what the replacer has used to stand in for other datatypes.</p>
+<ul>
+<li>The computed value and all its properties (beginning with the most nested properties and proceeding to the original value itself) are individually run through the reviver.</li>
+<li>Then it is called, with the object containing the property being processed as this, and with the property name as a string, and the property value as arguments.</li>
+<li>If the reviver function returns undefined (or returns no value, for example, if execution falls off the end of the function), the property is deleted from the object.</li>
+<li>Otherwise, the property is redefined to be the return value.</li>
+<li>If the reviver only transforms some values and not others, be certain to return all untransformed values as-is, otherwise, they will be deleted from the resulting object.</li>
+</ul>
+<p>    Copy the following code and paste it into the Scripts - Background.</p>
+<pre><code class="language-js">var jsonObj = {
+  Course: &quot;test_IntegrateNow&quot;,
+  Skills: [&quot;test_Integration&quot;, &quot;test_JSON&quot;, &quot;test_ServiceNow&quot;],
+  name: {
+    first_name: &quot;test_Vishal&quot;,
+    last_name: &quot;test_Ingle&quot;,
+  },
+}
+
+var jsonStr = JSON.stringify(jsonObj)
+
+var jsonObjFromString = JSON.parse(jsonStr, reviver)
+
+gs.info(JSON.stringify(jsonObjFromString, null, 4))
+
+function reviver(key, value) {
+  if (typeof value === &quot;string&quot;) {
+    return value.toString().slice(5)
+  } else {
+    return value
+  }
+}
+</code></pre>
+<p><img src="/images/json11.png" alt="json 1" /></p>
+<p>    Now click the Run Script button to execute the script. You should see the following output :
+<img src="/images/json12.png" alt="json 2" /></p>
+<p>    We have modified every string value using our reviver function and removed &quot;test_&quot; from it, Output shows the stringified version of this modified object.</p>
+<p>    We have seen examples of JSON.parse() and how it works. If you are interested in learning more about JSON and its methods, Mozilla developer documentation is a best place to start with, It has everything you need right <a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON">here</a>.</p>
+<p>    Hey, we are not done yet, There are still few more things we need to know.</p>
+<h4 id="working-with-json-properties"><a class="header" href="#working-with-json-properties">Working with JSON properties</a></h4>
+<p>    We have kind of already touched these concepts, but let us be more specific to them because they are far more important and needful to us.</p>
+<p>    we could then access the data inside an object using the dot or bracket notation. An object property can itself be an object, to access these items you just need to chain the extra step onto the end with another dot or bracket. We can also set (update) the value of object members by declaring the member the same way. Let us look at the example to understand what I mean.</p>
+<p>    Copy the following code and paste it into the Scripts - Background.</p>
+<pre><code class="language-js">var jsonObj = {
+  Course: &quot;IntegrateNow&quot;,
+  Skills: [&quot;Integration&quot;, &quot;JSON&quot;, &quot;ServiceNow&quot;],
+  name: {
+    first_name: &quot;Vishal&quot;,
+    last_name: &quot;Ingle&quot;,
+  },
+}
+
+gs.info(JSON.stringify(jsonObj, null, 4))
+gs.info(jsonObj.Course)
+gs.info(jsonObj.name.first_name)
+gs.info(jsonObj[&quot;Course&quot;])
+gs.info(jsonObj[&quot;name&quot;][&quot;first_name&quot;])
+
+jsonObj.chapter = &quot;Chapter 2&quot;
+jsonObj[&quot;title&quot;] = &quot;What you need to know abour JSON and Objects&quot;
+
+gs.info(JSON.stringify(jsonObj, null, 4))
+</code></pre>
+<p><img src="/images/json13.png" alt="json 1" /></p>
+<p>    Now click the Run Script button to execute the script. You should see the following output :
+<img src="/images/json14.png" alt="json 2" /></p>
+<p>    First we did display the stringified version of initial JSON Object. Next we did log the properties course and first_name from object using dot notation and brackets notation both. Though we have received the same response, it is best to use dot notation for performance reasons. but brackets notation has it's own use cases e.g. if you want to access the array type property's elements. After that we did add two more properties to our object using both dot and brackets notation and then logged the stringified version of object. We can see that our object now contains two new properties chapter &amp; title.</p>
+<h6 id="objectkeys--hasownproperty"><a class="header" href="#objectkeys--hasownproperty">Object.keys() &amp; hasOwnProperty()</a></h6>
+<p>    The Object.keys() method returns an array of a given object's own enumerable property names. And the hasOwnProperty() method returns a boolean indicating whether the object has the specified property as its own property.</p>
+<p>    Copy the following code and paste it into the Scripts - Background.</p>
+<pre><code class="language-js">var jsonObj = {
+  Course: &quot;IntegrateNow&quot;,
+  Skills: [&quot;Integration&quot;, &quot;JSON&quot;, &quot;ServiceNow&quot;],
+  name: {
+    first_name: &quot;Vishal&quot;,
+    last_name: &quot;Ingle&quot;,
+  },
+}
+
+gs.info(Object.keys(jsonObj))
+gs.info(jsonObj.hasOwnProperty(&quot;Skills&quot;))
+gs.info(jsonObj.hasOwnProperty(&quot;more_skills&quot;))
+</code></pre>
+<p><img src="/images/json15.png" alt="json 1" /></p>
+<p>    Now click the Run Script button to execute the script. You should see the following output :
+<img src="/images/json16.png" alt="json 2" /></p>
+<p>    The first line of output lists all the property names of our objects. Line two of our output indicates that we have the property named Skills in our object. Line three does indicate the same by returning false.</p>
+<p>    Finally, We did reach to the end of this chapter. This is the minimum you need to know about JSON and Objects to follow along with me. If you want to dig deep, Mozilla is again the best platform right <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">here</a> to learn about objects.</p>
+<hr />
+<h2 id="whats-next-1"><a class="header" href="#whats-next-1">What's next?</a></h2>
+<p>     In next chapter, we are actually starting our adventure in the ServiceNow land. I will explain one of the simplest real life use case and start gathering what all is needed to start implementing it. We will talk about ServiceNow API documentation (REST API Explorer), Will understand how to use it, touch back and expand some of the concepts we saw already and introduce some new ones. It will be fun, if you do it by yourself, if not already.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="chapter-3"><a class="header" href="#chapter-3">Chapter 3</a></h2>
+<h1 id="rest-api-explorer"><a class="header" href="#rest-api-explorer">REST API Explorer</a></h1>
+<h2 id="a-good-api-documentation"><a class="header" href="#a-good-api-documentation">A good API Documentation</a></h2>
+<p>    Somehow, I cant resist myself from quoting the famous quote from Dick Brandon :</p>
+<blockquote>
+<p>Documentation is like sex; when it's good, it's very, very good, and when it's bad, it's better than nothing.</p>
+</blockquote>
+<p>    The most important feature of API is it's documentation. Rather you can say, an API is only as good as it's documentation. If you are one of those, who did work or atleast tried to read API references for some tool and have struggled badly understanding it, you probably know it already. A bad documentation makes it hard to understand the artifacts and makes it unnecessarily difficult for you. While in other case, A good documentation explains how to effectively use the API, saves time and efforts, and enhances your development experience.</p>
+<h3 id="what-is-api-documentation"><a class="header" href="#what-is-api-documentation">What is API documentation?</a></h3>
+<p>    API documentation is a reference document that outlines how to use the API. It’s a technical manual that contains information about the services the API offers, how to use its various endpoints and parameters, and other implementation instructions. With good API documentation, developers can understand the usage of an API and incorporate it into their use cases without experiencing programming obstacles.</p>
+<h3 id="api-documentation-best-practices"><a class="header" href="#api-documentation-best-practices">API Documentation Best Practices</a></h3>
+<p>    Sometimes, you can see the documentions where the APIs are fully documented, but it is still terribly confusing. I would like to name few best practices that makes API documentation great :</p>
+<ul>
+<li>A good documentation is consistent with universally accepted naming conventions and terminologies.</li>
+<li>It uses a language that is simple and easily understandable by users.</li>
+<li>It offers useful, human-readable information about the possible error messages a user may encounter when interacting with your API—besides just correct error codes, to allow users to learn and integrate your technology easily.It also includes explanations on how the errors can be resolved.</li>
+<li>It allows you to test what you read in the documentation and see how it works.</li>
+<li>It includes interactive sample codes in the most popular programming languages to reduce the friction in implementing your API.</li>
+<li>It is constantly updated and remains accurate.</li>
+</ul>
+<p>    Another important feature that makes a documentation more better is it's user interface, If you don't have a visible user interface and you can't know how to use an API just by looking at it.</p>
+<h2 id="servicenow-rest-api-explorer"><a class="header" href="#servicenow-rest-api-explorer">ServiceNow REST API Explorer</a></h2>
+<p>    Though many documentations are crap, ServiceNow did a great job to maintain the documentation and following all the best practices. The REST API Explorer allows you to discover ServiceNow REST APIs, quickly construct and execute requests, and view responses from ServiceNow REST APIs within your browser.</p>
+<p><img src="/images/stop-documentation-madness.webp" alt="Good Documentation" /></p>
+<p>    Before we step forward, let us step back a little and recall what is &quot;Inbound REST Integration&quot;? In an inbound request, a third-party application requests an action through a ServiceNow API. ServiceNow processes the request and returns a status code and a response body. When the response body is returned, the Client application can extracts information from the response body and take action on the extracted data. The REST API Explorer helps us to test Inbound requests. In fact, you need to always refer the documentation of destination ServiceNow instance/3rd party application or server.</p>
+<p><img src="/images/app_store_learnv2_rest_sandiego_inbound_images_inbound_genericrequest.png" alt="Inbound" /></p>
+<p>    To open REST API Explorer, Navigate to <strong>System Web Services &gt; REST &gt; REST API Explorer</strong>. It displays all available APIs, API versions, and methods for each API. We can use the REST API Explorer to find an end point URL, method and variables that will get us the results that we need.</p>
+<p><img src="/images/RESTAPIExplorer1.png" alt="RESTAPIExplorer1" /></p>
+<p>    The REST API Explorer consists of:</p>
+<ul>
+<li>
+<p>A pane to select the Namespace, API Name, API Version, and REST method</p>
+</li>
+<li>
+<p>A listpane to view and configure the endpoint</p>
+</li>
+<li>
+<p>A menu to access documentation for the selected API and an API analytics dashboard</p>
+</li>
+<li>
+<p>A section to test the endpoint</p>
+<p><img src="/images/app_store_learnv2_rest_sandiego_inbound_images_inbound_apiexploreranatomy.png" alt="REST API Explorer 2" /></p>
+</li>
+</ul>
+<h3 id="understanding-how-to-use-the-rest-api-explorer"><a class="header" href="#understanding-how-to-use-the-rest-api-explorer">Understanding how to use the REST API Explorer</a></h3>
+<p>    There is no better way of learning something new than trying it, so let us try some simple use cases :</p>
+<h4 id="get-request"><a class="header" href="#get-request">GET request</a></h4>
+<p>Lets say, we want to retrieve all of the active incidents from the server instance, but we will only need a couple of the fields back in our response. We can test it within REST API Explorer :</p>
+<ul>
+<li>Navigate to <strong>System Web Services &gt; REST &gt; REST API Explorer</strong>.</li>
+</ul>
+<p><img src="/images/RESTAPIExplorer1.png" alt="RESTAPIExplorer2" /></p>
+<ul>
+<li>
+<p>In the top-left of the REST API Explorer, select Namespace as <strong>now</strong>, API Name as <strong>Table API</strong> &amp; API Version as <strong>latest</strong>.</p>
+<ul>
+<li>
+<p>Namespace specifies the scope of the web service :</p>
+<ul>
+<li>global indicates Globally scoped APIs</li>
+<li>now indicates REST APIs that are provided by ServiceNow</li>
+<li>private_scope_name indicates APIs (scripted web services) in privately-scoped applications</li>
+</ul>
+<p><img src="/images/namespace.png" alt="RESTAPIExplorer3" /></p>
+</li>
+<li>
+<p>API Name specifies API to configure and test in the REST API Explorer.</p>
+<ul>
+<li>The Table API provides endpoints that allow you to perform create, read, update, and delete (CRUD) operations on existing tables.</li>
+</ul>
+<p><img src="/images/apiname.png" alt="RESTAPIExplorer4" /></p>
+</li>
+<li>
+<p>API Version allows you to select a specific API version or use latest version.</p>
+<ul>
+<li>Depending on the version, endpoint returns different results on a valid query.</li>
+</ul>
+<p><img src="/images/apiversion.png" alt="RESTAPIExplorer5" /></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Click <strong>Retrieve records from a table (GET)</strong></p>
+<ul>
+<li>&quot;Retrieve records from a table&quot; is a HTTP GET method that retrieves multiple records from the specified table.</li>
+</ul>
+<p><img src="/images/restmethod.png" alt="RESTAPIExplorer6" /></p>
+</li>
+</ul>
+<p>    <strong>The fields in the Prepare request section of the REST API Explorer form are determined by which Namespace, API Name, API Version, and REST method is selected.</strong></p>
+<p>    Request Parameters consist of:</p>
+<pre><code>- Path parameters
+- Query parameters
+- Request headers
+</code></pre>
+<ul>
+<li>In the Path Parameters section, select the <strong>Incident (incident)</strong> table.
+<img src="/images/pathparam.png" alt="pathparam1" />
+<ul>
+<li>The list of path parameters depends on the endpoint URL.</li>
+<li>Path parameters are enclosed in curly braces in the endpoint URL.</li>
+<li>The values set in the path parameter field are substituted into the endpoint URL when a request is sent.</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/app_store_learnv2_rest_sandiego_inbound_images_inbound_pathparms.png" alt="pathparam2" /></p>
+<ul>
+<li>
+<p>Scroll to the bottom of the page and click <strong>Send</strong>.</p>
+<ul>
+<li>After configuring the REST method, one can click the Send button to send the request to the API.</li>
+<li>The REST API Explorer constructs the request to send to the ServiceNow API using the settings configured by the developer.</li>
+</ul>
+<p><img src="/images/sendget.png" alt="sendget" /></p>
+</li>
+<li>
+<p>Observe the request that is sent and recieved response.
+<img src="/images/getres1.png" alt="sendget" />
+<img src="/images/getres2.png" alt="sendget" /></p>
+<ul>
+<li>
+<p>The response includes incident records from the instance.</p>
+</li>
+<li>
+<p>The response also indicates the Status code and Execution time (in milliseconds) of the request.</p>
+</li>
+<li>
+<p>The Request section displays the HTTP Method / URI to send to the ServiceNow web service. The method is from the selected API.</p>
+</li>
+<li>
+<p>The path parameter values are set when configuring the request.</p>
+<p><img src="/images/path_app_store_learnv2_rest_sandiego_inbound_images_inbound_requestpopulated.png" alt="sendget" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>    The REST API Explorer limits queries to 10 records at a time. Only the first 10 incident records appear. However, you can also limit the maximum number of records returned in response when implementing a REST API using &quot;Query parameters&quot;, sysparm_limit. Let us change it to return only one record and click send to observe new response.</p>
+<p><img src="/images/restlimit.png" alt="sendget" /></p>
+<p>    As you have noticed, we have only one incident information returned in the response.</p>
+<p><img src="/images/restlimit2.png" alt="sendget" /></p>
+<p>    Lets set our sysparm_limit Query parameters back to 10, click send again and again we should get information about 10 incidents. The response by default will return all the incident fields, but we will only need a couple of the fields back in our response, We can specify those in the sysparm_fields parameter.</p>
+<p><img src="/images/queryparam1.png" alt="q1" />
+<img src="/images/queryparam2.png" alt="q2" /></p>
+<p>    Also, we want to return only active incidents. we can fetch the filtered records based on specified encoded query for parameter sysparm_query.
+<img src="/images/query2.png" alt="q3" /></p>
+<p>    Click send, the new request response should have only active incidents and specified four fields information returned :
+<img src="/images/query9.png" alt="q3" /></p>
+<p>    Qury parameters are added to the endpoint URL by the REST API Explorer when the request is sent. The query parameters are specific to the selected API method. A default set of query parameters are displayed for the API. The query parameters are added to the URI in the Request after '?'.</p>
+<p><img src="/images/query_app_store_learnv2_rest_sandiego_inbound_images_inbound_queryparmsuri.png" alt="q4" /></p>
+<p>    REST headers are the meta-data associated with an API request and response E.g. format of the Request and Response.</p>
+<p><img src="/images/rh2_app_store_learnv2_rest_sandiego_inbound_images_inbound_requestheaders.png" alt="q6" /></p>
+<p>    The Request Header settings appear in the request.</p>
+<p><img src="/images/rh3_app_store_learnv2_rest_sandiego_inbound_images_inbound_requestheadersrequest.png" alt="q5" /></p>
+<p>    As you have noticed from the screenshot above, The request format corresponds to Accept header and similarly, the response format corresponds to the Content-Type header. If you can recall from first chapter, Accept or request format is the format in which client sends the data to the server or to be precise, the format in which server is expecting the data. Similarly, Content-Type or request format is the format in which server returns the data. Both the headers are expressed as the MIME Types e.g. application/json. You can read more about the MIME types <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types">here</a>.</p>
+<p>    Let us do one more test, by changing the Reesponse format to application/xml and observe the response by clicking send :</p>
+<p><img src="/images/xmlres.png" alt="xml1" />
+<img src="/images/xmlres2.png" alt="xml2" /></p>
+<h4 id="post-request"><a class="header" href="#post-request">POST request</a></h4>
+<h5 id="requirements-gathering"><a class="header" href="#requirements-gathering">Requirements gathering</a></h5>
+<p>    Now, we have reached the point from where we can think of the complete business use case. But before technical implementation, we need to gather the information of what needs to be done from business based on their need. <strong>This process of understanding what you are trying to build and why you are building it is known as &quot;Requirements gathering&quot;.</strong> Requirements gathering is very very essential in any project. Don't worry, If you are just a developer you do not need to do all that stuff. Let me tell you what is the requirement. Just for the desclaimer, The actual use case is bi-directional and involves some complex logic, So I am going to explain just a part of it here to not complicate things right away.</p>
+<h5 id="business-use-case"><a class="header" href="#business-use-case">Business use case</a></h5>
+<p>    <strong>This use case is to integrate two servicenow instances, so that when the incident is created on one instance, the incident will automatically be created on another instance.</strong> Why so? Let us say, Instance 1 is a Customer instance for &quot;A&quot; company &amp; Instance 2 is a Vendor instance of company &quot;B&quot; that provides services to company &quot;A&quot;, And business want to have incident created on Vendor instance to be also replicated to customer instance. Now, using bi-directional integration, the incident can be handled by either side or can be updated on both the side, and as you can sense it can get complicated real fast. Though, later you will realise it was not so complicated as it seems now.</p>
+<h5 id="prapare-the-pre-requisites"><a class="header" href="#prapare-the-pre-requisites">Prapare the pre-requisites</a></h5>
+<p>    For above use case, we are going to use OOTB Table APIs again and REST API explorer to perform test.</p>
+<ul>
+<li>Navigate to <strong>System Web Services &gt; REST &gt; REST API Explorer</strong>.</li>
+</ul>
+<p><img src="/images/RESTAPIExplorer1.png" alt="RESTAPIExplorer2" /></p>
+<ul>
+<li>In the top-left of the REST API Explorer, select Namespace as <strong>now</strong>, API Name as <strong>Table API</strong> &amp; API Version as <strong>latest</strong>.</li>
+</ul>
+<p><img src="/images/namespace.png" alt="RESTAPIExplorer3" />
+<img src="/images/apiname.png" alt="RESTAPIExplorer4" />
+<img src="/images/apiversion.png" alt="RESTAPIExplorer5" /></p>
+<ul>
+<li>
+<p>Click <strong>Create a record (POST)</strong></p>
+<ul>
+<li>&quot;Create a record&quot; is a HTTP POST method that Inserts one record in the specified table.</li>
+</ul>
+<p><img src="/images/post1.png" alt="RESTAPIExplorer6" /></p>
+</li>
+<li>
+<p>In the Path Parameters section, set the &quot;tableName&quot; parameter as <strong>Incident (incident)</strong> table.</p>
+<p><img src="/images/post2.png" alt="RESTAPIExplorer6" /></p>
+</li>
+<li>
+<p>In the Request Body section, click <strong>Add a field</strong>.</p>
+<p><img src="/images/post3.png" alt="RESTAPIExplorer6" />
+<img src="/images/post32.png" alt="RESTAPIExplorer6" /></p>
+</li>
+<li>
+<p>Select a field and specify a value for that field. The request body updates automatically based on your entries.</p>
+<p><img src="/images/post4.png" alt="RESTAPIExplorer6" />
+<img src="/images/post42.png" alt="RESTAPIExplorer6" /></p>
+</li>
+<li>
+<p>Click the plus sign (+) and specify any additional field to assign a value to.</p>
+<p><img src="/images/post5.png" alt="RESTAPIExplorer6" /></p>
+</li>
+<li>
+<p>After constructing the request, click <strong>Send</strong> &amp; Select <strong>OK</strong> for the popup.</p>
+<p><img src="/images/post52.png" alt="RESTAPIExplorer6" /></p>
+</li>
+<li>
+<p>Observe the response from the server, It returnes the information of newely created incident.</p>
+<p><img src="/images/post6.png" alt="RESTAPIExplorer6" /></p>
+</li>
+</ul>
+<p>    Okay, we are not done yet with REST API explorer, But that's it for this chapter. I am going to let you guys experiment with REST API explorer for now and in next chapter we will look at the other missing pieces. ServiceNow documentation is still the best way to learn about REST API explorer. Two of the best resources can be found <a href="https://developer.servicenow.com/dev.do#!/learn/courses/sandiego/app_store_learnv2_rest_sandiego_rest_integrations/app_store_learnv2_rest_sandiego_inbound_rest_integrations/app_store_learnv2_rest_sandiego_introduction_to_the_rest_api_explorer">here</a> &amp; <a href="https://docs.servicenow.com/bundle/paris-application-development/page/integrate/inbound-rest/concept/use-REST-API-Explorer.html#use-REST-API-Explorer">here</a>.</p>
+<h6 id="what-about-other-web-services"><a class="header" href="#what-about-other-web-services">what about other web services?</a></h6>
+<p>    Some of you might be thinking, why we are only talking about REST and not SOAP or GraphQL? Remember, I did promise you to be able to do any kind of integrations! It is a foundation and we are starting with the most widely used and easiest web service. But bear with me, we will be there and be soon.</p>
+<hr />
+<h2 id="whats-next-2"><a class="header" href="#whats-next-2">What's next?</a></h2>
+<p>     In next chapter, we are going to build on top of information that we did gathered today, extract the useful information from the response, cover some of the missing pieces that we did not cover yet, and implement our first use case by old-school approach of script, point out some of the concerns, and start the quest for better solutions.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="chapter-4"><a class="header" href="#chapter-4">Chapter 4</a></h2>
+<h1 id="implementing-our-first-integration"><a class="header" href="#implementing-our-first-integration">Implementing Our First Integration</a></h1>
+<h2 id="a-clearer-picture"><a class="header" href="#a-clearer-picture">A clearer picture</a></h2>
+<p>    Till this point, we have seen what Inbound integration is in the context of ServiceNow, got familier with REST API explorer and got a faded picture of what we will be implementing in our first integration. I feel this is a perfect time to make that picture more clear. Please refer the following image:</p>
+<p><img src="./images/drawio1.png" alt="drawio1" /></p>
+<p>    The above image specifies that whenever an incident is created on Vendor (Company A) instance with a specific Service and assigned to Specific group (both of them should be predefined by business), The copy of incident is created on Customer (Company B) instance and assigned to specific assignment group (also predefined by business).</p>
+<p>    So straightforward right? Well, no! When you will work on real life implementations you will notice that there is always a tweak, if not you are just lucky. Please refer the following image:</p>
+<p><img src="./images/drawio2.png" alt="drawio2" /></p>
+<p>    As we can notice from the above image,our Vendor (Company A) instance has an additional On hold reason choice &quot;Awaiting Company A Validation&quot; (for some internal validation). Whereas our Customer (Company B) instance has all Out of the box (OOTB) choices. So our first tweak is we need to map our custom choice &quot;Awaiting Company A Validation&quot; from the Vendor instance to the &quot;Awaiting Vendor&quot; on the Customer i.e. Company B instance.</p>
+<p>    Those who are unaware about what these OOTB choices mean, you should read the answer to the community question by Mark Stanger, which can be found <a href="https://community.servicenow.com/community?id=community_question&amp;sys_id=23e90220dbc0eb805129a851ca9619f2">here</a>. For ease i will replicate the original response here :</p>
+<ul>
+<li><strong>Awaiting Caller:</strong> Waiting on a response back from the caller after the technician has requested additional information.</li>
+<li><strong>Awaiting Problem:</strong> Problem record has been opened from (or associated to) the incident and you're waiting for more information from the problem management process before continuing on.</li>
+<li><strong>Awaiting Change:</strong> Change record has been opened from (or associated to) the incident and you're waiting for more information from the change management process before continuing on.</li>
+<li><strong>Awaiting Vendor:</strong> Waiting on information from a vendor assisting with resolution of the incident.</li>
+</ul>
+<p>    Now, it is time for another tweak. Please refer the following images:</p>
+<p><img src="./images/drawio3.png" alt="drawio3" /></p>
+<p>    As you can notice from the above image, We have an additional Contact type &quot;API&quot; on Customer instance and no matter through which channel the incident is created on Vendor instance, the target incident on Customer instance should have the Contact type set as &quot;API&quot;.</p>
+<p>    We also have the requirement to always map the incident to the &quot;Inquiry / Help&quot; category on Customer instance:</p>
+<p><img src="./images/drawio4.png" alt="drawio4" /></p>
+<p>    And finally, we need to map the Service, Service Offering and the Description to the Description field (the justification could be that the CMDB is not implemented properly yet on Customer instance):</p>
+<p><img src="./images/drawio5.png" alt="drawio5" /></p>
+<p>    For other fields that are shown below it is straightforward, we will map them as is:</p>
+<p><img src="./images/drawio6.png" alt="drawio6" /></p>
+<p>    Okay, we can include many other things but for now we already have much complex requirement for our first integration and we are good to go.</p>
+<h2 id="create-the-code-sample"><a class="header" href="#create-the-code-sample">Create the code sample</a></h2>
+<p>    The REST API Explorer creates the code samples for integrating with the ServiceNow APIs in several commonly used languages in addition to <strong>ServiceNow Script</strong> snippet, These are:</p>
+<ul>
+<li>cURL</li>
+<li>Python</li>
+<li>Ruby</li>
+<li>JavaScript</li>
+<li>Perl</li>
+<li>Powershell</li>
+</ul>
+<p>    For our purpose, we are going to use the REST API Explorer to create the snippet to create an incident. You can refer <a href="/Chapter3_RESTAPIExplorer.html">Chapter 3: REST API Explorer</a> for more detailed explaination:</p>
+<ul>
+<li>
+<p>Navigate to <strong>System Web Services &gt; REST &gt; REST API Explorer</strong>.
+<img src="./images/drawio13.png" alt="drawio13" /></p>
+</li>
+<li>
+<p>In the top-left of the REST API Explorer, click <strong>Create a record (POST)</strong>.
+<img src="./images/drawio7.png" alt="drawio7" /></p>
+</li>
+<li>
+<p>In the Path Parameters section, select the <strong>Incident (incident)</strong> table.
+<img src="./images/drawio8.png" alt="drawio8" /></p>
+</li>
+<li>
+<p>In the Request Body section, click <strong>Add a field</strong>.
+<img src="./images/drawio9.png" alt="drawio9" /></p>
+</li>
+<li>
+<p>Select a field and specify a value for the field <strong>&quot;Short description&quot;</strong> as &quot;Test SD&quot; or whatever you may like:
+<img src="./images/drawio14.png" alt="drawio14" /></p>
+</li>
+<li>
+<p>Click the plus sign <strong>(+)</strong> and specify additional fields:</p>
+<ul>
+<li><strong>Description</strong>: Test Desc</li>
+<li><strong>Assignment group</strong>: 0a52d3dcd7011200f2d224837e6103f2</li>
+<li><strong>Impact</strong>: 2</li>
+<li><strong>Urgency</strong>: 1</li>
+<li><strong>State</strong>: 3</li>
+<li><strong>On hold reason</strong>: 4</li>
+<li><strong>Category</strong>: inquiry</li>
+<li><strong>Contact type</strong>: email</li>
+</ul>
+</li>
+</ul>
+<p><img src="./images/drawio10.png" alt="drawio10" /></p>
+<ul>
+<li>The request body updates automatically based on your entries (shown in the above image), such as:</li>
+</ul>
+<pre><code class="language-json">{
+  &quot;short_description&quot;: &quot;Test SD&quot;,
+  &quot;description&quot;: &quot;Test Desc&quot;,
+  &quot;assignment_group&quot;: &quot;0a52d3dcd7011200f2d224837e6103f2&quot;,
+  &quot;impact&quot;: &quot;2&quot;,
+  &quot;urgency&quot;: &quot;1&quot;,
+  &quot;state&quot;: &quot;3&quot;,
+  &quot;hold_reason&quot;: &quot;4&quot;,
+  &quot;category&quot;: &quot;inquiry&quot;,
+  &quot;contact_type&quot;: &quot;email&quot;
+}
+</code></pre>
+<ul>
+<li>We did use all the test values here, as we do not have our instances ready yet for our use case discussed, but we are good to go. After constructing the request, click <strong>Send</strong>. For pop-up, select <strong>OK</strong>.
+<img src="./images/drawio11.png" alt="drawio11" />
+<img src="./images/drawio12.png" alt="drawio12" /></li>
+</ul>
+<p>    The response includes a Location header that specifies where the incident was created and how to retrieve the incident. The response also indicates the Status code and Execution time (in milliseconds) of the request.
+<img src="./images/drawio15.png" alt="drawio15" />
+<img src="./images/drawio16.png" alt="drawio16" /></p>
+<p>    Now, let us verify if the incident really is created.</p>
+<ul>
+<li>Note down the <strong>number</strong> property from the respose body.
+<img src="./images/drawio17.png" alt="drawio17" /></li>
+<li>Navigate to <strong>Incident &gt; Open</strong> in a new tab, verify that the incident is created with the provided information:
+<img src="./images/drawio18.png" alt="drawio18" />
+<img src="./images/drawio19.png" alt="drawio19" /></li>
+</ul>
+<p>    Once you are satified with the testing, It is now time to generate the snippet and move to the next step:</p>
+<ul>
+<li>To create the code sample, Navigate back to REST API Explorer window and click the link for the language of your choice in the REST API Explorer. For the sake of this example, we will select <strong>&quot;ServiceNow Script&quot;</strong>.
+<img src="./images/drawio20.png" alt="drawio20" /></li>
+<li>To highlight the code sample for copying, click the <strong>Select Snippet</strong> button.
+<img src="./images/drawio21.png" alt="drawio21" /></li>
+<li>After highlighting the code sample, <strong>copy the code sample to the clipboard</strong> by using ctrl+c.
+<img src="./images/drawio22.png" alt="drawio22" /></li>
+</ul>
+<p>    If you did everything correctly you should have the code which look similar to the following copied to your clipboard:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(&quot;https://dev124645.service-now.com/api/now/table/incident&quot;)
+request.setHttpMethod(&quot;POST&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;admin&quot;
+var password = &quot;admin&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+request.setRequestHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+request.setRequestBody(
+  '{&quot;short_description&quot;:&quot;Test SD&quot;,&quot;description&quot;:&quot;Test Desc&quot;,&quot;assignment_group&quot;:&quot;0a52d3dcd7011200f2d224837e6103f2&quot;,&quot;impact&quot;:&quot;2&quot;,&quot;urgency&quot;:&quot;1&quot;,&quot;state&quot;:&quot;3&quot;,&quot;hold_reason&quot;:&quot;4&quot;,&quot;category&quot;:&quot;inquiry&quot;,&quot;contact_type&quot;:&quot;email&quot;}'
+)
+var response = request.execute()
+gs.log(response.getBody())
+</code></pre>
+<h2 id="setting-up-the-stage"><a class="header" href="#setting-up-the-stage">Setting up the stage</a></h2>
+<p>    Once we have our code sample copied, we can use it any server side code such as Business rules, Script includes, Workflows etc. But this code is of no use yet unless we make a very small adjustment to it:</p>
+<ul>
+<li>
+<p>It is time to visit our old good friend. Use the Application Navigator to open <strong>System Definition &gt; Scripts - Background</strong>.
+<img src="./images/drawio23.png" alt="drawio23" /></p>
+</li>
+<li>
+<p>Paste the snippet that we did copy from last section into the Run Script field And Click the <strong>Run script</strong> button to view the results of the script.
+<img src="./images/drawio24.png" alt="drawio24" />
+<img src="./images/drawio25.png" alt="drawio25" /></p>
+<p>    Oops, You should receive the <strong>User Not Authenticated</strong> error and I am sure that you did not expect that. All the code samples generated through the REST API Explorer uses fake credentials. Before using the script in the application to integrate with ServiceNow, we need to update the code to use valid credentials.</p>
+<p>    Let us modify our code to change the fake credentials by your admin credentials, and re-execute the script:</p>
+</li>
+</ul>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(&quot;https://dev124645.service-now.com/api/now/table/incident&quot;)
+request.setHttpMethod(&quot;POST&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+request.setRequestHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+request.setRequestBody(
+  '{&quot;short_description&quot;:&quot;Test SD&quot;,&quot;description&quot;:&quot;Test Desc&quot;,&quot;assignment_group&quot;:&quot;0a52d3dcd7011200f2d224837e6103f2&quot;,&quot;impact&quot;:&quot;2&quot;,&quot;urgency&quot;:&quot;1&quot;,&quot;state&quot;:&quot;3&quot;,&quot;hold_reason&quot;:&quot;4&quot;,&quot;category&quot;:&quot;inquiry&quot;,&quot;contact_type&quot;:&quot;email&quot;}'
+)
+var response = request.execute()
+gs.log(response.getBody())
+</code></pre>
+<p><img src="./images/drawio26.png" alt="drawio26" />
+<img src="./images/drawio27.png" alt="drawio27" /></p>
+<p>    The above output indicates that our API successfully created the incident. But you surely do not want to expose your admin credentials (and give full control of your instance) to others. And for this purpose and for every integration you will find a Service Account created on the target tool, Let us create one on our Customer instance.</p>
+<h3 id="service-account"><a class="header" href="#service-account">Service Account</a></h3>
+<p>    <strong>A service account is a special type of ServiceNow user account intended to represent a non-human user that needs to authenticate and be authorized to access data in ServiceNow APIs.</strong> When an external system makes a web service call to your ServiceNow instance, it must provide login credentials. Rather than using a normal user account to log in, it's best to use a service account specifically set up for that particular integration. Service accounts should be carefully managed, controlled, and audited. In most cases, they can also be associated back to an identity as an owner. However, service accounts should not have the same characteristics as a person logging on to a system. They should not have interactive user interface privileges, nor the capability to operate as a normal account or user.</p>
+<p>    Dawn Jurek has written a very good community blog which can be found <a href="https://community.servicenow.com/community?id=community_blog&amp;sys_id=b4fca2a5dbd0dbc01dcaf3231f961900">here</a> and which explains why you should use service accounts instead of personal user accounts for web service activities.
+For the ease I would like to put them here as is:</p>
+<ul>
+<li>Restrict the account activities to application program interface (API) connections, such as JavaScript Object Notation (JSON), Simple Object Access Protocol (SOAP), and Web Service Definition Language (WSDL). Accounts flagged as Web service access only cannot log into the ServiceNow user interface to perform other actions.</li>
+<li>Increase security by conforming to the principle of least privilege.</li>
+<li>Facilitate management, troubleshooting, and debugging of your integration. If a personal user account is used for integrations, you can't easily distinguish the integration transactions of that user from other activities the user performs in the system. On the other hand, if a service account is used for each integration, you can easily tell which integration did what in the system. The service account name is identified under Created by or Updated by in the transaction log and also appears on the records that the integration touches.</li>
+<li>Ensure that everything done by a particular integration service account was related to that specific integration.</li>
+<li>Improve auditability. All transactions can easily be traced to specific service accounts in the system, which facilitates examination and verification of records related to each integration.</li>
+</ul>
+<p>    Follow the steps below to set up a service account for our integration:</p>
+<ul>
+<li>
+<p>Navigate to <strong>User Administration &gt; Users</strong>.
+<img src="./images/sa1.png" alt="sa1" /></p>
+</li>
+<li>
+<p>Click <strong>New</strong> and enter the following information:</p>
+<ul>
+<li><strong>User ID:</strong> FirstIntegrationUser</li>
+<li><strong>Password:</strong> FirstIntegrationUserPassword</li>
+<li><strong>First name:</strong> First</li>
+<li><strong>Last name:</strong> IntegrationUser</li>
+</ul>
+<p><img src="./images/sa2.png" alt="sa2" /></p>
+</li>
+<li>
+<p>Select this check box for <strong>Web service access only</strong> to designate this user as a non-interactive user &amp; Click <strong>Submit</strong>.</p>
+<p><img src="./images/sa3.png" alt="sa3" /></p>
+</li>
+<li>
+<p>Now we need to give the service account user any roles necessary to perform the actions that will be carried out by the integration. Navigate to <strong>User Administration &gt; Users</strong> and then open our recently created Service Account user record <strong>&quot;FirstIntegrationUser&quot;</strong>.
+<img src="./images/sa6.png" alt="sa6" />
+<img src="./images/sa7.png" alt="sa7" /></p>
+</li>
+<li>
+<p>In the Roles related list, click <strong>Edit</strong>.
+<img src="./images/sa8.png" alt="sa8" /></p>
+</li>
+<li>
+<p>In the Collection list, select the desired roles (for our purpose we will use <strong>itil</strong> role), and then click <strong>Add</strong>.
+<img src="./images/sa9.png" alt="sa9" /></p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.
+<img src="./images/sa10.png" alt="sa10" /></p>
+</li>
+</ul>
+<p>    Now let us modify our script to have Service account's credentials :</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(&quot;https://dev124645.service-now.com/api/now/table/incident&quot;)
+request.setHttpMethod(&quot;POST&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;FirstIntegrationUser&quot;
+var password = &quot;FirstIntegrationUserPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+request.setRequestHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+request.setRequestBody(
+  '{&quot;short_description&quot;:&quot;Test SD&quot;,&quot;description&quot;:&quot;Test Desc&quot;,&quot;assignment_group&quot;:&quot;0a52d3dcd7011200f2d224837e6103f2&quot;,&quot;impact&quot;:&quot;2&quot;,&quot;urgency&quot;:&quot;1&quot;,&quot;state&quot;:&quot;3&quot;,&quot;hold_reason&quot;:&quot;4&quot;,&quot;category&quot;:&quot;inquiry&quot;,&quot;contact_type&quot;:&quot;email&quot;}'
+)
+var response = request.execute()
+gs.log(response.getBody())
+</code></pre>
+<p>    And if we re-execute the script in <strong>System Definition &gt; Scripts - Background</strong> with new credentials, you will get the output as below, which indicates that our snippet still works:</p>
+<p><img src="./images/sa4.png" alt="sa4" />
+<img src="./images/sa5.png" alt="sa5" /></p>
+<p>    Here, we did not see in detail about creating a user or assigning a role to a user. But if you want to dig deep, ServiceNow documentation is the best place to start with and has all that you need, right <a href="https://docs.servicenow.com/bundle/sandiego-platform-administration/page/administer/users-and-groups/task/t_CreateAUser.html">here</a> and <a href="https://docs.servicenow.com/bundle/sandiego-platform-administration/page/administer/users-and-groups/task/t_AssignARoleToAUser.html">here</a>. Also OOTB any one of itil, sn_incident_write or admin role is required to create an incident. You can read more about incident creation <a href="https://docs.servicenow.com/bundle/sandiego-it-service-management/page/product/incident-management/task/create-an-incident.html">here</a></p>
+<h3 id="additional-contact-type--api"><a class="header" href="#additional-contact-type--api">Additional Contact Type : API</a></h3>
+<p>    OOTB, we do not have the contact type as &quot;API&quot; on our Personal Developer Instance (PDI), Let us create one:
+<img src="./images/caict.png" alt="caict" /></p>
+<ul>
+<li>
+<p>Navigate to <strong>Incident &gt; Open</strong> in a new tab, Click any incident number to open the incident form:
+<img src="./images/inc1.png" alt="inc1" />
+<img src="./images/inc2.png" alt="inc2" /></p>
+</li>
+<li>
+<p>Right-click the <strong>Contact type</strong> field label and select <strong>Configure Choices</strong>. The Configuring State Choices slushbucket will open.
+<img src="./images/inc3.png" alt="inc3" />
+<img src="./images/inc4.png" alt="inc4" /></p>
+</li>
+<li>
+<p>In <strong>Enter new item:</strong> field type <strong>API</strong> and click <strong>Add</strong>.
+<img src="./images/inc5.png" alt="inc5" /></p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.
+<img src="./images/inc6.png" alt="inc6" /></p>
+</li>
+</ul>
+<p>    If we did everything correctly, we should have and additional contact type now named &quot;API&quot;:
+<img src="./images/inc7.png" alt="inc7" /></p>
+<h3 id="assignment-group"><a class="header" href="#assignment-group">Assignment group</a></h3>
+<p>    Finally, let us create one assignment group to be assigned to the incident created by means of our integration:</p>
+<ul>
+<li>
+<p>Navigate to <strong>User Administration &gt; Groups</strong> and click <strong>New</strong> button:
+<img src="./images/inc8.png" alt="inc8" /></p>
+</li>
+<li>
+<p>Create a group with Name as &quot;FirstIntegrationGroup&quot;, Type as &quot;itil&quot; &amp; Parent as &quot;Incident Management&quot; and click <strong>Submit</strong> button:
+<img src="./images/inc9.png" alt="inc9" /></p>
+</li>
+</ul>
+<h2 id="setting-up-the-vendor-instance"><a class="header" href="#setting-up-the-vendor-instance">Setting up the Vendor Instance</a></h2>
+<p>    We have everything that we need from our customer instance set up, but we still need to set our Vendor instance. I have borrowed another PDI from one of my friend to use as Vendor instance, and we are ready fix the prerequisites. However, The San Diego Release of ServiceNow comes with a brand new interface known as the Next Experience UI, or also internally known as Polaris, So you might experience a different look and feel on our Vendor instance. In a way it is good for us as we will be able to easily identify which is our Customer instance (UI16) or Vendor instance (Plaris).</p>
+<h3 id="assignment-group-1"><a class="header" href="#assignment-group-1">Assignment group</a></h3>
+<p>    Like our customer instance we need an assignment group to be created on Vendor instance to be used as a trigger to the APIs, Let us create one:</p>
+<ul>
+<li>
+<p>Navigate to <strong>User Administration &gt; Groups</strong> and click <strong>New</strong> button:
+<img src="./images/vnd1.png" alt="vnd1" />
+<img src="./images/vnd1_1.png" alt="vnd1_1" /></p>
+</li>
+<li>
+<p>Create a group with Name as &quot;VendorAssignmentGroup&quot;, Type as &quot;itil&quot; &amp; Parent as &quot;Incident Management&quot; and click <strong>Submit</strong> button:
+<img src="./images/vnd2.png" alt="vnd2" /></p>
+</li>
+</ul>
+<h3 id="additional-on-hold-reason--awaiting-company-a-validation"><a class="header" href="#additional-on-hold-reason--awaiting-company-a-validation">Additional On hold reason : Awaiting Company A Validation</a></h3>
+<p>    OOTB, we do not have the On hold reason choice as &quot;Awaiting Company A Validation&quot; on our Vendor PDI, Let us create one:
+<img src="./images/vnd3.png" alt="vnd3" /></p>
+<ul>
+<li>
+<p>Navigate to <strong>Incident &gt; Open</strong> in a new tab, Click any incident number to open the incident form:
+<img src="./images/vnd4.png" alt="vnd4" />
+<img src="./images/vnd5.png" alt="vnd5" />
+<img src="./images/vnd5_1.png" alt="vnd5_1" /></p>
+</li>
+<li>
+<p>Right-click the <strong>On hold reason</strong> field label and select <strong>Configure Choices</strong>. The Configuring State Choices slushbucket will open.
+<img src="./images/vnd6.png" alt="vnd6" />
+<img src="./images/vnd7.png" alt="vnd7" /></p>
+</li>
+<li>
+<p>In <strong>Enter new item:</strong> field type <strong>Awaiting Company A Validation</strong> and click <strong>Add</strong>.
+<img src="./images/vnd8.png" alt="vnd8" /></p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.
+<img src="./images/vnd9.png" alt="vnd9" /></p>
+</li>
+</ul>
+<p>    If we did everything correctly, we should have and additional On hold reason choice as &quot;Awaiting Company A Validation&quot;:
+<img src="./images/vnd10.png" alt="vnd10" /></p>
+<h3 id="service--service-offering"><a class="header" href="#service--service-offering">Service &amp; Service Offering</a></h3>
+<p>    Like assignment group, we also need an Service created on Vendor instance to be used as a trigger to the APIs. In addition we also need a Service offering of which information we will map to the description:</p>
+<ul>
+<li>
+<p>Navigate to <strong>All &gt; Service Portfolio Management &gt; Business Services</strong> and click the <strong>New</strong> button:
+<img src="./images/ser1.png" alt="ser1" />
+<img src="./images/ser2.png" alt="ser2" /></p>
+</li>
+<li>
+<p>Set the <strong>Name</strong> as <strong>&quot;IntegrateNow&quot;</strong> and click the <strong>Submit</strong> button:
+<img src="./images/ser3.png" alt="ser3" /></p>
+</li>
+<li>
+<p>A new Service named <strong>&quot;IntegrateNow&quot;</strong> should be created. Click on the name to open the record:
+<img src="./images/ser4.png" alt="ser4" /></p>
+</li>
+<li>
+<p>Scroll to the bottom of the form to find the related list <strong>Offering</strong> , then click <strong>New</strong> to create a new service offering:
+<img src="./images/ser5.png" alt="ser5" /></p>
+</li>
+<li>
+<p>Set the <strong>Name</strong> as <strong>&quot;IntegrateNow Support&quot;</strong> and click the <strong>Submit</strong> button:
+<img src="./images/ser6.png" alt="ser6" /></p>
+</li>
+<li>
+<p>A new Service offering named <strong>&quot;IntegrateNow Support&quot;</strong> should be created:
+<img src="./images/ser7.png" alt="ser7" /></p>
+</li>
+</ul>
+<h2 id="integration-time"><a class="header" href="#integration-time">Integration time</a></h2>
+<p>    Till this point, we have all the pre-requisites fulfilled for our integration, and now we are ready to implement our integration. There are different ways of achieving this use case, but we are going to start with the most traditional approach of script. In coming chapters we will enhance our approach to be more efficient. So without furthur due, let us start with the last section of this chapter.</p>
+<h3 id="business-rule"><a class="header" href="#business-rule">Business Rule</a></h3>
+<p>    Here, we will create a business rule on our Vendor instance that will trigger the API if our condition matches and creates the incident on customer instance.</p>
+<ul>
+<li>Navigate to <strong>All &gt; System Definition &gt; Business Rules</strong>.
+<img src="./images/ibr1.png" alt="ibr1" /></li>
+<li>Click <strong>New</strong>.
+<img src="./images/ibr2.png" alt="ibr2" /></li>
+<li>Enter any <strong>Name</strong> for the business rule.
+<img src="./images/ibr3.png" alt="ibr3" /></li>
+<li>Select the <strong>Table</strong> that the business rule runs on i.e. <strong>Incident [incident]</strong>.
+<img src="./images/ibr4.png" alt="ibr4" /></li>
+<li>Select the <strong>Advanced</strong> check box to see the advanced version of the form.
+<img src="./images/ibr5.png" alt="ibr5" /></li>
+<li>For <strong>When</strong> field select <strong>after</strong>.
+<img src="./images/ibr6.png" alt="ibr6" /></li>
+<li>Select the <strong>Insert</strong> check box to execute the business rule when a record is inserted into the database.
+<img src="./images/ibr7.png" alt="ibr7" /></li>
+<li>Now, copy and paste our modified code sample into the <strong>Script</strong> field &amp; click <strong>Submit</strong>.
+<img src="./images/ibr8.png" alt="ibr8" />
+<img src="./images/ibr9.png" alt="ibr9" /></li>
+</ul>
+<p>    The final script in the business rule script field should look something like this :</p>
+<pre><code class="language-js">;(function executeRule(current, previous /*null when async*/) {
+  // Add your code here
+  var request = new sn_ws.RESTMessageV2()
+  request.setEndpoint(
+    &quot;https://dev124645.service-now.com/api/now/table/incident&quot;
+  )
+  request.setHttpMethod(&quot;POST&quot;)
+
+  //Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+  var user = &quot;FirstIntegrationUser&quot;
+  var password = &quot;FirstIntegrationUserPassword&quot;
+
+  request.setBasicAuth(user, password)
+  request.setRequestHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+  request.setRequestHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+  request.setRequestBody(
+    '{&quot;short_description&quot;:&quot;Test SD&quot;,&quot;description&quot;:&quot;Test Desc&quot;,&quot;assignment_group&quot;:&quot;0a52d3dcd7011200f2d224837e6103f2&quot;,&quot;impact&quot;:&quot;2&quot;,&quot;urgency&quot;:&quot;1&quot;,&quot;state&quot;:&quot;3&quot;,&quot;hold_reason&quot;:&quot;4&quot;,&quot;category&quot;:&quot;inquiry&quot;,&quot;contact_type&quot;:&quot;email&quot;}'
+  )
+  var response = request.execute()
+  gs.log(response.getBody())
+})(current, previous)
+</code></pre>
+<ul>
+<li>Finally, set the <strong>Filter Conditions</strong> as shown in below image &amp; click <strong>Update</strong>:
+<img src="./images/ibr10.png" alt="ibr10" /></li>
+</ul>
+<p>    Believe it or not, we can even test our integration now. Though our values are still static. If you are curious why did we set the fields the way we do, please refer the ServiceNow documentation <a href="https://docs.servicenow.com/bundle/sandiego-application-development/page/script/business-rules/reference/r_HowBusinessRulesWork.html">here</a>.</p>
+<ul>
+<li>On Vendor instance, Navigate to <strong>All &gt; Incident &gt; Create New</strong>:
+<img src="./images/ibr11.png" alt="ibr11" /></li>
+<li>Set the Service as <strong>IntegrateNow</strong> &amp; Assignment group as <strong>VendorAssignmentGroup</strong>:
+<img src="./images/ibr12.png" alt="ibr12" /></li>
+<li>Fill all other mandatory fields with the values you may like &amp; click <strong>Submit</strong>:
+<img src="./images/ibr13.png" alt="ibr13" /></li>
+<li>We can notice from the recent system logs, that our API has successfully been triggered:
+<img src="./images/ibr14.png" alt="ibr14" /></li>
+<li>On Customer instance, we can validate that new incident has been created:
+<img src="./images/ibr15.png" alt="ibr15" /></li>
+</ul>
+<h2 id="we-are-not-done-yet"><a class="header" href="#we-are-not-done-yet">We are not done yet</a></h2>
+<p>    To be honest, I did not expect this chapter to be this long. We did lot of stuff and I would like to give yourself some time to digest all of these. In the next chapter, we will resume from where we stopped today and will complete our first integration.</p>
+<hr />
+<h2 id="whats-next-3"><a class="header" href="#whats-next-3">What's next?</a></h2>
+<p>     In the next chapter, we will resume from where we stopped today and will complete our first integration.We will point out some of the concerns with this traditional approach and start the quest for better solutions.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="chapter-5"><a class="header" href="#chapter-5">Chapter 5</a></h2>
+<h1 id="finishing-touches"><a class="header" href="#finishing-touches">Finishing Touches</a></h1>
+<h2 id="where-did-we-stop"><a class="header" href="#where-did-we-stop">Where did we stop</a></h2>
+<p>    Last time, we did set up both of our Customer and Vendor instances to make them ready for our use case; We did leverage the REST API Explorer to generate a sample script with some dummy data and used it in Business Rule to create an incident on our Customer instance from a Vendor instance. This is a unique use case where we actually did leverage outbound (triggering the API from Vendor instance) and inbound (providing the inbound API and responding to API request by creating an incident on Customer instance). This difference will be more clear as we proceed with our series and implement some of the awesome use cases. For now let us start from where we did leave last time and finish our first integration.</p>
+<p>    The final script that we did put in our business rule script field should look something like this :</p>
+<pre><code class="language-js">;(function executeRule(current, previous /*null when async*/) {
+  // Add your code here
+  var request = new sn_ws.RESTMessageV2()
+  request.setEndpoint(
+    &quot;https://dev124645.service-now.com/api/now/table/incident&quot;
+  )
+  request.setHttpMethod(&quot;POST&quot;)
+
+  //Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+  var user = &quot;FirstIntegrationUser&quot;
+  var password = &quot;FirstIntegrationUserPassword&quot;
+
+  request.setBasicAuth(user, password)
+  request.setRequestHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+  request.setRequestHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+  request.setRequestBody(
+    '{&quot;short_description&quot;:&quot;Test SD&quot;,&quot;description&quot;:&quot;Test Desc&quot;,&quot;assignment_group&quot;:&quot;0a52d3dcd7011200f2d224837e6103f2&quot;,&quot;impact&quot;:&quot;2&quot;,&quot;urgency&quot;:&quot;1&quot;,&quot;state&quot;:&quot;3&quot;,&quot;hold_reason&quot;:&quot;4&quot;,&quot;category&quot;:&quot;inquiry&quot;,&quot;contact_type&quot;:&quot;email&quot;}'
+  )
+  var response = request.execute()
+  gs.log(response.getBody())
+})(current, previous)
+</code></pre>
+<p><img src="./images/ibr9.png" alt="ibr9" /></p>
+<p>    As we did test last time, the script works as is but it has some issues that needs to be tackeled. Let us point them out and fix one by one.</p>
+<h2 id="what-is-not-right"><a class="header" href="#what-is-not-right">What is not right</a></h2>
+<h3 id="statics-request-body"><a class="header" href="#statics-request-body">Statics request body</a></h3>
+<p>    The very first thing that we should fix is the request body or data that we will pass to the server. It is static meaning it will always create an incident with same information. We want it to be dynamic and it should fetch the information from the incident for which the Business Rule is triggered. Notice the following line from the above script :</p>
+<pre><code class="language-js">request.setRequestBody(
+  '{&quot;short_description&quot;:&quot;Test SD&quot;,&quot;description&quot;:&quot;Test Desc&quot;,&quot;assignment_group&quot;:&quot;0a52d3dcd7011200f2d224837e6103f2&quot;,&quot;impact&quot;:&quot;2&quot;,&quot;urgency&quot;:&quot;1&quot;,&quot;state&quot;:&quot;3&quot;,&quot;hold_reason&quot;:&quot;4&quot;,&quot;category&quot;:&quot;inquiry&quot;,&quot;contact_type&quot;:&quot;email&quot;}'
+)
+</code></pre>
+<p>     <strong>setRequestBody()</strong> method accepts one string parameter as the body content to send to the web service provider when using PUT or POST HTTP methods. In above example, we are passing a static json string as a parameter value. Which means we can rewrite above line of code as below:</p>
+<pre><code class="language-js">var reqBody = {
+  short_description: &quot;Test SD&quot;,
+  description: &quot;Test Desc&quot;,
+  assignment_group: &quot;0a52d3dcd7011200f2d224837e6103f2&quot;,
+  impact: &quot;2&quot;,
+  urgency: &quot;1&quot;,
+  state: &quot;3&quot;,
+  hold_reason: &quot;4&quot;,
+  category: &quot;inquiry&quot;,
+  contact_type: &quot;email&quot;,
+}
+request.setRequestBody(JSON.stringify(reqBody))
+</code></pre>
+<p>     What we did here is storing the content of our request body as an json object and then convert it to string right before passing it to the server. If you are not aware of how this works, you have probably skipped <a href="/Chapter2_WhatYouNeedToKnowAboutJSONAndObjects.html">Chapter 2</a>, where we did talk a lot about json and I encourage you to go back and get familier with it. Now let us use the current argument of Business rule to fetch the values from current incident dynamically:</p>
+<pre><code class="language-js">var reqBody = {
+  short_description: current.getDisplayValue(&quot;short_description&quot;),
+  impact: current.getValue(&quot;impact&quot;),
+  urgency: current.getValue(&quot;urgency&quot;),
+  state: current.getValue(&quot;state&quot;),
+}
+request.setRequestBody(JSON.stringify(reqBody))
+</code></pre>
+<p>     Here, I have removed the other properties from the object on purpose. We will add them back to the object after we perform some manipulation on the information. Why? Remember the tweaks that we need to consider; it is necessary to write a clean code to not make it unnecessarily un-readable. Let us tackle each of this tweaks:</p>
+<h4 id="tweak-1-"><a class="header" href="#tweak-1-">Tweak 1 :</a></h4>
+<p>    Our Vendor (Company A) instance has an additional On hold reason choice &quot;Awaiting Company A Validation&quot; (for some internal validation). Whereas our Customer (Company B) instance has all Out of the box (OOTB) choices. So, we need to map our custom choice &quot;Awaiting Company A Validation&quot; from the Vendor instance to the &quot;Awaiting Vendor&quot; on the Customer i.e. Company B instance.</p>
+<p><img src="./images/drawio2.png" alt="drawio2" /></p>
+<p>    To implement this, We could rewrite our line of code as below :</p>
+<pre><code class="language-js">var reqBody = {
+  short_description: current.getDisplayValue(&quot;short_description&quot;),
+  impact: current.getValue(&quot;impact&quot;),
+  urgency: current.getValue(&quot;urgency&quot;),
+  state: current.getValue(&quot;state&quot;),
+}
+if (current.getValue(&quot;state&quot;) == &quot;3&quot;) {
+  //if State is On Hold
+  var onHoldReason = current.getValue(&quot;hold_reason&quot;)
+  if (onHoldReason == &quot;6&quot;) {
+    //if Awaiting Company A Validation
+    onHoldReason = &quot;4&quot; //set to Awaiting Vendor
+  }
+  reqBody[&quot;hold_reason&quot;] = onHoldReason //add the property to object reqBody
+}
+request.setRequestBody(JSON.stringify(reqBody))
+</code></pre>
+<h4 id="tweak-2-"><a class="header" href="#tweak-2-">Tweak 2 :</a></h4>
+<p>    We have an additional Contact type &quot;API&quot; on Customer instance and no matter through which channel the incident is created on Vendor instance, the target incident on Customer instance should have the Contact type set as &quot;API&quot;.</p>
+<p><img src="./images/drawio3.png" alt="drawio3" /></p>
+<p>    We also have the requirement to always map the incident to the &quot;Inquiry / Help&quot; category on Customer instance:</p>
+<p><img src="./images/drawio4.png" alt="drawio4" /></p>
+<p>    Since, we always need the static values for contact type and category values, we can leverage the system properties to modify our code as below :</p>
+<pre><code class="language-js">var reqBody = {
+  short_description: current.getDisplayValue(&quot;short_description&quot;),
+  impact: current.getValue(&quot;impact&quot;),
+  urgency: current.getValue(&quot;urgency&quot;),
+  state: current.getValue(&quot;state&quot;),
+}
+if (current.getValue(&quot;state&quot;) == &quot;3&quot;) {
+  //if State is On Hold
+  var onHoldReason = current.getValue(&quot;hold_reason&quot;)
+  if (onHoldReason == &quot;6&quot;) {
+    //if Awaiting Company A Validation
+    onHoldReason = &quot;4&quot; //set to Awaiting Vendor
+  }
+  reqBody[&quot;hold_reason&quot;] = onHoldReason //add the property to object reqBody
+}
+reqBody[&quot;contact_type&quot;] = gs.getProperty(&quot;integratenow.customer.contact_type&quot;) //set Contact Type as API
+reqBody[&quot;category&quot;] = gs.getProperty(&quot;integratenow.customer.category&quot;) //set Category as Inquiry / Help
+reqBody[&quot;assignment_group&quot;] = gs.getProperty(
+  &quot;integratenow.customer.assignment_group&quot;
+) //set target/customer Assignment group (FirstIntegrationGroup)
+request.setRequestBody(JSON.stringify(reqBody))
+</code></pre>
+<p>    Here, I've also set the target assignment group which is predefined by business. But none of these system properties are defined yet, so we need to create them :</p>
+<ul>
+<li>In the Navigation filter, type <strong>sys_properties.list</strong> and click enter
+<img src="./images/ch5_1.png" alt="ch5_1" /></li>
+<li>Click <strong>New</strong>
+<img src="./images/ch5_2.png" alt="ch5_2" /></li>
+<li>Name the property as <strong>integratenow.customer.contact_type</strong>
+<img src="./images/ch5_3.png" alt="ch5_3" /></li>
+<li>Set the desired string value for field Value as <strong>API</strong> &amp; click submit.
+<img src="./images/ch5_4.png" alt="ch5_4" /></li>
+<li>Create two more properties as below:
+<ul>
+<li>Name : <strong>integratenow.customer.category</strong>, Value : <strong>inquiry</strong></li>
+<li>Name : <strong>integratenow.customer.assignment_group</strong>, Value : <strong>a12fc27d87da491028720d47dabb35d9</strong>
+<img src="./images/ch5_5.png" alt="ch5_5" />
+<img src="./images/ch5_6.png" alt="ch5_6" />
+<img src="./images/ch5_7.png" alt="ch5_7" /></li>
+</ul>
+</li>
+</ul>
+<p>    A point to remember here (and going forward), all the custom values for the records that we did create, including group sys_id might be different for you. So be cautious!</p>
+<h4 id="tweak-3-"><a class="header" href="#tweak-3-">Tweak 3 :</a></h4>
+<p>    And the last tweak that we need to tackle is that the Service, Service Offering and the Description needs to be mapped with to Description field:</p>
+<p><img src="./images/drawio5.png" alt="drawio5" /></p>
+<p>    Let us rewrite our line of code to accomodate this requirement:</p>
+<pre><code class="language-js">var reqBody = {
+  short_description: current.getDisplayValue(&quot;short_description&quot;),
+  impact: current.getValue(&quot;impact&quot;),
+  urgency: current.getValue(&quot;urgency&quot;),
+  state: current.getValue(&quot;state&quot;),
+}
+if (current.getValue(&quot;state&quot;) == &quot;3&quot;) {
+  //if State is On Hold
+  var onHoldReason = current.getValue(&quot;hold_reason&quot;)
+  if (onHoldReason == &quot;6&quot;) {
+    //if Awaiting Company A Validation
+    onHoldReason = &quot;4&quot; //set to Awaiting Vendor
+  }
+  reqBody[&quot;hold_reason&quot;] = onHoldReason //add the property to object reqBody
+}
+reqBody[&quot;contact_type&quot;] = gs.getProperty(&quot;integratenow.customer.contact_type&quot;) //set Contact Type as API
+reqBody[&quot;category&quot;] = gs.getProperty(&quot;integratenow.customer.category&quot;) //set Category as Inquiry / Help
+reqBody[&quot;assignment_group&quot;] = gs.getProperty(
+  &quot;integratenow.customer.assignment_group&quot;
+) //set target/customer Assignment group (FirstIntegrationGroup)
+var newDescription =
+  &quot;Service: &quot; +
+  current.getDisplayValue(&quot;business_service&quot;) +
+  &quot;\n&quot; +
+  &quot;Service Offering: &quot; +
+  current.getDisplayValue(&quot;service_offering&quot;) +
+  &quot;\n&quot; +
+  &quot;Description: &quot; +
+  current.getDisplayValue(&quot;description&quot;)
+reqBody[&quot;description&quot;] = newDescription.toString()
+request.setRequestBody(JSON.stringify(reqBody))
+</code></pre>
+<p>    Here, we did assume that All the fields will have some value, but you are free to modify and make it more fail safe.</p>
+<h3 id="exposed-credentials"><a class="header" href="#exposed-credentials">Exposed credentials</a></h3>
+<p>    As you can notice from the following lines from the our script, we are exposing our username and password directly in the script. This is not a best practice and there are better way of implementing the integration that we will see later in this series. For now we are just going to ignore it to save some time, but you could probably write additional system properties to store them.</p>
+<pre><code class="language-js">var user = &quot;FirstIntegrationUser&quot;
+var password = &quot;FirstIntegrationUserPassword&quot;
+</code></pre>
+<h3 id="static-endpoints"><a class="header" href="#static-endpoints">Static endpoints</a></h3>
+<p>    Observe the below line of code :</p>
+<pre><code class="language-js">request.setEndpoint(&quot;https://dev124645.service-now.com/api/now/table/incident&quot;)
+</code></pre>
+<p>    <strong>setEndpoint()</strong> method sets the endpoint for the REST message. It accepts one parameter which is the URL of the REST provider you want to interface with, or in other words, endpoint. E.g. in our code we set the endpoint to <code>https://dev124645.service-now.com/api/now/table/incident</code>. The problem with this approach is our endpoint is now static and for any reason if the endpoint changes, we need to change it in every possible script it is used. Again, we are not going to fix it right away. You can utilize the system properties to tackle this problem as well, but this can be handled in a better way that we will see in later chapters.</p>
+<p>    Our modified Business Rule script should now look something like this :</p>
+<pre><code class="language-js">;(function executeRule(current, previous /*null when async*/) {
+  // Add your code here
+  var request = new sn_ws.RESTMessageV2()
+  request.setEndpoint(
+    &quot;https://dev124645.service-now.com/api/now/table/incident&quot;
+  )
+  request.setHttpMethod(&quot;POST&quot;)
+
+  //Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+  var user = &quot;FirstIntegrationUser&quot;
+  var password = &quot;FirstIntegrationUserPassword&quot;
+
+  request.setBasicAuth(user, password)
+  request.setRequestHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+  request.setRequestHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+  var reqBody = {
+    short_description: current.getDisplayValue(&quot;short_description&quot;),
+    impact: current.getValue(&quot;impact&quot;),
+    urgency: current.getValue(&quot;urgency&quot;),
+    state: current.getValue(&quot;state&quot;),
+  }
+
+  if (current.getValue(&quot;state&quot;) == &quot;3&quot;) {
+    //if State is On Hold
+    var onHoldReason = current.getValue(&quot;hold_reason&quot;)
+    if (onHoldReason == &quot;6&quot;) {
+      //if Awaiting Company A Validation
+      onHoldReason = &quot;4&quot; //set to Awaiting Vendor
+    }
+    reqBody[&quot;hold_reason&quot;] = onHoldReason //add the property to object reqBody
+  }
+
+  reqBody[&quot;contact_type&quot;] = gs.getProperty(&quot;integratenow.customer.contact_type&quot;) //set Contact Type as API
+  reqBody[&quot;category&quot;] = gs.getProperty(&quot;integratenow.customer.category&quot;) //set Category as Inquiry / Help
+  reqBody[&quot;assignment_group&quot;] = gs.getProperty(
+    &quot;integratenow.customer.assignment_group&quot;
+  ) //set target/customer Assignment group (FirstIntegrationGroup)
+
+  var newDescription =
+    &quot;Service: &quot; +
+    current.getDisplayValue(&quot;business_service&quot;) +
+    &quot;\n&quot; +
+    &quot;Service Offering: &quot; +
+    current.getDisplayValue(&quot;service_offering&quot;) +
+    &quot;\n&quot; +
+    &quot;Description: &quot; +
+    current.getDisplayValue(&quot;description&quot;)
+  reqBody[&quot;description&quot;] = newDescription.toString()
+
+  request.setRequestBody(JSON.stringify(reqBody))
+  var response = request.execute()
+  gs.log(response.getBody())
+})(current, previous)
+</code></pre>
+<p>    We have almost completed our first integration and we can perform a test before we do furthur modifications.</p>
+<ul>
+<li>On Vendor instance, Navigate to <strong>All &gt; Incident &gt; Create New</strong>:
+<img src="./images/ibr11.png" alt="ibr11" /></li>
+<li>Set the Service as <strong>IntegrateNow</strong> &amp; Assignment group as <strong>VendorAssignmentGroup</strong>:
+<img src="./images/ch5_test1.png" alt="ch5_test1" /></li>
+<li>Fill all other desired fields with the values you may like &amp; click <strong>Submit</strong>:
+<img src="./images/ch5_test2.png" alt="ch5_test2" /></li>
+<li>We can notice from the recent system logs, that our API has successfully been triggered:
+<img src="./images/ch5_test3.png" alt="ch5_test3" /></li>
+<li>On Customer instance, we can validate that new incident has been created:
+<img src="./images/ch5_test4.png" alt="ch5_test4" />
+<img src="./images/ch5_test5.png" alt="ch5_test5" /></li>
+</ul>
+<h2 id="correlation"><a class="header" href="#correlation">Correlation</a></h2>
+<p>    Okay, technically we did implement our first use case, but it is not enough. What do I mean? Think of the functional side, How would you know on Customer end that the incident exists in their table corresponds to which incident on Vendor instance? If there are multiple other tools that are generating the incidents using same Service Account then how would you know it corresponds to which tool? Most importantly, If we want to update an incident whenever the incident is updated on either end, how would you know which incident to update? In worst case you might create multiple duplicate incidents for one vendor incident and you need something to prevent that behavior. Seems like a big issue, well how would you tackle this problem? The answer is <strong>Correlation</strong>.</p>
+<p>    <strong>A correlation establishes a synchronization relationship between records that reside on separate instances.</strong> The <strong>Correlation ID</strong> identifies the remote record whose data values should be used to update the local record. For example, suppose incident record INC100001 correlates to problem record PRB123456 on a remote instance. Whenever changes are made to fields in remote problem PRB123456, the system uses the Correlation ID to identify that local incident INC100001 receives the same field updates.</p>
+<p><img src="./images/correlation-classic-example.png" alt="correlation-classic-example.png" /></p>
+<p>    If you have wondered what Correlation ID and Correlation Display fields are for or if you need better explaination, Please do read an post on <strong>SN Guru Blog</strong>, which can be found <a href="https://servicenowguru.com/integration/correlation-id-display-fields/">here</a>. But, I would also like to quote a shorter answer from <strong>john andersen</strong> to the community post which can be found <a href="https://community.servicenow.com/community?id=community_question&amp;sys_id=d44d4ba9db9cdbc01dcaf3231f9619fe">here</a> as is :</p>
+<blockquote>
+<p>These fields are typically used for Integration purposes. You will often store a corresponding third party record ID in the correlation ID field. The correlation Display field can contain a free-form descriptive label of what third party system is replicating or tied to this record.<br />
+For example, if you are tying incident records to a third party ticketing system when they are created within ServiceNow, the corresponding ticket ID from the third party would be stored in the correlation ID field. You could also set the correlation display field to be &quot;JIRA&quot;, or &quot;REMEDY&quot;, or whatever you want to indicate the third party system using this ticket.</p>
+</blockquote>
+<p>    ServiceNow documentaion article on Correlation is also a good read which can be found <a href="https://docs.servicenow.com/bundle/rome-servicenow-platform/page/administer/integrationhub/concept/correlation.html">here</a>.</p>
+<h2 id="filling-the-gaps"><a class="header" href="#filling-the-gaps">Filling the gaps</a></h2>
+<p>    In our script we are using the following line as our last line of code, which just logs the returned response to the log table :</p>
+<pre><code class="language-js">gs.log(response.getBody())
+</code></pre>
+<p>    <strong>getBody()</strong> method gets the content of the REST response body as text. E.g. In our case, we did recieve the response back as json string. We can replace this line by following code which converts the json string to json object and then gets the required fields from the json object to be used to store in Correlation fields :</p>
+<pre><code class="language-js">var resBody = JSON.parse(response.getBody())
+current.setValue(&quot;correlation_id&quot;, resBody[&quot;result&quot;][&quot;number&quot;])
+current.setValue(&quot;correlation_display&quot;, &quot;CustomerIncNumber&quot;)
+current.work_notes = JSON.stringify(resBody)
+</code></pre>
+<p>    Here, It is important to notice that we are not using setter method for worknotes, as the setValue() method is not supported for journal fields and documented <a href="https://docs.servicenow.com/bundle/sandiego-platform-administration/page/administer/field-administration/concept/c_JournalFields.html">here</a>. Many times I did use the getValue() or setValue() method to with additional comments or work notes and found myself spend a lot of time debugging it. It is very well expained by <strong>Tim Woodruff</strong> in his <strong>ServiceNow Development Handbook - Third Edition</strong> book, which is a must read if you want some awesome pro tips and thank yourself later.</p>
+<p>    As long as our code is concerned, we are parsing the Incident &quot;Number&quot; of Incident created on customer instance by our API and storing it in a field &quot;Correlation ID&quot;. We also did store the Correlation Display as a static string &quot;CustomerIncNumber&quot; to indicate it represents the Incident number of the customer instance. In the last line I'm just adding the whole response from the API to the activity streams, You would not do it in real time unless there is a use case.</p>
+<p>    Similar to the above, we also need to store the Correlation ID and Correlation Display fields on customer instance with the current incident number and some identifier text. Let us modify our code one last time to include the following lines to it :</p>
+<pre><code class="language-js">reqBody[&quot;correlation_id&quot;] = current.getDisplayValue(&quot;number&quot;)
+reqBody[&quot;correlation_display&quot;] = &quot;VendorIncNumber&quot;
+</code></pre>
+<p>    Our final Business Rule script should look something like this now:</p>
+<pre><code class="language-js">;(function executeRule(current, previous /*null when async*/) {
+  // Add your code here
+  var request = new sn_ws.RESTMessageV2()
+  request.setEndpoint(
+    &quot;https://dev124645.service-now.com/api/now/table/incident&quot;
+  )
+  request.setHttpMethod(&quot;POST&quot;)
+
+  //Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+  var user = &quot;FirstIntegrationUser&quot;
+  var password = &quot;FirstIntegrationUserPassword&quot;
+
+  request.setBasicAuth(user, password)
+  request.setRequestHeader(&quot;Accept&quot;, &quot;application/json&quot;)
+  request.setRequestHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+  var reqBody = {
+    short_description: current.getDisplayValue(&quot;short_description&quot;),
+    impact: current.getValue(&quot;impact&quot;),
+    urgency: current.getValue(&quot;urgency&quot;),
+    state: current.getValue(&quot;state&quot;),
+  }
+
+  if (current.getValue(&quot;state&quot;) == &quot;3&quot;) {
+    //if State is On Hold
+    var onHoldReason = current.getValue(&quot;hold_reason&quot;)
+    if (onHoldReason == &quot;6&quot;) {
+      //if Awaiting Company A Validation
+      onHoldReason = &quot;4&quot; //set to Awaiting Vendor
+    }
+    reqBody[&quot;hold_reason&quot;] = onHoldReason //add the property to object reqBody
+  }
+
+  reqBody[&quot;contact_type&quot;] = gs.getProperty(&quot;integratenow.customer.contact_type&quot;) //set Contact Type as API
+  reqBody[&quot;category&quot;] = gs.getProperty(&quot;integratenow.customer.category&quot;) //set Category as Inquiry / Help
+  reqBody[&quot;assignment_group&quot;] = gs.getProperty(
+    &quot;integratenow.customer.assignment_group&quot;
+  ) //set target/customer Assignment group (FirstIntegrationGroup)
+
+  var newDescription =
+    &quot;Service: &quot; +
+    current.getDisplayValue(&quot;business_service&quot;) +
+    &quot;\n&quot; +
+    &quot;Service Offering: &quot; +
+    current.getDisplayValue(&quot;service_offering&quot;) +
+    &quot;\n&quot; +
+    &quot;Description: &quot; +
+    current.getDisplayValue(&quot;description&quot;)
+  reqBody[&quot;description&quot;] = newDescription.toString()
+
+  reqBody[&quot;correlation_id&quot;] = current.getDisplayValue(&quot;number&quot;)
+  reqBody[&quot;correlation_display&quot;] = &quot;VendorIncNumber&quot;
+  request.setRequestBody(JSON.stringify(reqBody))
+  var response = request.execute()
+  var resBody = JSON.parse(response.getBody())
+  current.setValue(&quot;correlation_id&quot;, resBody[&quot;result&quot;][&quot;number&quot;])
+  current.setValue(&quot;correlation_display&quot;, &quot;CustomerIncNumber&quot;)
+  current.work_notes = JSON.stringify(resBody)
+})(current, previous)
+</code></pre>
+<p>     Finally, Since we should not use current.update() in our script, let us change the Business Rule trigger condition as below:</p>
+<ul>
+<li>When : <strong>before</strong></li>
+<li>Insert : <strong>Checked</strong></li>
+<li>Update : <strong>Checked</strong></li>
+<li>Filter Conditions :
+<ul>
+<li>Service is IntegrateNow</li>
+<li>Assignment group is VendorAssignmentGroup</li>
+<li>Correlation ID is empty</li>
+<li>Correlation Display is empty</li>
+</ul>
+</li>
+</ul>
+<p><img src="./images/ch5_br_cond.png" alt="BR Final Conditions" /></p>
+<h2 id="final-testing"><a class="header" href="#final-testing">Final testing</a></h2>
+<p>    So, we have finally arrived at the point for which we did wait so long. We did complete our first integration and it is time to test it.</p>
+<ul>
+<li>On Vendor instance, Navigate to <strong>All &gt; Incident &gt; Create New</strong>:
+<img src="./images/ibr11.png" alt="ibr11" /></li>
+<li>Set the Service as <strong>IntegrateNow</strong> &amp; Assignment group as <strong>VendorAssignmentGroup</strong>; fill all other desired fields with the values you may like &amp; click <strong>Submit</strong>:
+<img src="./images/final_test1.png" alt="final_test1" /></li>
+<li>We can notice from the worknotes, that our API has successfully been triggered and returned the response back:
+<img src="./images/final_test2.png" alt="final_test2" /></li>
+<li>we can validate the implementation by personalizing incident list view and bringing both the Correlation fields to list :
+<img src="./images/final_test3.png" alt="final_test3" /></li>
+<li>Similarly, on customer instance, we can personalize incident list view by bringing both the Correlation fields to list view :
+<img src="./images/final_test4.png" alt="final_test4" /></li>
+</ul>
+<h2 id="your-assignment"><a class="header" href="#your-assignment">Your assignment</a></h2>
+<p>    If you have noticed closely, we are still not passing the incident caller to our API and Hence, caller_id field is empty on our customer instance. Assuming their can be duplicate users with same name and email id but unique user name or user id, modify our script accordingly to set the caller.</p>
+<hr />
+<h2 id="whats-next-4"><a class="header" href="#whats-next-4">What's next?</a></h2>
+<p>     In the next chapter, we will visit another conceptual aside section to learn everything we need to work with XML responses. This is going to be extermely useful for us to work with the integration systems that handles only XML responses.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="chapter-6"><a class="header" href="#chapter-6">Chapter 6</a></h2>
+<h1 id="working-with-xmls"><a class="header" href="#working-with-xmls">Working With XMLs</a></h1>
+<p>    So far, we have worked with easier JSON responses, but often we need to work with other types e.g. XML, YAML or CSV. Understanding how to work with XMLs is extermely important not only when you work with web services like RSS or SOAP, but also REST when you receive back the responses in XML format. In this chapter, we will try to learn some of the important concepts regarding XML that will help us to work with XML when we interact with them. Here, we will try to limit ourselves to only concepts essential to work with ServiceNow web services and it is extremely important that we understand them very well. If you want to learn more about these concepts, the best place is <a href="https://www.w3schools.com/xml/default.asp">XML Tutorial</a> on w3schools.com.</p>
+<p><img src="./images/xml-conversion.png" alt="xml" /></p>
+<p>    <strong>XML</strong> or <strong>Extensible Markup Language</strong> is a markup language much like HTML, but without predefined tags to use. Instead, you define your own tags designed specifically for your needs. <strong>XML was designed and is a powerful way to store and transport data in a format that can be both human and machine-readable.</strong> Because of the custom tags, it's something that humans can read and understand. Web services use XML to code and to decode data, and SOAP to transport it.</p>
+<p><img src="./images/1_XuRqFNT2fMExddcrERq-6g.jpeg" alt="XMLResponse" /></p>
+<p>    Many finds working with XML difficult because of its structured nature, which requires more efforts for parsing the XML document. But once you understand the magic that is known as XML, you will be amazed with it's capabilities. And most important thing about XML is, it is everywhere!</p>
+<p><img src="./images/1m5efq.jpg" alt="XMLResponse" /></p>
+<h2 id="structure-of-an-xml-document"><a class="header" href="#structure-of-an-xml-document">Structure of an XML document</a></h2>
+<p>    XML describes a class of data objects called XML documents. The whole structure of XML is built on tags. Use the Application Navigator to open <strong>REST &gt; REST API Explorer</strong>:
+<img src="./images/XML1.png" alt="XML1" />
+    In the top-left of the REST API Explorer, Make sure that method selected is <strong>Retrieve records from a table (GET)</strong>. In the Path Parameters section, select the <strong>Incident (incident)</strong> table.
+<img src="./images/XML2.png" alt="XML2" />
+    The response by default will return all the incident fields, but we will only need a couple of the fields back in our response, We can specify those in the <strong>sysparm_fields</strong> parameter. Let us limit sysparm_fields to Number, Caller and Short Description:
+<img src="./images/XML3.png" alt="XML3" />
+<img src="./images/XML4.png" alt="XML4" />
+    Let us change the Reesponse format to <strong>application/xml</strong> and click <strong>Send</strong>.
+<img src="./images/XML7.png" alt="XML7" /></p>
+<p>    Observe the response body. This, like JSON, is a single line response that we received and is difficult to read:
+<img src="./images/XML8.png" alt="XML8" /></p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;response&gt;&lt;result&gt;&lt;number&gt;INC0000060&lt;/number&gt;&lt;short_description&gt;Unable to connect to email&lt;/short_description&gt;&lt;caller_id&gt;&lt;link&gt;https://dev124645.service-now.com/api/now/table/sys_user/681ccaf9c0a8016400b98a06818d57c7&lt;/link&gt;&lt;value&gt;681ccaf9c0a8016400b98a06818d57c7&lt;/value&gt;&lt;/caller_id&gt;&lt;/result&gt;&lt;/response&gt;
+</code></pre>
+<p>    Let us copy the response and paste it into online prettifier tools like <a href="https://jsonformatter.org/xml-pretty-print">JSON formatter</a> or <a href="https://codebeautify.org/xml-pretty-print">Code Beautify</a>, which will prettify our XML like below :</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;response&gt;
+	&lt;result&gt;
+		&lt;number&gt;INC0000060&lt;/number&gt;
+		&lt;short_description&gt;Unable to connect to email&lt;/short_description&gt;
+		&lt;caller_id&gt;
+			&lt;link&gt;https://dev124645.service-now.com/api/now/table/sys_user/681ccaf9c0a8016400b98a06818d57c7&lt;/link&gt;
+			&lt;value&gt;681ccaf9c0a8016400b98a06818d57c7&lt;/value&gt;
+		&lt;/caller_id&gt;
+	&lt;/result&gt;
+&lt;/response&gt;
+</code></pre>
+<p><img src="./images/XML9.png" alt="XML9" />
+<img src="./images/XML10.png" alt="XML10" /></p>
+<p>    Here, The document starts with a <code>&lt;response&gt;</code> tag, followed by a <code>&lt;result&gt;</code> element that gives the information about the incident i.e Number, Short Description and Caller. Also, The tags are closed in a sequence; <code>&lt;response&gt;</code> tag is closed after the <code>&lt;result&gt;</code> tag with the use of <code>/</code> character.</p>
+<p>    However, notice the very first line of our example, which is also known as <strong>XML prolog</strong>:</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+</code></pre>
+<p>    The above line of code is not a tag. It is used just for the transmission of the meta-data of a document i.e. version &amp; character encoding used in the document. The XML prolog is optional. If it exists, it must come first in the document.</p>
+<p>    <strong>XML documents form a tree structure that starts at &quot;the root&quot; and branches to &quot;the leaves&quot;.</strong> The XML above is quite self-descriptive:</p>
+<ul>
+<li>It has a information about Incident Number i.e. <code>INC0000060</code> specified in the <code>number</code> tag.</li>
+<li>It has a information about incident Short Description i.e. <code>Unable to connect to email</code> specified in the <code>short_description</code> tag.</li>
+<li>It has a a information about incident Caller specified in the <code>caller_id</code> tag. Element <code>caller_id</code> has the two child elements:
+<ul>
+<li><code>link</code> tag provides the API endpoint, which can be used to fetch information about the Incident caller i.e. <code>https://dev124645.service-now.com/api/now/table/sys_user/681ccaf9c0a8016400b98a06818d57c7</code></li>
+<li><code>value</code> tag provides the SysID of the Incident caller i.e. <code>681ccaf9c0a8016400b98a06818d57c7</code></li>
+</ul>
+</li>
+</ul>
+<p>    The tags in the example above (like <code>&lt;number&gt;</code> and <code>&lt;link&gt;</code>) are not defined in any XML standard. These tags are &quot;invented&quot; by the author of the XML document.</p>
+<p>    The first line after the prolog defines the <strong>root element</strong> of the document:</p>
+<pre><code class="language-xml">&lt;response&gt;
+</code></pre>
+<p>    The next line starts a <code>&lt;result&gt;</code> element, which is a child element of response:</p>
+<pre><code class="language-xml">&lt;result&gt;
+</code></pre>
+<p>    The <code>&lt;result&gt;</code> element have 3 child elements: <code>&lt;number&gt;</code>, <code>&lt;short_description&gt;</code> &amp; <code>&lt;caller_id&gt;</code>. Similarly, <code>&lt;caller_id&gt;</code> have 2 child elements: <code>&lt;link&gt;</code> and <code>&lt;value&gt;</code>.</p>
+<p>    One of the important point to remember here is, <strong>XML stores data in plain text format</strong>. This provides a software- and hardware-independent way of storing, transporting, and sharing data.</p>
+<h2 id="the-xml-tree-structure"><a class="header" href="#the-xml-tree-structure">The XML Tree Structure</a></h2>
+<p>    <strong>An XML tree starts at a root element and branches from the root to child elements and all elements can have sub elements (child elements).</strong></p>
+<ul>
+<li>The terms parent, child, and sibling are used to describe the relationships between elements.</li>
+<li>Parents have children.</li>
+<li>Children have parents.</li>
+<li>Siblings are children on the same level (brothers and sisters).</li>
+<li>All elements can have text content and attributes.</li>
+</ul>
+<pre><code class="language-xml">&lt;root&gt;
+  &lt;child&gt;
+    &lt;subchild&gt;.....&lt;/subchild&gt;
+  &lt;/child&gt;
+&lt;/root&gt;
+</code></pre>
+<p>    Consider the below image, copied from <a href="https://www.w3schools.com/xml/xml_tree.asp">w3schools.com</a>:</p>
+<p><img src="./images/nodetree.gif" alt="nodetree" /></p>
+<p>    The image above represents books in this XML:</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;bookstore&gt;
+  &lt;book category=&quot;cooking&quot;&gt;
+    &lt;title lang=&quot;en&quot;&gt;Everyday Italian&lt;/title&gt;
+    &lt;author&gt;Giada De Laurentiis&lt;/author&gt;
+    &lt;year&gt;2005&lt;/year&gt;
+    &lt;price&gt;30.00&lt;/price&gt;
+  &lt;/book&gt;
+  &lt;book category=&quot;children&quot;&gt;
+    &lt;title lang=&quot;en&quot;&gt;Harry Potter&lt;/title&gt;
+    &lt;author&gt;J K. Rowling&lt;/author&gt;
+    &lt;year&gt;2005&lt;/year&gt;
+    &lt;price&gt;29.99&lt;/price&gt;
+  &lt;/book&gt;
+  &lt;book category=&quot;web&quot;&gt;
+    &lt;title lang=&quot;en&quot;&gt;Learning XML&lt;/title&gt;
+    &lt;author&gt;Erik T. Ray&lt;/author&gt;
+    &lt;year&gt;2003&lt;/year&gt;
+    &lt;price&gt;39.95&lt;/price&gt;
+  &lt;/book&gt;
+&lt;/bookstore&gt;
+</code></pre>
+<p>    <strong>An XML element is everything from (including) the element's start tag to (including) the element's end tag</strong> and an element can contain:</p>
+<ul>
+<li>text</li>
+<li>attributes</li>
+<li>other elements</li>
+<li>a mix of the above</li>
+</ul>
+<p>    In the example above:</p>
+<ul>
+<li><code>&lt;title&gt;</code>, <code>&lt;author&gt;</code>, <code>&lt;year&gt;</code>, and <code>&lt;price&gt;</code> have text content because they contain text (like 29.99).</li>
+<li><code>&lt;bookstore&gt;</code> and <code>&lt;book&gt;</code> have element contents, because they contain elements.</li>
+<li><code>&lt;book&gt;</code> has an attribute (<code>category=&quot;children&quot;</code>).</li>
+</ul>
+<p>    An element with no content is said to be empty. In XML, you can indicate an empty element like this:</p>
+<pre><code class="language-xml">&lt;business_service&gt;&lt;/business_service&gt;
+</code></pre>
+<p>OR you can also use a so called self-closing tag:</p>
+<pre><code class="language-xml">&lt;business_service/&gt;
+</code></pre>
+<p>    <strong>XML elements can have attributes, designed to contain data related to a specific element.</strong> Attribute values must always be quoted. Either single or double quotes can be used. E.g. a display_value attribute is used in this example:</p>
+<pre><code class="language-xml">&lt;xml&gt;
+    &lt;incident&gt;
+        &lt;active&gt;true&lt;/active&gt;
+        &lt;caller_id  display_value=&quot;Joe Employee&quot;&gt;681ccaf9c0a8016400b98a06818d57c7&lt;/caller_id&gt;
+        &lt;category&gt;network&lt;/category&gt;
+        &lt;short_description&gt;Wireless access is down in my area&lt;/short_description&gt;
+    &lt;/incident&gt;
+&lt;/xml&gt;
+</code></pre>
+<p>    <strong>The metadata (data about data) should be stored as attributes, and the data itself should be stored as elements.</strong> E.g. The id attributes below are for identifying the different notes. It is not a part of the note itself.</p>
+<pre><code class="language-xml">&lt;messages&gt;
+  &lt;note id=&quot;501&quot;&gt;
+    &lt;to&gt;Tove&lt;/to&gt;
+    &lt;from&gt;Jani&lt;/from&gt;
+    &lt;heading&gt;Reminder&lt;/heading&gt;
+    &lt;body&gt;Don't forget me this weekend!&lt;/body&gt;
+  &lt;/note&gt;
+  &lt;note id=&quot;502&quot;&gt;
+    &lt;to&gt;Jani&lt;/to&gt;
+    &lt;from&gt;Tove&lt;/from&gt;
+    &lt;heading&gt;Re: Reminder&lt;/heading&gt;
+    &lt;body&gt;I will not&lt;/body&gt;
+  &lt;/note&gt;
+&lt;/messages&gt;
+</code></pre>
+<h2 id="xml-design-rules"><a class="header" href="#xml-design-rules">XML design rules</a></h2>
+<p>    XML document must be well-formed. XML documents that conform to the syntax rules below are said to be &quot;Well Formed&quot; XML documents:</p>
+<ul>
+<li>XML documents must contain one root element that is the parent of all other elements:</li>
+</ul>
+<pre><code class="language-xml">&lt;root&gt;
+  &lt;child&gt;
+    &lt;subchild&gt;.....&lt;/subchild&gt;
+  &lt;/child&gt;
+&lt;/root&gt;
+</code></pre>
+<p>    In this example <code>&lt;response&gt;</code> is the root element:</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;response&gt;
+	&lt;result&gt;
+		&lt;number&gt;INC0000060&lt;/number&gt;
+		&lt;short_description&gt;Unable to connect to email&lt;/short_description&gt;
+		&lt;caller_id&gt;
+			&lt;link&gt;https://dev124645.service-now.com/api/now/table/sys_user/681ccaf9c0a8016400b98a06818d57c7&lt;/link&gt;
+			&lt;value&gt;681ccaf9c0a8016400b98a06818d57c7&lt;/value&gt;
+		&lt;/caller_id&gt;
+	&lt;/result&gt;
+&lt;/response&gt;
+</code></pre>
+<ul>
+<li>
+<p>Element names must start with a letter or underscore.</p>
+</li>
+<li>
+<p>Element names cannot start with the letters xml (or XML, or Xml, etc).</p>
+</li>
+<li>
+<p>Element names can contain letters, digits, hyphens, underscores, and periods.</p>
+</li>
+<li>
+<p>Element names cannot contain spaces.</p>
+</li>
+<li>
+<p>In XML, it is illegal to omit the closing tag. All elements must have a closing tag:</p>
+</li>
+</ul>
+<pre><code class="language-xml">&lt;actions_taken/&gt;
+&lt;active&gt;true&lt;/active&gt;
+</code></pre>
+<ul>
+<li>XML tags are case sensitive. The tag <code>&lt;Active&gt;</code> is different from the tag <code>&lt;active&gt;</code>. Opening and closing tags must be written with the same case:</li>
+</ul>
+<pre><code class="language-xml">&lt;short_description&gt;Wireless access is down in my area&lt;/short_description&gt;
+</code></pre>
+<ul>
+<li>In XML, all elements must be properly nested within each other. E.g. In the example below, &quot;Properly nested&quot; simply means that since the <code>&lt;active&gt;</code> element is opened inside the <code>&lt;incident&gt;</code> element, it must be closed inside the <code>&lt;incident&gt;</code> element:</li>
+</ul>
+<pre><code class="language-xml">&lt;incident&gt;
+  &lt;active&gt;true&lt;/active&gt;
+&lt;/incident&gt;
+</code></pre>
+<ul>
+<li>XML elements can have attributes in name/value pairs just like in HTML. In XML, the attribute values must always be quoted:</li>
+</ul>
+<pre><code class="language-xml">&lt;assignment_group display_value=&quot;Incident Management&quot; name=&quot;Incident Management&quot;&gt;12a586cd0bb23200ecfd818393673a30&lt;/assignment_group&gt;
+</code></pre>
+<ul>
+<li>Some characters have a special meaning in XML, they should be replaced with an entity reference. E.g. If you place a character like &quot;&lt;&quot; inside an XML element, it will generate an error because the parser interprets it as the start of a new element and it should be replaced with an entity reference <code>&amp;lt;</code>:</li>
+</ul>
+<pre><code class="language-xml">&lt;message&gt;salary &amp;lt; 1000&lt;/message&gt;
+</code></pre>
+<ul>
+<li>
+<p>XML stores a new line as LF.</p>
+</li>
+<li>
+<p>Avoid &quot;-&quot;. If you name something &quot;first-name&quot;, some software may think you want to subtract &quot;name&quot; from &quot;first&quot;.</p>
+</li>
+<li>
+<p>Avoid &quot;.&quot;. If you name something &quot;first.name&quot;, some software may think that &quot;name&quot; is a property of the object &quot;first&quot;.</p>
+</li>
+<li>
+<p>Avoid &quot;:&quot;. Colons are reserved for namespaces.</p>
+</li>
+</ul>
+<h2 id="xml-dom"><a class="header" href="#xml-dom">XML DOM</a></h2>
+<p>    The <strong>XML DOM defines a standard way for accessing and manipulating XML documents.</strong> It presents an XML document as a tree-structure. The XML DOM is a standard for how to get, change, add, and delete XML elements. All XML elements can be accessed through the XML DOM. Understanding the DOM is a must for anyone working with XML. You can use online tools such <a href="https://www.xmlviewer.org/">XML Viewer</a> to visualize a tree structure of our XML document:
+<img src="./images/XMLTreeView.png" alt="XMLTreeView" /></p>
+<h2 id="xml-parser--xmldocument2"><a class="header" href="#xml-parser--xmldocument2">XML Parser &amp; XMLDocument2</a></h2>
+<p>    XML parser can convert text into an XML DOM object. ServiceNow provides a JavaScript Object wrapper for parsing and extracting XML data from an XML string known as <strong>XMLDocument2</strong>. An XML string has a tree structure, and the parts of the structure are called nodes. An XMLDocument2 object deals with two node types: element, and document element (root node of the XML tree).</p>
+<p>    Let us generate the snippet for the GET method that we did use earlier to receive Incident information:</p>
+<ul>
+<li>To create the code sample, Navigate back to REST API Explorer window and click the link for the language of your choice in the REST API Explorer. For the sake of this example, we will select <strong>&quot;ServiceNow Script&quot;</strong>.
+<img src="./images/XML11.png" alt="XML11" /></li>
+<li>To highlight the code sample for copying, click the <strong>Select Snippet</strong> button.
+<img src="./images/XML12.png" alt="XML12" /></li>
+<li>After highlighting the code sample, <strong>copy the code sample to the clipboard</strong> by using ctrl+c.
+<img src="./images/XML13.png" alt="XML13" /></li>
+</ul>
+<p>    If you did everything correctly you should have the code which look similar to the following copied to your clipboard:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=1&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;admin&quot;
+var password = &quot;admin&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+gs.log(response.getBody())
+</code></pre>
+<p>    It is time to visit our old good friend. Use the Application Navigator to open <strong>System Definition &gt; Scripts - Background</strong> and Paste the snippet that we did copy from last step into the Run Script field.
+<img src="./images/XML14.png" alt="XML14" />
+    Let us modify our code to change the fake credentials by your admin credentials, and re-execute the script and Click the <strong>Run script</strong> button to view the results of the script:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=1&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+gs.log(response.getBody())
+</code></pre>
+<p><img src="./images/XML15.png" alt="XML15" />
+<img src="./images/XML16.png" alt="XML16" /></p>
+<p>    Well, we received the XML response back from our API, but just like JSON responses, it is a XML string. Let us add <strong>typeof</strong> to the logger function to get the type of our response and re-execute the script:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=1&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+gs.log(typeof response.getBody())
+</code></pre>
+<p><img src="./images/XML17.png" alt="XML17" />
+<img src="./images/XML18.png" alt="XML18" /></p>
+<h3 id="xmldocument2--parsexml"><a class="header" href="#xmldocument2--parsexml">XMLDocument2 &amp; parseXML</a></h3>
+<p>    <strong>XMLDocument2() Creates an XMLDocument2 object.</strong> we can use JavaScript class &quot;XMLDocument2&quot; to create an object from an XML string. <strong>parseXML</strong> method parses the XML string and loads it into the XMLDocument2 object. Lets modify our code and re-execute the script:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=1&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+gs.log(typeof xmlDoc)
+gs.log(xmlDoc)
+</code></pre>
+<p><img src="./images/XML19.png" alt="XML19" /></p>
+<p>    As we can see from the output, we have converted our string representation of XML into XMLDocument2 object.</p>
+<p><img src="./images/XML20.png" alt="XML20" /></p>
+<h3 id="getdocumentelement"><a class="header" href="#getdocumentelement">getDocumentElement</a></h3>
+<p>    <strong>getDocumentElement</strong> gets the document element node of the XMLdocument2 object. The document element node is the root node. Lets modify our code and re-execute the script:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=1&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+//returns the root node of the document tree.
+var rootNode = xmlDoc.getDocumentElement()
+gs.info(rootNode)
+</code></pre>
+<p><img src="./images/XML21.png" alt="XML21" />
+<img src="./images/XML22.png" alt="XML22" /></p>
+<h3 id="xpath"><a class="header" href="#xpath">XPath</a></h3>
+<p>    XPath stands for XML Path Language. <strong>XPath can be used to navigate through elements and attributes in an XML document.</strong> It uses path expressions to navigate in XML documents. These path expressions look very much like the expressions you see when you work with a traditional computer file system.</p>
+<p><img src="./images/xpathwin.png" alt="img_xpath_folders" /></p>
+<p>    XML documents are treated as trees of nodes. In XPath, there are seven kinds of nodes: element, attribute, text, namespace, processing-instruction, comment, and document nodes. The topmost element of the tree is called the root element. Look at the following XML document:</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+
+&lt;bookstore&gt;
+
+&lt;book category=&quot;cooking&quot;&gt;
+  &lt;title lang=&quot;en&quot;&gt;Everyday Italian&lt;/title&gt;
+  &lt;author&gt;Giada De Laurentiis&lt;/author&gt;
+  &lt;year&gt;2005&lt;/year&gt;
+  &lt;price&gt;30.00&lt;/price&gt;
+&lt;/book&gt;
+
+&lt;book category=&quot;children&quot;&gt;
+  &lt;title lang=&quot;en&quot;&gt;Harry Potter&lt;/title&gt;
+  &lt;author&gt;J K. Rowling&lt;/author&gt;
+  &lt;year&gt;2005&lt;/year&gt;
+  &lt;price&gt;29.99&lt;/price&gt;
+&lt;/book&gt;
+
+&lt;book category=&quot;web&quot;&gt;
+  &lt;title lang=&quot;en&quot;&gt;XQuery Kick Start&lt;/title&gt;
+  &lt;author&gt;James McGovern&lt;/author&gt;
+  &lt;author&gt;Per Bothner&lt;/author&gt;
+  &lt;author&gt;Kurt Cagle&lt;/author&gt;
+  &lt;author&gt;James Linn&lt;/author&gt;
+  &lt;author&gt;Vaidyanathan Nagarajan&lt;/author&gt;
+  &lt;year&gt;2003&lt;/year&gt;
+  &lt;price&gt;49.99&lt;/price&gt;
+&lt;/book&gt;
+
+&lt;book category=&quot;web&quot;&gt;
+  &lt;title lang=&quot;en&quot;&gt;Learning XML&lt;/title&gt;
+  &lt;author&gt;Erik T. Ray&lt;/author&gt;
+  &lt;year&gt;2003&lt;/year&gt;
+  &lt;price&gt;39.95&lt;/price&gt;
+&lt;/book&gt;
+
+&lt;/bookstore&gt;
+</code></pre>
+<p>    Example of nodes in the XML document above:</p>
+<pre><code class="language-xml">&lt;bookstore&gt; (root element node)
+
+&lt;author&gt;J K. Rowling&lt;/author&gt; (element node)
+
+lang=&quot;en&quot; (attribute node)
+</code></pre>
+<h3 id="selecting-nodes"><a class="header" href="#selecting-nodes">Selecting Nodes</a></h3>
+<p>    XPath uses path expressions to select nodes in an XML document. The node is selected by following a path or steps. The most useful path expressions are listed below:</p>
+<div class="table-wrapper"><table><thead><tr><th>Expression</th><th>Description</th><th>Example</th><th>Result</th></tr></thead><tbody>
+<tr><td>nodename</td><td>Selects all nodes with the name &quot;nodename&quot;</td><td>bookstore</td><td>Selects all nodes with the name &quot;bookstore&quot;</td></tr>
+<tr><td>/</td><td>Selects from the root node</td><td>/bookstore</td><td>Selects the root element bookstore</td></tr>
+<tr><td></td><td></td><td>bookstore/book</td><td>Selects all book elements that are children of bookstore</td></tr>
+<tr><td>//</td><td>Selects nodes in the document from the current node that match the selection no matter where they are</td><td>//book</td><td>Selects all book elements no matter where they are in the document</td></tr>
+<tr><td></td><td></td><td>bookstore//book</td><td>Selects all book elements that are descendant of the bookstore element, no matter where they are under the bookstore element</td></tr>
+<tr><td>.</td><td>Selects the current node</td><td></td><td></td></tr>
+<tr><td>..</td><td>Selects the parent of the current node</td><td></td><td></td></tr>
+<tr><td>@</td><td>Selects attributes</td><td>//@</td><td>lang Selects all attributes that are named lang</td></tr>
+</tbody></table>
+</div>
+<h3 id="predicates"><a class="header" href="#predicates">Predicates</a></h3>
+<p>    Predicates are used to find a specific node or a node that contains a specific value. Predicates are always embedded in square brackets. In the table below we have listed some path expressions with predicates and the result of the expressions:</p>
+<div class="table-wrapper"><table><thead><tr><th>Path Expression</th><th>Result</th></tr></thead><tbody>
+<tr><td>/bookstore/book[1]</td><td>Selects the first book element that is the child of the bookstore element.</td></tr>
+<tr><td>/bookstore/book[last()]</td><td>Selects the last book element that is the child of the bookstore element</td></tr>
+<tr><td>/bookstore/book[last()-1]</td><td>Selects the last but one book element that is the child of the bookstore element</td></tr>
+<tr><td>/bookstore/book[position()&lt;3]</td><td>Selects the first two book elements that are children of the bookstore element</td></tr>
+<tr><td>//title[@lang]</td><td>Selects all the title elements that have an attribute named lang</td></tr>
+<tr><td>//title[@lang='en']</td><td>Selects all the title elements that have a &quot;lang&quot; attribute with a value of &quot;en&quot;</td></tr>
+<tr><td>/bookstore/book[price&gt;35.00]</td><td>Selects all the book elements of the bookstore element that have a price element with a value greater than 35.00</td></tr>
+<tr><td>/bookstore/book[price&gt;35.00]/title</td><td>Selects all the title elements of the book elements of the bookstore element that have a price element with a value greater than 35.00</td></tr>
+</tbody></table>
+</div>
+<h3 id="selecting-unknown-nodes"><a class="header" href="#selecting-unknown-nodes">Selecting Unknown Nodes</a></h3>
+<p>    XPath wildcards can be used to select unknown XML nodes. In the table below we have listed some path expressions and the result of the expressions:</p>
+<div class="table-wrapper"><table><thead><tr><th>Wildcard</th><th>Description</th><th>Path Expression</th><th>Result</th></tr></thead><tbody>
+<tr><td>*</td><td>Matches any element node</td><td>/bookstore/*</td><td>Selects all the child element nodes of the bookstore element</td></tr>
+<tr><td></td><td></td><td>//*</td><td>Selects all elements in the document</td></tr>
+<tr><td>@*</td><td>Matches any attribute node</td><td>//title[@*]</td><td>Selects all title elements which have at least one attribute of any kind</td></tr>
+<tr><td>node()</td><td>Matches any node of any kind</td><td></td><td></td></tr>
+</tbody></table>
+</div>
+<h3 id="selecting-several-paths"><a class="header" href="#selecting-several-paths">Selecting Several Paths</a></h3>
+<p>    By using the <code>|</code> operator in an XPath expression you can select several paths. In the table below we have listed some path expressions and the result of the expressions:</p>
+<div class="table-wrapper"><table><thead><tr><th>Path Expression</th><th>Result</th></tr></thead><tbody>
+<tr><td>//book/title | //book/price</td><td>Selects all the title AND price elements of all book elements</td></tr>
+<tr><td>//title | //price</td><td>Selects all the title AND price elements in the document</td></tr>
+<tr><td>/bookstore/book/title | //price</td><td>Selects all the title elements of the book element of the bookstore element AND all the price elements in the document</td></tr>
+</tbody></table>
+</div>
+<h3 id="xpath-axes"><a class="header" href="#xpath-axes">XPath Axes</a></h3>
+<p>    An axis represents a relationship to the context (current) node, and is used to locate nodes relative to that node on the tree.</p>
+<div class="table-wrapper"><table><thead><tr><th>AxisName</th><th>Result</th></tr></thead><tbody>
+<tr><td>ancestor</td><td>Selects all ancestors (parent, grandparent, etc.) of the current node</td></tr>
+<tr><td>ancestor-or-self</td><td>Selects all ancestors (parent, grandparent, etc.) of the current node and the current node itself</td></tr>
+<tr><td>attribute</td><td>Selects all attributes of the current node</td></tr>
+<tr><td>child</td><td>Selects all children of the current node</td></tr>
+<tr><td>descendant</td><td>Selects all descendants (children, grandchildren, etc.) of the current node</td></tr>
+<tr><td>descendant-or-self</td><td>Selects all descendants (children, grandchildren, etc.) of the current node and the current node itself</td></tr>
+<tr><td>following</td><td>Selects everything in the document after the closing tag of the current node</td></tr>
+<tr><td>following-sibling</td><td>Selects all siblings after the current node</td></tr>
+<tr><td>namespace</td><td>Selects all namespace nodes of the current node</td></tr>
+<tr><td>parent</td><td>Selects the parent of the current node</td></tr>
+<tr><td>preceding</td><td>Selects all nodes that appear before the current node in the document, except ancestors, attribute nodes and namespace nodes</td></tr>
+<tr><td>preceding-sibling</td><td>Selects all siblings before the current node</td></tr>
+<tr><td>self</td><td>Selects the current node</td></tr>
+</tbody></table>
+</div>
+<h3 id="location-path-expression"><a class="header" href="#location-path-expression">Location Path Expression</a></h3>
+<p>    A location path can be absolute or relative. An absolute location path starts with a slash ( / ) and a relative location path does not. In both cases the location path consists of one or more steps, each separated by a slash:</p>
+<pre><code class="language-xml">An absolute location path:
+
+/step/step/...
+
+A relative location path:
+
+step/step/...
+</code></pre>
+<p>    The syntax for a location step is:</p>
+<pre><code class="language-xml">axisname::nodetest[predicate]
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>Example</th><th>Result</th></tr></thead><tbody>
+<tr><td>child::book</td><td>Selects all book nodes that are children of the current node</td></tr>
+<tr><td>attribute::lang</td><td>Selects the lang attribute of the current node</td></tr>
+<tr><td>child::*</td><td>Selects all element children of the current node</td></tr>
+<tr><td>attribute::*</td><td>Selects all attributes of the current node</td></tr>
+<tr><td>child::text()</td><td>Selects all text node children of the current node</td></tr>
+<tr><td>child::node()</td><td>Selects all children of the current node</td></tr>
+<tr><td>descendant::book</td><td>Selects all book descendants of the current node</td></tr>
+<tr><td>ancestor::book</td><td>Selects all book ancestors of the current node</td></tr>
+<tr><td>ancestor-or-self::book</td><td>Selects all book ancestors of the current node - and the current as well if it is a book node</td></tr>
+<tr><td>child::*/child::price</td><td>Selects all price grandchildren of the current node</td></tr>
+</tbody></table>
+</div>
+<h3 id="getnode--getnodetext"><a class="header" href="#getnode--getnodetext">getNode &amp; getNodeText</a></h3>
+<p>    <strong>getNode</strong> gets the node specified in the xPath. <strong>getNodeText</strong> gets all the text child nodes from the node referenced in the specified XPath. Let us modify our code to fetch the <code>number</code> element from our response and re-execute the script:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=1&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var node = xmlDoc.getNode(&quot;/response/result/number&quot;)
+gs.info(node)
+</code></pre>
+<p><img src="./images/XML26.png" alt="XML26" />
+    Your output should look something like this:</p>
+<pre><code class="language-xml">&lt;number&gt;INC0000060&lt;/number&gt;
+</code></pre>
+<p>    If you are wondering how the result of the background script is displayed on the same page, that is probabaly because you are unaware of an awesome extension <a href="https://www.arnoudkooi.com/">SN Utils</a> by Arnoud Kooi. I strongly encourage you to have this extension installed on your personal computer to learn the amazing capabilities of this extension and increase your productivity.</p>
+<p>    Now, lets modify the script one more time to get the incident number from number element:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=1&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var nodeText = xmlDoc.getNodeText(&quot;/response/result/number&quot;)
+gs.info(nodeText)
+</code></pre>
+<p>    After executing the script, your output should look something similar to the following:</p>
+<pre><code class="language-js">INC0000060
+</code></pre>
+<p><img src="./images/XML27.png" alt="XML27" /></p>
+<h3 id="getfirstnode--getnextnode"><a class="header" href="#getfirstnode--getnextnode">getFirstNode &amp; getNextNode</a></h3>
+<p>    <strong>getFirstNode</strong> gets the first node in the specified xPath. <strong>getNextNode</strong> gets the node after the specified node. Let us assume the following document from <a href="https://developer.servicenow.com/dev.do#!/reference/api/sandiego/server/no-namespace/c_XMLDocument2ScopedAPI">ServiceNow API documentation</a>:</p>
+<pre><code class="language-xml">&lt;store&gt;
+    &lt;resources company=&quot;ABC Inc&quot;&gt;
+        &lt;resources type=&quot;servers&quot; /&gt;
+    &lt;/resources&gt;
+    &lt;resources company=&quot;XYZ Inc&quot;&gt;
+        &lt;resource type=&quot;bookstore&quot;&gt;
+            &lt;book&gt;
+                &lt;title&gt;Windows&lt;/title&gt;
+                &lt;price&gt;10&lt;/price&gt;
+            &lt;/book&gt;
+            &lt;book year=&quot;2009&quot;&gt;
+                &lt;title&gt;Harry Potter&lt;/title&gt;
+                &lt;price&gt;50&lt;/price&gt;
+            &lt;/book&gt;
+            &lt;book year=&quot;1999&quot;&gt;
+                &lt;title&gt;Learning XML&lt;/title&gt;
+                &lt;price&gt;120&lt;/price&gt;
+            &lt;/book&gt;
+            &lt;book year=&quot;2019&quot;&gt;
+                &lt;title&gt;Learning Java&lt;/title&gt;
+                &lt;price&gt;99&lt;/price&gt;
+            &lt;/book&gt;
+        &lt;/resource&gt;
+    &lt;/resources&gt;
+&lt;/store&gt;
+</code></pre>
+<p>    The getFirstNode methods supports the following xPath expressions with predicates:</p>
+<p><code>/store/resources/resource[@type='bookstore']/book[@year='1999']</code>
+<code>/store/resources/resource[@type='bookstore']/book[@year]</code>
+<code>/store/resources/resource[@type='bookstore']/book[price &gt; 100]</code></p>
+<p>    However, it does not support the following xPath expressions with predicates:</p>
+<p><code>/store/resources/resource[@type='bookstore']/book[2]</code>
+<code>/store/resources/resource[@type='bookstore']/book[last()]</code>
+<code>/store/resources/resource[@type='bookstore']/book[position()&gt;2]</code></p>
+<p>    To work around this, use xPath without predicates, such as <code>/store/resources/resource[@type='bookstore']/book</code> and then filter the nodes in the script using the getFirstNode() and getNextNode() methods.</p>
+<p>    Let us modify our code to fetch information about 3 incidents, by setting the <strong>sysparm_limit</strong> query parameter to 3 :</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=3&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+//returns the root node of the document tree.
+var rootNode = xmlDoc.getDocumentElement()
+gs.info(rootNode)
+</code></pre>
+<p>    The above script will log the document element tree structure, which should look something like this :</p>
+<pre><code class="language-xml">&lt;response&gt;
+	&lt;result&gt;
+		&lt;number&gt;INC0000060&lt;/number&gt;
+		&lt;short_description&gt;Unable to connect to email&lt;/short_description&gt;
+		&lt;caller_id&gt;
+			&lt;link&gt;https://dev124645.service-now.com/api/now/table/sys_user/681ccaf9c0a8016400b98a06818d57c7&lt;/link&gt;
+			&lt;value&gt;681ccaf9c0a8016400b98a06818d57c7&lt;/value&gt;
+		&lt;/caller_id&gt;
+	&lt;/result&gt;
+	&lt;result&gt;
+		&lt;number&gt;INC0009002&lt;/number&gt;
+		&lt;short_description&gt;My computer is not detecting the headphone device&lt;/short_description&gt;
+		&lt;caller_id&gt;
+			&lt;link&gt;https://dev124645.service-now.com/api/now/table/sys_user/77ad8176731313005754660c4cf6a7de&lt;/link&gt;
+			&lt;value&gt;77ad8176731313005754660c4cf6a7de&lt;/value&gt;
+		&lt;/caller_id&gt;
+	&lt;/result&gt;
+	&lt;result&gt;
+		&lt;number&gt;INC0000009&lt;/number&gt;
+		&lt;short_description&gt;Reset my password&lt;/short_description&gt;
+		&lt;caller_id&gt;
+			&lt;link&gt;https://dev124645.service-now.com/api/now/table/sys_user/5137153cc611227c000bbd1bd8cd2006&lt;/link&gt;
+			&lt;value&gt;5137153cc611227c000bbd1bd8cd2006&lt;/value&gt;
+		&lt;/caller_id&gt;
+	&lt;/result&gt;
+&lt;/response&gt;
+</code></pre>
+<p><img src="./images/XML23.png" alt="XML23" /></p>
+<p>    Now, let us observe our output. we have several <code>result</code> nodes in our <code>response</code> element. To see getFirstNode in action, modify the script as below and re-execute:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=3&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var firstIncResult = xmlDoc.getFirstNode(&quot;/response/result&quot;)
+gs.info(firstIncResult)
+</code></pre>
+<p><img src="./images/XML24.png" alt="XML24" /></p>
+<p>    You should receive the output displaying the information about first result node, which looks something like this:</p>
+<pre><code class="language-xml">&lt;result&gt;
+	&lt;number&gt;INC0000060&lt;/number&gt;
+	&lt;short_description&gt;Unable to connect to email&lt;/short_description&gt;
+	&lt;caller_id&gt;
+		&lt;link&gt;https://dev124645.service-now.com/api/now/table/sys_user/681ccaf9c0a8016400b98a06818d57c7&lt;/link&gt;
+		&lt;value&gt;681ccaf9c0a8016400b98a06818d57c7&lt;/value&gt;
+	&lt;/caller_id&gt;
+&lt;/result&gt;
+</code></pre>
+<p>    Now, let us modify the script again to see getNextNode in action as below and re-execute:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=3&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var firstIncResult = xmlDoc.getFirstNode(&quot;/response/result&quot;)
+
+var secondIncResult = xmlDoc.getNextNode(firstIncResult)
+gs.info(secondIncResult)
+</code></pre>
+<p><img src="./images/XML25.png" alt="XML25" /></p>
+<p>    You should receive the output displaying the information about second result node, which looks something like this:</p>
+<pre><code class="language-xml">&lt;result&gt;
+	&lt;number&gt;INC0009002&lt;/number&gt;
+	&lt;short_description&gt;My computer is not detecting the headphone device&lt;/short_description&gt;
+	&lt;caller_id&gt;
+		&lt;link&gt;https://dev124645.service-now.com/api/now/table/sys_user/77ad8176731313005754660c4cf6a7de&lt;/link&gt;
+		&lt;value&gt;77ad8176731313005754660c4cf6a7de&lt;/value&gt;
+	&lt;/caller_id&gt;
+&lt;/result&gt;
+</code></pre>
+<p>    The most important thing to notice here is that the parameter (The current node) passed to the getNextNode method. In our example we passed the first result node <strong>firstIncResult</strong> as a parameter to the getNextNode method in order to retrieve the next result node.</p>
+<h3 id="createelement--createelementwithtextvalue"><a class="header" href="#createelement--createelementwithtextvalue">createElement &amp; createElementWithTextValue</a></h3>
+<p>    <strong>createElement</strong> creates and adds an element node to the current node. The element name is the string passed in as a parameter. The new element has no text child nodes. <strong>createElementWithTextValue</strong> creates and adds an element node with a text child node to the current node. It accepts two string parameters: name of the element to add &amp; element's text value. Lets modify our script to see these two methods in action:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=1&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+xmlDoc.createElement(&quot;new_element_without_text&quot;)
+xmlDoc.createElementWithTextValue(
+  &quot;new_element_with_text&quot;,
+  &quot;New Element With Text&quot;
+)
+
+gs.info(xmlDoc)
+</code></pre>
+<p>    After execution your output should be similar to the following:</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;response&gt;
+	&lt;new_element_without_text/&gt;
+	&lt;new_element_with_text&gt;New Element With Text&lt;/new_element_with_text&gt;
+	&lt;result&gt;
+		&lt;number&gt;INC0000060&lt;/number&gt;
+		&lt;short_description&gt;Unable to connect to email&lt;/short_description&gt;
+		&lt;caller_id&gt;
+			&lt;link&gt;https://dev124645.service-now.com/api/now/table/sys_user/681ccaf9c0a8016400b98a06818d57c7&lt;/link&gt;
+			&lt;value&gt;681ccaf9c0a8016400b98a06818d57c7&lt;/value&gt;
+		&lt;/caller_id&gt;
+	&lt;/result&gt;
+&lt;/response&gt;
+</code></pre>
+<p><img src="./images/XML28.png" alt="XML28" /></p>
+<p>    As you can clearly notice, We have two additional nodes added to our document : <code>new_element_without_text</code> and <code>new_element_with_text</code>.</p>
+<h2 id="xmltojson"><a class="header" href="#xmltojson">xmlToJSON</a></h2>
+<p><img src="./images/xmltojson.jpg" alt="xmltojson" /></p>
+<p>    Though parsing the xml with help of XMLDocument2 is very convinient, We can leverage xmlToJSON method of GlideSystem to convert the xml to JSON object which is easier to work with. <strong>xmlToJSON Takes an XML string and returns a JSON object.</strong> Let us modify the script to understand how this works :</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=1&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlObj = gs.xmlToJSON(xmlString)
+
+gs.info(JSON.stringify(xmlObj, null, 4))
+</code></pre>
+<p>    After executing the script, our <strong>xmlObj</strong> contains the JSON object, the last logger function in our script pretty prints the JSON object:</p>
+<p><img src="./images/XML29.png" alt="XML29" /></p>
+<p>    Though, the script worked totally fine, It is important that you pre-process the XML input before passing to xmlToJSON. You can read more about this in the Support article <a href="https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB0784264">KB0784264</a>. The modified script looks similar to this:</p>
+<pre><code class="language-js">var request = new sn_ws.RESTMessageV2()
+request.setEndpoint(
+  &quot;https://dev124645.service-now.com/api/now/table/incident?sysparm_fields=number%2Ccaller_id%2Cshort_description&amp;sysparm_limit=1&quot;
+)
+request.setHttpMethod(&quot;GET&quot;)
+
+//Eg. UserName=&quot;admin&quot;, Password=&quot;admin&quot; for this code sample.
+var user = &quot;MyAdminUserName&quot;
+var password = &quot;MyAdminPassword&quot;
+
+request.setBasicAuth(user, password)
+request.setRequestHeader(&quot;Accept&quot;, &quot;application/xml&quot;)
+
+var response = request.execute()
+
+var xmlString = response.getBody()
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var rootNode = xmlDoc.getDocumentElement()
+
+var xmlObj = gs.xmlToJSON(rootNode)
+
+gs.info(JSON.stringify(xmlObj, null, 4))
+</code></pre>
+<p><img src="./images/XML30.png" alt="XML30" /></p>
+<h2 id="xmlnode"><a class="header" href="#xmlnode">XMLNode</a></h2>
+<p>    <strong>The scoped XMLNode API allows you to query values from XML nodes.</strong> XMLNodes are extracted from XMLDocument2 objects, which contain XML strings. There are no constructors for creating a stand alone instance of an XMLNode object. Instead, use the createElement() method of XMLDocument2, which adds a node to an existing document.</p>
+<h3 id="getattribute--getattributes"><a class="header" href="#getattribute--getattributes">getAttribute &amp; getAttributes</a></h3>
+<p>    <strong>getAttribute</strong> gets the value of the attribute. <strong>getAttributes</strong> Returns an object containing the node's attributes as properties with values. Let us consider the below sample XML document:</p>
+<pre><code class="language-xml">&lt;xml&gt;
+	&lt;incident&gt;
+		&lt;active&gt;true&lt;/active&gt;
+		&lt;assignment_group display_value=&quot;Software&quot; name=&quot;Software&quot;&gt;8a4dde73c6112278017a6a4baf547aa7&lt;/assignment_group&gt;
+		&lt;caller_id display_value=&quot;Bud Richman&quot;&gt;46c6f9efa9fe198101ddf5eed9adf6e7&lt;/caller_id&gt;
+		&lt;category&gt;software&lt;/category&gt;
+		&lt;cmdb_ci display_value=&quot;Sales Force Automation&quot;&gt;a9c0c8d2c6112276018f7705562f9cb0&lt;/cmdb_ci&gt;
+		&lt;description&gt;Unable to login to SFA even though login credentials are correct.&lt;/description&gt;
+		&lt;location display_value=&quot;324 South State Street, Salt Lake City,UT&quot;&gt;105cf7f3c611227501e75e08b14a38ba&lt;/location&gt;
+		&lt;short_description&gt;Can't access SFA software&lt;/short_description&gt;
+		&lt;sys_class_name&gt;incident&lt;/sys_class_name&gt;
+		&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;
+		&lt;sys_created_on&gt;2021-11-07 22:05:30&lt;/sys_created_on&gt;
+		&lt;sys_id&gt;a9e30c7dc61122760116894de7bcc7bd&lt;/sys_id&gt;
+		&lt;urgency&gt;3&lt;/urgency&gt;
+	&lt;/incident&gt;
+&lt;/xml&gt;
+</code></pre>
+<p>    Now, Let us modify the script to convert above XML string to XMLDocument2 Object and fetch the attribute <code>display_value</code> of element <code>location</code> i.e. <code>324 South State Street, Salt Lake City,UT</code>:</p>
+<pre><code class="language-js">var xmlString =
+  '&lt;xml&gt;&lt;incident&gt;&lt;active&gt;true&lt;/active&gt;&lt;assignment_group display_value=&quot;Software&quot; name=&quot;Software&quot;&gt;8a4dde73c6112278017a6a4baf547aa7&lt;/assignment_group&gt;&lt;caller_id display_value=&quot;Bud Richman&quot;&gt;46c6f9efa9fe198101ddf5eed9adf6e7&lt;/caller_id&gt;&lt;category&gt;software&lt;/category&gt;&lt;cmdb_ci display_value=&quot;Sales Force Automation&quot;&gt;a9c0c8d2c6112276018f7705562f9cb0&lt;/cmdb_ci&gt;&lt;description&gt;Unable to login to SFA even though login credentials are correct.&lt;/description&gt;&lt;location display_value=&quot;324 South State Street, Salt Lake City,UT&quot;&gt;105cf7f3c611227501e75e08b14a38ba&lt;/location&gt;&lt;short_description&gt;Cant access SFA software&lt;/short_description&gt;&lt;sys_class_name&gt;incident&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2021-11-07 22:05:30&lt;/sys_created_on&gt;&lt;sys_id&gt;a9e30c7dc61122760116894de7bcc7bd&lt;/sys_id&gt;&lt;urgency&gt;3&lt;/urgency&gt;&lt;/incident&gt;&lt;/xml&gt;'
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var node = xmlDoc.getNode(&quot;//location&quot;)
+gs.info(node.getAttribute(&quot;display_value&quot;))
+</code></pre>
+<p><img src="./images/XML31.png" alt="XML31" /></p>
+<p>    Now, Let us modify the script one more time to retrieve all attributes of element <code>assignment_group</code> as an object:</p>
+<pre><code class="language-js">var xmlString =
+  '&lt;xml&gt;&lt;incident&gt;&lt;active&gt;true&lt;/active&gt;&lt;assignment_group display_value=&quot;Software&quot; name=&quot;Software&quot;&gt;8a4dde73c6112278017a6a4baf547aa7&lt;/assignment_group&gt;&lt;caller_id display_value=&quot;Bud Richman&quot;&gt;46c6f9efa9fe198101ddf5eed9adf6e7&lt;/caller_id&gt;&lt;category&gt;software&lt;/category&gt;&lt;cmdb_ci display_value=&quot;Sales Force Automation&quot;&gt;a9c0c8d2c6112276018f7705562f9cb0&lt;/cmdb_ci&gt;&lt;description&gt;Unable to login to SFA even though login credentials are correct.&lt;/description&gt;&lt;location display_value=&quot;324 South State Street, Salt Lake City,UT&quot;&gt;105cf7f3c611227501e75e08b14a38ba&lt;/location&gt;&lt;short_description&gt;Cant access SFA software&lt;/short_description&gt;&lt;sys_class_name&gt;incident&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2021-11-07 22:05:30&lt;/sys_created_on&gt;&lt;sys_id&gt;a9e30c7dc61122760116894de7bcc7bd&lt;/sys_id&gt;&lt;urgency&gt;3&lt;/urgency&gt;&lt;/incident&gt;&lt;/xml&gt;'
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var node = xmlDoc.getNode(&quot;//assignment_group&quot;)
+gs.info(node.getAttributes())
+</code></pre>
+<p>    After executing the script, you should get an object logged to the output screen with all the attributes of <code>assignment_group</code> as properties with values.</p>
+<p><img src="./images/XML32.png" alt="XML32" /></p>
+<h3 id="getfirstchild--getlastchild"><a class="header" href="#getfirstchild--getlastchild">getFirstChild &amp; getLastChild</a></h3>
+<p>    <strong>getFirstChild</strong> gets the node's first child node. <strong>getLastChild</strong> gets the node's last child node. Let us modify our script to see this in action:</p>
+<pre><code class="language-js">var xmlString =
+  '&lt;xml&gt;&lt;incident&gt;&lt;active&gt;true&lt;/active&gt;&lt;assignment_group display_value=&quot;Software&quot; name=&quot;Software&quot;&gt;8a4dde73c6112278017a6a4baf547aa7&lt;/assignment_group&gt;&lt;caller_id display_value=&quot;Bud Richman&quot;&gt;46c6f9efa9fe198101ddf5eed9adf6e7&lt;/caller_id&gt;&lt;category&gt;software&lt;/category&gt;&lt;cmdb_ci display_value=&quot;Sales Force Automation&quot;&gt;a9c0c8d2c6112276018f7705562f9cb0&lt;/cmdb_ci&gt;&lt;description&gt;Unable to login to SFA even though login credentials are correct.&lt;/description&gt;&lt;location display_value=&quot;324 South State Street, Salt Lake City,UT&quot;&gt;105cf7f3c611227501e75e08b14a38ba&lt;/location&gt;&lt;short_description&gt;Cant access SFA software&lt;/short_description&gt;&lt;sys_class_name&gt;incident&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2021-11-07 22:05:30&lt;/sys_created_on&gt;&lt;sys_id&gt;a9e30c7dc61122760116894de7bcc7bd&lt;/sys_id&gt;&lt;urgency&gt;3&lt;/urgency&gt;&lt;/incident&gt;&lt;/xml&gt;'
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var node = xmlDoc.getNode(&quot;//incident&quot;)
+
+gs.info(node.getFirstChild())
+
+gs.info(node.getLastChild())
+</code></pre>
+<p>    Once the script is executed you should see the output as below, indicating first child element and last child element of node <code>incident</code> :</p>
+<pre><code class="language-xml">&lt;active&gt;true&lt;/active&gt;
+&lt;urgency&gt;3&lt;/urgency&gt;
+</code></pre>
+<p><img src="./images/XML33.png" alt="XML33" /></p>
+<h3 id="gettextcontent"><a class="header" href="#gettextcontent">getTextContent</a></h3>
+<p>    <strong>getTextContent</strong> gets the text content of the current node. <strong>The text content of a node consists of all the node's child text nodes.</strong></p>
+<p>    Let us modify our script to understand these better :</p>
+<pre><code class="language-js">var xmlString =
+  '&lt;xml&gt;&lt;incident&gt;&lt;active&gt;true&lt;/active&gt;&lt;assignment_group display_value=&quot;Software&quot; name=&quot;Software&quot;&gt;8a4dde73c6112278017a6a4baf547aa7&lt;/assignment_group&gt;&lt;caller_id display_value=&quot;Bud Richman&quot;&gt;46c6f9efa9fe198101ddf5eed9adf6e7&lt;/caller_id&gt;&lt;category&gt;software&lt;/category&gt;&lt;cmdb_ci display_value=&quot;Sales Force Automation&quot;&gt;a9c0c8d2c6112276018f7705562f9cb0&lt;/cmdb_ci&gt;&lt;description&gt;Unable to login to SFA even though login credentials are correct.&lt;/description&gt;&lt;location display_value=&quot;324 South State Street, Salt Lake City,UT&quot;&gt;105cf7f3c611227501e75e08b14a38ba&lt;/location&gt;&lt;short_description&gt;Cant access SFA software&lt;/short_description&gt;&lt;sys_class_name&gt;incident&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2021-11-07 22:05:30&lt;/sys_created_on&gt;&lt;sys_id&gt;a9e30c7dc61122760116894de7bcc7bd&lt;/sys_id&gt;&lt;urgency&gt;3&lt;/urgency&gt;&lt;/incident&gt;&lt;/xml&gt;'
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var rootNode = xmlDoc.getDocumentElement()
+
+var firstNode = rootNode.getFirstChild()
+
+gs.info(firstNode.getTextContent())
+
+var shortDescription = xmlDoc.getNode(&quot;//short_description&quot;)
+gs.info(shortDescription.getTextContent())
+</code></pre>
+<p>    You should be receiving the output as following :
+<img src="./images/XML34.png" alt="XML34" /></p>
+<h3 id="hasattribute"><a class="header" href="#hasattribute">hasAttribute</a></h3>
+<p>    <strong>hasAttribute</strong> determines if the node has the specified attribute. Let us modify the script to see this method in action :</p>
+<pre><code class="language-js">var xmlString =
+  '&lt;xml&gt;&lt;incident&gt;&lt;active&gt;true&lt;/active&gt;&lt;assignment_group display_value=&quot;Software&quot; name=&quot;Software&quot;&gt;8a4dde73c6112278017a6a4baf547aa7&lt;/assignment_group&gt;&lt;caller_id display_value=&quot;Bud Richman&quot;&gt;46c6f9efa9fe198101ddf5eed9adf6e7&lt;/caller_id&gt;&lt;category&gt;software&lt;/category&gt;&lt;cmdb_ci display_value=&quot;Sales Force Automation&quot;&gt;a9c0c8d2c6112276018f7705562f9cb0&lt;/cmdb_ci&gt;&lt;description&gt;Unable to login to SFA even though login credentials are correct.&lt;/description&gt;&lt;location display_value=&quot;324 South State Street, Salt Lake City,UT&quot;&gt;105cf7f3c611227501e75e08b14a38ba&lt;/location&gt;&lt;short_description&gt;Cant access SFA software&lt;/short_description&gt;&lt;sys_class_name&gt;incident&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2021-11-07 22:05:30&lt;/sys_created_on&gt;&lt;sys_id&gt;a9e30c7dc61122760116894de7bcc7bd&lt;/sys_id&gt;&lt;urgency&gt;3&lt;/urgency&gt;&lt;/incident&gt;&lt;/xml&gt;'
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var locationNode = xmlDoc.getNode(&quot;//location&quot;)
+
+gs.info(locationNode.hasAttribute(&quot;display_value&quot;))
+
+gs.info(locationNode.hasAttribute(&quot;display_name&quot;))
+</code></pre>
+<p>    After the excution of the script you should be able to see the output as follows:
+<img src="./images/XML35.png" alt="XML35" /></p>
+<h3 id="setattribute"><a class="header" href="#setattribute">setAttribute</a></h3>
+<pre><code class="language-js">var xmlString =
+  '&lt;xml&gt;&lt;incident&gt;&lt;active&gt;true&lt;/active&gt;&lt;assignment_group display_value=&quot;Software&quot; name=&quot;Software&quot;&gt;8a4dde73c6112278017a6a4baf547aa7&lt;/assignment_group&gt;&lt;caller_id display_value=&quot;Bud Richman&quot;&gt;46c6f9efa9fe198101ddf5eed9adf6e7&lt;/caller_id&gt;&lt;category&gt;software&lt;/category&gt;&lt;cmdb_ci display_value=&quot;Sales Force Automation&quot;&gt;a9c0c8d2c6112276018f7705562f9cb0&lt;/cmdb_ci&gt;&lt;description&gt;Unable to login to SFA even though login credentials are correct.&lt;/description&gt;&lt;location display_value=&quot;324 South State Street, Salt Lake City,UT&quot;&gt;105cf7f3c611227501e75e08b14a38ba&lt;/location&gt;&lt;short_description&gt;Cant access SFA software&lt;/short_description&gt;&lt;sys_class_name&gt;incident&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2021-11-07 22:05:30&lt;/sys_created_on&gt;&lt;sys_id&gt;a9e30c7dc61122760116894de7bcc7bd&lt;/sys_id&gt;&lt;urgency&gt;3&lt;/urgency&gt;&lt;/incident&gt;&lt;/xml&gt;'
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var activeNode = xmlDoc.getNode(&quot;//active&quot;)
+gs.info(activeNode.hasAttribute(&quot;state&quot;))
+
+activeNode.setAttribute(&quot;state&quot;, &quot;open&quot;)
+
+gs.info(activeNode.hasAttribute(&quot;state&quot;))
+gs.info(activeNode.getAttribute(&quot;state&quot;))
+gs.info(activeNode)
+</code></pre>
+<p>    After executing above script you should receive the output as below, indicating a new attribute <code>state</code> has been added to the <code>active</code> node with the value of <code>open</code>:
+<img src="./images/XMLSetAttr.png" alt="XMLSetAttr" /></p>
+<h3 id="getchildnodeiterator--xmlnodeiterator"><a class="header" href="#getchildnodeiterator--xmlnodeiterator">getChildNodeIterator &amp; XMLNodeIterator</a></h3>
+<p>    <strong>getChildNodeIterator</strong> gets a XMLNodeIterator object that can be used to walk through the list of child nodes. <strong>The scoped XMLNodeIterator class allows you to iterate through a node of a XML document.</strong> There are no constructors for creating a stand alone instance of a XMLNodeIterator object. To create a XMLNodeIterator object use the getChildNodeIterator() method of the XMLNode object. Let us assume the below example:</p>
+<pre><code class="language-js">var xmlString =
+  '&lt;xml&gt;&lt;incident&gt;&lt;active&gt;true&lt;/active&gt;&lt;assignment_group display_value=&quot;Software&quot; name=&quot;Software&quot;&gt;8a4dde73c6112278017a6a4baf547aa7&lt;/assignment_group&gt;&lt;caller_id display_value=&quot;Bud Richman&quot;&gt;46c6f9efa9fe198101ddf5eed9adf6e7&lt;/caller_id&gt;&lt;category&gt;software&lt;/category&gt;&lt;cmdb_ci display_value=&quot;Sales Force Automation&quot;&gt;a9c0c8d2c6112276018f7705562f9cb0&lt;/cmdb_ci&gt;&lt;description&gt;Unable to login to SFA even though login credentials are correct.&lt;/description&gt;&lt;location display_value=&quot;324 South State Street, Salt Lake City,UT&quot;&gt;105cf7f3c611227501e75e08b14a38ba&lt;/location&gt;&lt;short_description&gt;Cant access SFA software&lt;/short_description&gt;&lt;sys_class_name&gt;incident&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2021-11-07 22:05:30&lt;/sys_created_on&gt;&lt;sys_id&gt;a9e30c7dc61122760116894de7bcc7bd&lt;/sys_id&gt;&lt;urgency&gt;3&lt;/urgency&gt;&lt;/incident&gt;&lt;/xml&gt;'
+
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+
+var node = xmlDoc.getNode(&quot;//incident&quot;)
+var iter = node.getChildNodeIterator()
+while (iter.hasNext()) {
+  var currentNode = iter.next()
+  gs.info(currentNode)
+}
+</code></pre>
+<p>    The ouput of these script logs all the nodes within the <code>incident</code> element :
+<img src="./images/XMLNodeIter.png" alt="XMLNodeIter" /></p>
+<p>    The <strong>hasNext()</strong> method in the above code returns true if the iteration has more elements. Similarly, <strong>next()</strong> method gets the next element in the iteration.</p>
+<h3 id="getnodename--getnodevalue"><a class="header" href="#getnodename--getnodevalue">getNodeName &amp; getNodeValue</a></h3>
+<p>    <strong>getNodeName</strong> gets the node's name. A node's name is determined by the node type. <strong>A document-element node's name is #document. A text node's name is #text. An element node's name is the element's name.</strong> <strong>getNodeValue</strong> gets the node's value. A node's value is also determined by the node type. <strong>Element and document-element nodes return null.</strong> Let us consider the below example from <a href="https://developer.servicenow.com/dev.do#!/reference/api/sandiego/server/no-namespace/c_XMLNodeScopedAPI">ServiceNow API documentation</a>:</p>
+<pre><code class="language-js">var xmlString =
+  &quot;&lt;test&gt;&quot; +
+  &quot;  &lt;one&gt;&quot; +
+  '    &lt;two att=&quot;xxx&quot;&gt;abcd1234&lt;/two&gt;' +
+  '    &lt;three boo=&quot;yah&quot; att=&quot;yyy&quot;&gt;1234abcd&lt;/three&gt;' +
+  &quot;    &lt;two&gt;another&lt;/two&gt;&quot; +
+  &quot;  &lt;/one&gt;&quot; +
+  &quot;  &lt;number&gt;1234&lt;/number&gt;&quot; +
+  &quot;&lt;/test&gt;&quot;
+var xmlDoc = new XMLDocument2()
+xmlDoc.parseXML(xmlString)
+var node = xmlDoc.getNode(&quot;//one&quot;)
+var iter = node.getChildNodeIterator()
+while (iter.hasNext()) {
+  var n = iter.next()
+  gs.info(&quot;Node name: &quot; + n.getNodeName())
+  gs.info(&quot;Node value: &quot; + n.getNodeValue())
+}
+</code></pre>
+<p>    The above script should display the output as below:
+<img src="./images/XMLNodeProp.png" alt="XMLNodeProp" /></p>
+<hr />
+<h2 id="where-can-you-dig-more"><a class="header" href="#where-can-you-dig-more">Where can you dig more?</a></h2>
+<p>    There is a lot of useful information about XML present on the internet. But some of the interesting resources which you should definitely visit are given below:</p>
+<ul>
+<li><a href="https://www.w3schools.com/xml/">XML Tutorial</a> by w3schools.com</li>
+<li><a href="https://alistapart.com/article/usingxml/">Using XML</a> by J. David Eisenberg</li>
+<li><a href="https://www.xml.com/axml/axml.html">Introduction to the Annotated XML Specification</a> by Tim Bray</li>
+</ul>
+<hr />
+<h2 id="whats-next-5"><a class="header" href="#whats-next-5">What's next?</a></h2>
+<p>    Originally this chapter was very long but I splitted it into three chapters. After all it was not the best place to introduce you with all of that concepts right away. We will visit them as and when required. In the next chapter we will modify our script using REST Message, which is more better than coding everything in a script. See you in the next chapter.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
