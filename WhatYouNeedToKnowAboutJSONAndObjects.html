@@ -215,7 +215,7 @@
 }
 </code></pre>
 <p>    So, if you could just use JSON and not XML that would be great.</p>
-<p><img src="/images/jlibgkfs8yf21.png" alt="XML vs JSON" /></p>
+<p><img src="./images/jlibgkfs8yf21.png" alt="XML vs JSON" /></p>
 <h2 id="working-with-json"><a class="header" href="#working-with-json">Working with JSON</a></h2>
 <p>    JSON is easy for humans to read and write &amp; for machines to parse and generate. It is supported by many programming languages and is especially useful for JavaScript-based apps, websites and browser extensions.</p>
 <h4 id="how-it-looks"><a class="header" href="#how-it-looks">How it looks</a></h4>
@@ -245,7 +245,7 @@
 </blockquote>
 <p>    You can read the article by Ben Sweetser <a href="https://developer.servicenow.com/blog.do?p=/post/training-scriptsbg/">here</a> if you need to learn more about it.</p>
 <p>    To open Scripts - Background, use the Application Navigator to open System Definition &gt; Scripts - Background. It is going to be our playground and a friend in our journey.</p>
-<p><img src="/images/sba.png" alt="Scripts Background" /></p>
+<p><img src="./images/sba.png" alt="Scripts Background" /></p>
 <h4 id="typeof--gsinfo"><a class="header" href="#typeof--gsinfo">typeof &amp; gs.info()</a></h4>
 <p>    The typeof operator returns a string indicating the type of the value provided, Whereas, gs.info method writes an info message to the system log. Combination of both of them are extremely useful when it comes to debugging but let us use them here for another purpose. You can read more about them typeof <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof">here</a> and info as well as other useful GlideSystem methods <a href="https://developer.servicenow.com/dev.do#!/reference/api/sandiego/server/no-namespace/c_GlideSystemScopedAPI#r_ScopedGlideSystemInf_String_Object_Object_Object_Object_Object">here</a>.</p>
 <p>    Copy the following code and paste it into the Scripts - Background.</p>
@@ -261,9 +261,9 @@
 gs.info(jsonObj)
 gs.info(typeof jsonObj)
 </code></pre>
-<p><img src="/images/typeof1.png" alt="typeof 1" /></p>
+<p><img src="./images/typeof1.png" alt="typeof 1" /></p>
 <p>    Now click the Run Script button to execute the script. You should see the following output :
-<img src="/images/typeof2.png" alt="typeof 2" /></p>
+<img src="./images/typeof2.png" alt="typeof 2" /></p>
 <p>    The second line of the output indicates that jsonObj variable stores an object. Though, notice that the first line of the output does not display the content of jsonObj variable.</p>
 <h4 id="json-serialization--deserialization"><a class="header" href="#json-serialization--deserialization">JSON serialization &amp; deserialization</a></h4>
 <p>    JSON is a syntax for serializing objects, arrays, numbers, strings, booleans, and null. Serialization means to convert an object into that string, and deserialization is its inverse operation.</p>
@@ -289,9 +289,9 @@ var jsonStr = JSON.stringify(jsonObj)
 gs.info(jsonStr)
 gs.info(typeof jsonStr)
 </code></pre>
-<p><img src="/images/json1.png" alt="json 1" /></p>
+<p><img src="./images/json1.png" alt="json 1" /></p>
 <p>    Now click the Run Script button to execute the script. You should see the following output :
-<img src="/images/json2.png" alt="json 2" /></p>
+<img src="./images/json2.png" alt="json 2" /></p>
 <p>    The first and second line of output displays the stringified version of JSON object and the third line indicates that it is of type string.</p>
 <h5 id="jsonstringifyvalue-replacer--jsonstringifyvalue-replacer-space"><a class="header" href="#jsonstringifyvalue-replacer--jsonstringifyvalue-replacer-space">JSON.stringify(value, replacer) &amp; JSON.stringify(value, replacer, space)</a></h5>
 <p>    Before we talk about the second parameter, replacer, I would like you to be familiar with the third parameter i.e. space. It can be a String or Number object that's used to insert white space (including indentation, line break characters, etc.) into the output JSON string for readability purposes.</p>
@@ -316,9 +316,9 @@ gs.info(typeof jsonStr)
 gs.info(JSON.stringify(jsonObj, null, 4))
 gs.info(JSON.stringify(jsonObj, null, &quot;\t&quot;))
 </code></pre>
-<p><img src="/images/json3.png" alt="json 1" /></p>
+<p><img src="./images/json3.png" alt="json 1" /></p>
 <p>    Now click the Run Script button to execute the script. You should see the following output :
-<img src="/images/json4.png" alt="json 2" /></p>
+<img src="./images/json4.png" alt="json 2" /></p>
 <p>    Both the outputs are now displayed in more readable format.</p>
 <p>    Finally, Let us talk about the second parameter, replacer. It can be a function that alters the behavior of the stringification process, or an array of String and Number that serve as an allowlist for selecting/filtering the properties of the value object to be included in the JSON string. If this value is null or not provided, all properties of the object are included in the resulting JSON string.</p>
 <p>    The replacer parameter can be either a function or an array.</p>
@@ -337,9 +337,9 @@ gs.info(JSON.stringify(jsonObj, null, &quot;\t&quot;))
 gs.info(JSON.stringify(jsonObj, [&quot;Course&quot;, &quot;Skills&quot;], 4))
 gs.info(JSON.stringify(jsonObj, [&quot;Course&quot;, &quot;Skills&quot;]))
 </code></pre>
-<p><img src="/images/json5.png" alt="json 1" /></p>
+<p><img src="./images/json5.png" alt="json 1" /></p>
 <p>    Now click the Run Script button to execute the script. You should see the following output :
-<img src="/images/json6.png" alt="json 2" /></p>
+<img src="./images/json6.png" alt="json 2" /></p>
 <p>    As you might have noticed already, only course and skills are the properties that are added to the new JSON string.</p>
 <h6 id="replacer-as-a-function-"><a class="header" href="#replacer-as-a-function-">replacer, as a function :</a></h6>
 <ul>
@@ -374,9 +374,9 @@ function replacer(key, value) {
   return value
 }
 </code></pre>
-<p><img src="/images/json7.png" alt="json 1" /></p>
+<p><img src="./images/json7.png" alt="json 1" /></p>
 <p>    Now click the Run Script button to execute the script. You should see the following output :
-<img src="/images/json8.png" alt="json 2" /></p>
+<img src="./images/json8.png" alt="json 2" /></p>
 <p>    We have modified every string value using our replacer function and appended by &quot;test_&quot;.</p>
 <p>    We have seen examples of JSON.stringify() and how it works. It converts a value to JSON notation representing it:</p>
 <ul>
@@ -409,9 +409,9 @@ var jsonObjFromString = JSON.parse(jsonStr)
 gs.info(jsonObjFromString)
 gs.info(typeof jsonObjFromString)
 </code></pre>
-<p><img src="/images/json9.png" alt="json 1" /></p>
+<p><img src="./images/json9.png" alt="json 1" /></p>
 <p>    Now click the Run Script button to execute the script. You should see the following output :
-<img src="/images/json10.png" alt="json 2" /></p>
+<img src="./images/json10.png" alt="json 2" /></p>
 <p>    After executing the code we are certain that jsonStr is a string and line two of output conveys that. JSON.parse() method converts this json string into an JSON object, last line of the output shows that jsonObjFromString is now an object.</p>
 <h5 id="using-the-reviver-parameter"><a class="header" href="#using-the-reviver-parameter">Using the reviver parameter</a></h5>
 <p>    An optional reviver function can be provided to perform a transformation on the resulting object before it is returned or in other words, If a reviver is specified, the value computed by parsing is transformed before being returned. It allows for interpreting what the replacer has used to stand in for other datatypes.</p>
@@ -446,9 +446,9 @@ function reviver(key, value) {
   }
 }
 </code></pre>
-<p><img src="/images/json11.png" alt="json 1" /></p>
+<p><img src="./images/json11.png" alt="json 1" /></p>
 <p>    Now click the Run Script button to execute the script. You should see the following output :
-<img src="/images/json12.png" alt="json 2" /></p>
+<img src="./images/json12.png" alt="json 2" /></p>
 <p>    We have modified every string value using our reviver function and removed &quot;test_&quot; from it, Output shows the stringified version of this modified object.</p>
 <p>    We have seen examples of JSON.parse() and how it works. If you are interested in learning more about JSON and its methods, Mozilla developer documentation is a best place to start with, It has everything you need right <a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON">here</a>.</p>
 <p>    Hey, we are not done yet, There are still few more things we need to know.</p>
@@ -476,9 +476,9 @@ jsonObj[&quot;title&quot;] = &quot;What you need to know abour JSON and Objects&
 
 gs.info(JSON.stringify(jsonObj, null, 4))
 </code></pre>
-<p><img src="/images/json13.png" alt="json 1" /></p>
+<p><img src="./images/json13.png" alt="json 1" /></p>
 <p>    Now click the Run Script button to execute the script. You should see the following output :
-<img src="/images/json14.png" alt="json 2" /></p>
+<img src="./images/json14.png" alt="json 2" /></p>
 <p>    First we did display the stringified version of initial JSON Object. Next we did log the properties course and first_name from object using dot notation and brackets notation both. Though we have received the same response, it is best to use dot notation for performance reasons. but brackets notation has it's own use cases e.g. if you want to access the array type property's elements. After that we did add two more properties to our object using both dot and brackets notation and then logged the stringified version of object. We can see that our object now contains two new properties chapter &amp; title.</p>
 <h6 id="objectkeys--hasownproperty"><a class="header" href="#objectkeys--hasownproperty">Object.keys() &amp; hasOwnProperty()</a></h6>
 <p>    The Object.keys() method returns an array of a given object's own enumerable property names. And the hasOwnProperty() method returns a boolean indicating whether the object has the specified property as its own property.</p>
@@ -496,9 +496,9 @@ gs.info(Object.keys(jsonObj))
 gs.info(jsonObj.hasOwnProperty(&quot;Skills&quot;))
 gs.info(jsonObj.hasOwnProperty(&quot;more_skills&quot;))
 </code></pre>
-<p><img src="/images/json15.png" alt="json 1" /></p>
+<p><img src="./images/json15.png" alt="json 1" /></p>
 <p>    Now click the Run Script button to execute the script. You should see the following output :
-<img src="/images/json16.png" alt="json 2" /></p>
+<img src="./images/json16.png" alt="json 2" /></p>
 <p>    The first line of output lists all the property names of our objects. Line two of our output indicates that we have the property named Skills in our object. Line three does indicate the same by returning false.</p>
 <p>    Finally, We did reach to the end of this chapter. This is the minimum you need to know about JSON and Objects to follow along with me. If you want to dig deep, Mozilla is again the best platform right <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">here</a> to learn about objects.</p>
 <hr />
@@ -534,6 +534,22 @@ gs.info(jsonObj.hasOwnProperty(&quot;more_skills&quot;))
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

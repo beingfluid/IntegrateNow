@@ -175,7 +175,7 @@
 <p>    When you chat with a friend, you need a mobile (or in other words, a communication device) to do that. Or in order to open a door you need a handle. Application Programming Interface or API is a similar concept, and it helps two programs to communicate &amp; enable exchange of information with each other.</p>
 <p>    Let us try to understand this another way. Think that you are hungry and want to eat a pizza. You go to the nearest restaurant, check the menu and make the order to the waiter. Waiter in turn takes the order to the kitchen, brings the pizza from the kitchen and deliver the pizza to your table. The waiter plays the similar part as of the API.</p>
 <p>     In IT world, Client application requests information from a server. A server processes the request and returns a status code and a response body. When the response body is returned, the Client extracts information from the response body and takes action on the extracted data. API is a mid layer that handles this communication. Scripted REST Services allow developers to create their own APIs on the ServiceNow Platform.</p>
-<p><img src="/images/Chapter1_1.png" alt="What is API" /></p>
+<p><img src="./images/Chapter1_1.png" alt="What is API" /></p>
 <h2 id="what-is-rest-api"><a class="header" href="#what-is-rest-api">What is REST API</a></h2>
 <p>    Representational state transfer or REST is the most popular approach of building APIs. When a request for data is sent to a REST API, it’s usually done through hypertext transfer protocol (HTTP). Once a request is received, APIs designed for REST can return messages in a variety of formats: HTML, XML, plain text, and JSON.</p>
 <h4 id="a-request-is-made-up-of-four-things"><a class="header" href="#a-request-is-made-up-of-four-things">A request is made up of four things:</a></h4>
@@ -227,7 +227,7 @@
 <p>    Both this headers are expressed by as MIME-types. E.g.</p>
 <pre><code class="language-js">Content-Type:application/json;
 </code></pre>
-<p><img src="/images/Headers.png" alt="Accept vs Content-Type" /></p>
+<p><img src="./images/Headers.png" alt="Accept vs Content-Type" /></p>
 <h2 id="http-status-codes"><a class="header" href="#http-status-codes">HTTP Status Codes</a></h2>
 <p>    I'm sure you have came across the scenerio, when you tried to access a webpage and recieved an 404 (Page not found) or 403 (Access Forbidden) error? This are status codes.</p>
 <p>    Server always returns the HTTP status code with the response. The HTTP status codes refer to the interaction with the REST service provider. The status codes do not tell anything about the requested data. ServiceNow APIs return standard HTTP status codes.:</p>
@@ -238,7 +238,7 @@
 <li>4xx: Client Error</li>
 <li>5xx: Server Error</li>
 </ul>
-<p><img src="/images/statuscode2.png" alt="Status Code" /></p>
+<p><img src="./images/statuscode2.png" alt="Status Code" /></p>
 <h2 id="http-query-parameters"><a class="header" href="#http-query-parameters">HTTP Query Parameters</a></h2>
 <p>    HTTP Query Parameters are appended to the endpoint url after '?'. The query parameters are specific to the selected API method and control what information developers using the API can pass in the API request URL.</p>
 <pre><code class="language-js">https://dev124645.service-now.com/api/now/table/incident?sysparm_query=active%3Dtrue&amp;sysparm_limit=10
@@ -252,9 +252,9 @@
 <h2 id="outbound-vs-inbound-rest-integrations"><a class="header" href="#outbound-vs-inbound-rest-integrations">Outbound vs. Inbound REST Integrations</a></h2>
 <p>    When ServiceNow consumes a web services from third party providers and other ServiceNow instances, It is considered as a Outbound REST Integration. Whereas, In an inbound request, a third-party application requests an action through a ServiceNow API.</p>
 <h4 id="outbound-rest-integration"><a class="header" href="#outbound-rest-integration">Outbound REST Integration</a></h4>
-<p><img src="/images/app_store_learnv2_rest_sandiego_outbound_images_outbound_genericrequest.png" alt="Outbound" /></p>
+<p><img src="./images/app_store_learnv2_rest_sandiego_outbound_images_outbound_genericrequest.png" alt="Outbound" /></p>
 <h4 id="inbound-rest-integration"><a class="header" href="#inbound-rest-integration">Inbound REST Integration</a></h4>
-<p><img src="/images/app_store_learnv2_rest_sandiego_inbound_images_inbound_genericrequest.png" alt="Inbound" /></p>
+<p><img src="./images/app_store_learnv2_rest_sandiego_inbound_images_inbound_genericrequest.png" alt="Inbound" /></p>
 <h2 id="whats-next"><a class="header" href="#whats-next">What's next?</a></h2>
 <p>     In next chapter, we will see some of the concepts &amp; methods related to javascript JSON and Objects, before diving into actual ServiceNow integration jungle. Knowing this simple concepts will be extermely helpful and will make us confident about the code that we are going to write. Believe me, you are going to use hell lot of JSON.</p>
 
@@ -287,6 +287,22 @@
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

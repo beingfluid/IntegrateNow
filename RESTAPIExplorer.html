@@ -189,11 +189,11 @@
 <p>    Another important feature that makes a documentation more better is it's user interface, If you don't have a visible user interface and you can't know how to use an API just by looking at it.</p>
 <h2 id="servicenow-rest-api-explorer"><a class="header" href="#servicenow-rest-api-explorer">ServiceNow REST API Explorer</a></h2>
 <p>    Though many documentations are crap, ServiceNow did a great job to maintain the documentation and following all the best practices. The REST API Explorer allows you to discover ServiceNow REST APIs, quickly construct and execute requests, and view responses from ServiceNow REST APIs within your browser.</p>
-<p><img src="/images/stop-documentation-madness.webp" alt="Good Documentation" /></p>
+<p><img src="./images/stop-documentation-madness.webp" alt="Good Documentation" /></p>
 <p>    Before we step forward, let us step back a little and recall what is &quot;Inbound REST Integration&quot;? In an inbound request, a third-party application requests an action through a ServiceNow API. ServiceNow processes the request and returns a status code and a response body. When the response body is returned, the Client application can extracts information from the response body and take action on the extracted data. The REST API Explorer helps us to test Inbound requests. In fact, you need to always refer the documentation of destination ServiceNow instance/3rd party application or server.</p>
-<p><img src="/images/app_store_learnv2_rest_sandiego_inbound_images_inbound_genericrequest.png" alt="Inbound" /></p>
+<p><img src="./images/app_store_learnv2_rest_sandiego_inbound_images_inbound_genericrequest.png" alt="Inbound" /></p>
 <p>    To open REST API Explorer, Navigate to <strong>System Web Services &gt; REST &gt; REST API Explorer</strong>. It displays all available APIs, API versions, and methods for each API. We can use the REST API Explorer to find an end point URL, method and variables that will get us the results that we need.</p>
-<p><img src="/images/RESTAPIExplorer1.png" alt="RESTAPIExplorer1" /></p>
+<p><img src="./images/RESTAPIExplorer1.png" alt="RESTAPIExplorer1" /></p>
 <p>    The REST API Explorer consists of:</p>
 <ul>
 <li>
@@ -207,7 +207,7 @@
 </li>
 <li>
 <p>A section to test the endpoint</p>
-<p><img src="/images/app_store_learnv2_rest_sandiego_inbound_images_inbound_apiexploreranatomy.png" alt="REST API Explorer 2" /></p>
+<p><img src="./images/app_store_learnv2_rest_sandiego_inbound_images_inbound_apiexploreranatomy.png" alt="REST API Explorer 2" /></p>
 </li>
 </ul>
 <h3 id="understanding-how-to-use-the-rest-api-explorer"><a class="header" href="#understanding-how-to-use-the-rest-api-explorer">Understanding how to use the REST API Explorer</a></h3>
@@ -217,7 +217,7 @@
 <ul>
 <li>Navigate to <strong>System Web Services &gt; REST &gt; REST API Explorer</strong>.</li>
 </ul>
-<p><img src="/images/RESTAPIExplorer1.png" alt="RESTAPIExplorer2" /></p>
+<p><img src="./images/RESTAPIExplorer1.png" alt="RESTAPIExplorer2" /></p>
 <ul>
 <li>
 <p>In the top-left of the REST API Explorer, select Namespace as <strong>now</strong>, API Name as <strong>Table API</strong> &amp; API Version as <strong>latest</strong>.</p>
@@ -229,21 +229,21 @@
 <li>now indicates REST APIs that are provided by ServiceNow</li>
 <li>private_scope_name indicates APIs (scripted web services) in privately-scoped applications</li>
 </ul>
-<p><img src="/images/namespace.png" alt="RESTAPIExplorer3" /></p>
+<p><img src="./images/namespace.png" alt="RESTAPIExplorer3" /></p>
 </li>
 <li>
 <p>API Name specifies API to configure and test in the REST API Explorer.</p>
 <ul>
 <li>The Table API provides endpoints that allow you to perform create, read, update, and delete (CRUD) operations on existing tables.</li>
 </ul>
-<p><img src="/images/apiname.png" alt="RESTAPIExplorer4" /></p>
+<p><img src="./images/apiname.png" alt="RESTAPIExplorer4" /></p>
 </li>
 <li>
 <p>API Version allows you to select a specific API version or use latest version.</p>
 <ul>
 <li>Depending on the version, endpoint returns different results on a valid query.</li>
 </ul>
-<p><img src="/images/apiversion.png" alt="RESTAPIExplorer5" /></p>
+<p><img src="./images/apiversion.png" alt="RESTAPIExplorer5" /></p>
 </li>
 </ul>
 </li>
@@ -252,7 +252,7 @@
 <ul>
 <li>&quot;Retrieve records from a table&quot; is a HTTP GET method that retrieves multiple records from the specified table.</li>
 </ul>
-<p><img src="/images/restmethod.png" alt="RESTAPIExplorer6" /></p>
+<p><img src="./images/restmethod.png" alt="RESTAPIExplorer6" /></p>
 </li>
 </ul>
 <p>    <strong>The fields in the Prepare request section of the REST API Explorer form are determined by which Namespace, API Name, API Version, and REST method is selected.</strong></p>
@@ -263,7 +263,7 @@
 </code></pre>
 <ul>
 <li>In the Path Parameters section, select the <strong>Incident (incident)</strong> table.
-<img src="/images/pathparam.png" alt="pathparam1" />
+<img src="./images/pathparam.png" alt="pathparam1" />
 <ul>
 <li>The list of path parameters depends on the endpoint URL.</li>
 <li>Path parameters are enclosed in curly braces in the endpoint URL.</li>
@@ -271,7 +271,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="/images/app_store_learnv2_rest_sandiego_inbound_images_inbound_pathparms.png" alt="pathparam2" /></p>
+<p><img src="./images/app_store_learnv2_rest_sandiego_inbound_images_inbound_pathparms.png" alt="pathparam2" /></p>
 <ul>
 <li>
 <p>Scroll to the bottom of the page and click <strong>Send</strong>.</p>
@@ -279,12 +279,12 @@
 <li>After configuring the REST method, one can click the Send button to send the request to the API.</li>
 <li>The REST API Explorer constructs the request to send to the ServiceNow API using the settings configured by the developer.</li>
 </ul>
-<p><img src="/images/sendget.png" alt="sendget" /></p>
+<p><img src="./images/sendget.png" alt="sendget" /></p>
 </li>
 <li>
 <p>Observe the request that is sent and recieved response.
-<img src="/images/getres1.png" alt="sendget" />
-<img src="/images/getres2.png" alt="sendget" /></p>
+<img src="./images/getres1.png" alt="sendget" />
+<img src="./images/getres2.png" alt="sendget" /></p>
 <ul>
 <li>
 <p>The response includes incident records from the instance.</p>
@@ -297,32 +297,32 @@
 </li>
 <li>
 <p>The path parameter values are set when configuring the request.</p>
-<p><img src="/images/path_app_store_learnv2_rest_sandiego_inbound_images_inbound_requestpopulated.png" alt="sendget" /></p>
+<p><img src="./images/path_app_store_learnv2_rest_sandiego_inbound_images_inbound_requestpopulated.png" alt="sendget" /></p>
 </li>
 </ul>
 </li>
 </ul>
 <p>    The REST API Explorer limits queries to 10 records at a time. Only the first 10 incident records appear. However, you can also limit the maximum number of records returned in response when implementing a REST API using &quot;Query parameters&quot;, sysparm_limit. Let us change it to return only one record and click send to observe new response.</p>
-<p><img src="/images/restlimit.png" alt="sendget" /></p>
+<p><img src="./images/restlimit.png" alt="sendget" /></p>
 <p>    As you have noticed, we have only one incident information returned in the response.</p>
-<p><img src="/images/restlimit2.png" alt="sendget" /></p>
+<p><img src="./images/restlimit2.png" alt="sendget" /></p>
 <p>    Lets set our sysparm_limit Query parameters back to 10, click send again and again we should get information about 10 incidents. The response by default will return all the incident fields, but we will only need a couple of the fields back in our response, We can specify those in the sysparm_fields parameter.</p>
-<p><img src="/images/queryparam1.png" alt="q1" />
-<img src="/images/queryparam2.png" alt="q2" /></p>
+<p><img src="./images/queryparam1.png" alt="q1" />
+<img src="./images/queryparam2.png" alt="q2" /></p>
 <p>    Also, we want to return only active incidents. we can fetch the filtered records based on specified encoded query for parameter sysparm_query.
-<img src="/images/query2.png" alt="q3" /></p>
+<img src="./images/query2.png" alt="q3" /></p>
 <p>    Click send, the new request response should have only active incidents and specified four fields information returned :
-<img src="/images/query9.png" alt="q3" /></p>
+<img src="./images/query9.png" alt="q3" /></p>
 <p>    Qury parameters are added to the endpoint URL by the REST API Explorer when the request is sent. The query parameters are specific to the selected API method. A default set of query parameters are displayed for the API. The query parameters are added to the URI in the Request after '?'.</p>
-<p><img src="/images/query_app_store_learnv2_rest_sandiego_inbound_images_inbound_queryparmsuri.png" alt="q4" /></p>
+<p><img src="./images/query_app_store_learnv2_rest_sandiego_inbound_images_inbound_queryparmsuri.png" alt="q4" /></p>
 <p>    REST headers are the meta-data associated with an API request and response E.g. format of the Request and Response.</p>
-<p><img src="/images/rh2_app_store_learnv2_rest_sandiego_inbound_images_inbound_requestheaders.png" alt="q6" /></p>
+<p><img src="./images/rh2_app_store_learnv2_rest_sandiego_inbound_images_inbound_requestheaders.png" alt="q6" /></p>
 <p>    The Request Header settings appear in the request.</p>
-<p><img src="/images/rh3_app_store_learnv2_rest_sandiego_inbound_images_inbound_requestheadersrequest.png" alt="q5" /></p>
+<p><img src="./images/rh3_app_store_learnv2_rest_sandiego_inbound_images_inbound_requestheadersrequest.png" alt="q5" /></p>
 <p>    As you have noticed from the screenshot above, The request format corresponds to Accept header and similarly, the response format corresponds to the Content-Type header. If you can recall from first chapter, Accept or request format is the format in which client sends the data to the server or to be precise, the format in which server is expecting the data. Similarly, Content-Type or request format is the format in which server returns the data. Both the headers are expressed as the MIME Types e.g. application/json. You can read more about the MIME types <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types">here</a>.</p>
 <p>    Let us do one more test, by changing the Reesponse format to application/xml and observe the response by clicking send :</p>
-<p><img src="/images/xmlres.png" alt="xml1" />
-<img src="/images/xmlres2.png" alt="xml2" /></p>
+<p><img src="./images/xmlres.png" alt="xml1" />
+<img src="./images/xmlres2.png" alt="xml2" /></p>
 <h4 id="post-request"><a class="header" href="#post-request">POST request</a></h4>
 <h5 id="requirements-gathering"><a class="header" href="#requirements-gathering">Requirements gathering</a></h5>
 <p>    Now, we have reached the point from where we can think of the complete business use case. But before technical implementation, we need to gather the information of what needs to be done from business based on their need. <strong>This process of understanding what you are trying to build and why you are building it is known as &quot;Requirements gathering&quot;.</strong> Requirements gathering is very very essential in any project. Don't worry, If you are just a developer you do not need to do all that stuff. Let me tell you what is the requirement. Just for the desclaimer, The actual use case is bi-directional and involves some complex logic, So I am going to explain just a part of it here to not complicate things right away.</p>
@@ -333,46 +333,46 @@
 <ul>
 <li>Navigate to <strong>System Web Services &gt; REST &gt; REST API Explorer</strong>.</li>
 </ul>
-<p><img src="/images/RESTAPIExplorer1.png" alt="RESTAPIExplorer2" /></p>
+<p><img src="./images/RESTAPIExplorer1.png" alt="RESTAPIExplorer2" /></p>
 <ul>
 <li>In the top-left of the REST API Explorer, select Namespace as <strong>now</strong>, API Name as <strong>Table API</strong> &amp; API Version as <strong>latest</strong>.</li>
 </ul>
-<p><img src="/images/namespace.png" alt="RESTAPIExplorer3" />
-<img src="/images/apiname.png" alt="RESTAPIExplorer4" />
-<img src="/images/apiversion.png" alt="RESTAPIExplorer5" /></p>
+<p><img src="./images/namespace.png" alt="RESTAPIExplorer3" />
+<img src="./images/apiname.png" alt="RESTAPIExplorer4" />
+<img src="./images/apiversion.png" alt="RESTAPIExplorer5" /></p>
 <ul>
 <li>
 <p>Click <strong>Create a record (POST)</strong></p>
 <ul>
 <li>&quot;Create a record&quot; is a HTTP POST method that Inserts one record in the specified table.</li>
 </ul>
-<p><img src="/images/post1.png" alt="RESTAPIExplorer6" /></p>
+<p><img src="./images/post1.png" alt="RESTAPIExplorer6" /></p>
 </li>
 <li>
 <p>In the Path Parameters section, set the &quot;tableName&quot; parameter as <strong>Incident (incident)</strong> table.</p>
-<p><img src="/images/post2.png" alt="RESTAPIExplorer6" /></p>
+<p><img src="./images/post2.png" alt="RESTAPIExplorer6" /></p>
 </li>
 <li>
 <p>In the Request Body section, click <strong>Add a field</strong>.</p>
-<p><img src="/images/post3.png" alt="RESTAPIExplorer6" />
-<img src="/images/post32.png" alt="RESTAPIExplorer6" /></p>
+<p><img src="./images/post3.png" alt="RESTAPIExplorer6" />
+<img src="./images/post32.png" alt="RESTAPIExplorer6" /></p>
 </li>
 <li>
 <p>Select a field and specify a value for that field. The request body updates automatically based on your entries.</p>
-<p><img src="/images/post4.png" alt="RESTAPIExplorer6" />
-<img src="/images/post42.png" alt="RESTAPIExplorer6" /></p>
+<p><img src="./images/post4.png" alt="RESTAPIExplorer6" />
+<img src="./images/post42.png" alt="RESTAPIExplorer6" /></p>
 </li>
 <li>
 <p>Click the plus sign (+) and specify any additional field to assign a value to.</p>
-<p><img src="/images/post5.png" alt="RESTAPIExplorer6" /></p>
+<p><img src="./images/post5.png" alt="RESTAPIExplorer6" /></p>
 </li>
 <li>
 <p>After constructing the request, click <strong>Send</strong> &amp; Select <strong>OK</strong> for the popup.</p>
-<p><img src="/images/post52.png" alt="RESTAPIExplorer6" /></p>
+<p><img src="./images/post52.png" alt="RESTAPIExplorer6" /></p>
 </li>
 <li>
 <p>Observe the response from the server, It returnes the information of newely created incident.</p>
-<p><img src="/images/post6.png" alt="RESTAPIExplorer6" /></p>
+<p><img src="./images/post6.png" alt="RESTAPIExplorer6" /></p>
 </li>
 </ul>
 <p>    Okay, we are not done yet with REST API explorer, But that's it for this chapter. I am going to let you guys experiment with REST API explorer for now and in next chapter we will look at the other missing pieces. ServiceNow documentation is still the best way to learn about REST API explorer. Two of the best resources can be found <a href="https://developer.servicenow.com/dev.do#!/learn/courses/sandiego/app_store_learnv2_rest_sandiego_rest_integrations/app_store_learnv2_rest_sandiego_inbound_rest_integrations/app_store_learnv2_rest_sandiego_introduction_to_the_rest_api_explorer">here</a> &amp; <a href="https://docs.servicenow.com/bundle/paris-application-development/page/integrate/inbound-rest/concept/use-REST-API-Explorer.html#use-REST-API-Explorer">here</a>.</p>
@@ -411,6 +411,22 @@
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 
